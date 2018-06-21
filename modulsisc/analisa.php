@@ -346,7 +346,6 @@ $dari=$_POST['TARIKHBESARA'];
                     </div>
                 </div>
                 <ul class="nav" id="side-menu">
-                 test
                   <li> <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-cart-outline fa-fw" data-icon="v"></i> 
                         
                         <span class="hide-menu">Pendaftaran<span class="fa arrow"></span> </span></a>
