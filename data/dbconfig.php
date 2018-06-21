@@ -11,9 +11,9 @@ class Database
      
     //CA180328-New Connection Strings @ Staging
     private $host = "localhost";
-    private $db_name = "ppdmmjoh_sip";
-    private $username = "ppdmmjoh_sip";
-    private $password = "sipMoe@2018";
+    private $db_name = "dbsip";
+    private $username = "root";
+    private $password = "root";
     public $conn;
 
     public function dbConnection()
