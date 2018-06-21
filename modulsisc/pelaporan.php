@@ -526,6 +526,8 @@ $tahunsemasa = date('Y');
     $stmt->execute();
     $row=$stmt->fetch(PDO::FETCH_ASSOC);
     
+    $missing = array();
+    
     if($stmt->rowCount() <> 0) {
         $diff1 = array();
         while($row2=$stmt->fetch(PDO::FETCH_ASSOC)) {
