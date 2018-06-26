@@ -1,6 +1,4 @@
 ROADMAP SISTEM.
-Senaraikan roadmap sistem pelaporan supaya ada hala tuju
-
 1) tagging dalam kelas
 2) analisa dalam kelas
-3)
+3) tov -siap

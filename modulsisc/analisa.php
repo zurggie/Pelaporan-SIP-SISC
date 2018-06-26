@@ -479,12 +479,38 @@ $kirakelompok = $stmt->fetchColumn();
     $sqlnRow=$sqln->fetch(PDO::FETCH_ASSOC);
     $namappd=$sqlnRow['NAMAPPD'];    
     
+    //query untuk update TOV mula
+    if(isset($_POST['tovupdate'])) {
+        $ctov = $auth_user->runQuery("SELECT nokp FROM tovgdb WHERE nokp=:nokp AND tahun=:tahun");
+        $ctov->bindParam(':nokp',$_POST['ic']);
+        $ctov->bindParam(':tahun',date('Y'));
+        $ctov->execute();
+        $rtov = $ctov->fetch(PDO::FETCH_ASSOC);
+
+        if($ctov->rowCount() > 0) {
+            $uptov = $auth_user->runQuery("UPDATE tovgdb SET tov = :tov WHERE nokp = :nokp AND tahun = :tahun");
+        } else {
+            $uptov = $auth_user->runQuery("INSERT INTO tovgdb (nokp,tov,tahun) VALUES (:nokp,:tov,:tahun)");
+        }
+        $uptov->bindParam(':tov',$_POST['tov']);
+        $uptov->bindParam(':tahun',date('Y'));
+        $uptov->bindParam(':nokp',$_POST['ic']);
+        $uptov->execute();
+    }
+    //query update TOV tamat
+
+    $dtov = $auth_user->runQuery("SELECT tov FROM tovgdb WHERE nokp=:nokp AND tahun=:tahun");
+    $dtov->bindParam(':nokp',$nokp);
+    $dtov->bindParam(':tahun',date('Y'));
+    $dtov->execute();
+    if($dtov->rowCount() > 0) {
+        $drow = $dtov->fetch(PDO::FETCH_ASSOC);
+        $tov = $drow['tov'];
+    } else {
+        $tov = 0;
+    }
     
-
 ?>
-
-
-<?php $tov = 50; ?>
 <a role="button" class="accordion col-sm-12">
         <table style="width:100%;">
             <tr>
@@ -651,17 +677,30 @@ foreach ($stmt3 as $sqlnRow) {
   </table> 
     
     <?php
-    $stid = $auth_user->runQuery("SELECT ID FROM sisc_guru WHERE nokp=:nokp");
+    $stid = $auth_user->runQuery("SELECT ID,NOKP FROM sisc_guru WHERE nokp=:nokp");
     $stid->bindParam(':nokp',$nokp);
     $stid->execute();
     $rowid = $stid->fetch(PDO::FETCH_ASSOC);
     $idguru = $rowid['ID'];
+    $icguru = $rowid['NOKP'];
     ?>
     
     
     <div class="row" style="margin:2rem 2rem;">
+    <div class="col-sm-5 pull-left">
+        <form class="form-inline" action="analisa.php?id=tovar" method="POST">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><strong>TOV</strong></div>
+                    <input type="number" class="form-control" name="tov" value="<?php echo $tov;?>" style="width:80px;">
+                </div>
+            </div>
+            <input type="hidden" name="ic" value="<?php echo $icguru;?>">
+            <button type="submit" name="tovupdate" class="btn btn-primary">Kemaskini</button>
+        </form>
+    </div>
     <div class="col-sm-3 pull-right">
-        <a href="pelaporan.php?id=<?php echo $idguru?>" class="btn btn-primary btn-block">Tambah Bimbingan</a>
+        <a href="pelaporan.php?id=<?php echo $idguru?>" class="btn btn-success btn-block">Tambah Bimbingan</a>
     </div>
 </div>
     
