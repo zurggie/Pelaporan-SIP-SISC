@@ -151,8 +151,8 @@ $dari=$_POST['TARIKHBESARA'];
         transition: 0.4s;
 }
 
-.active, .accordion:hover {
-        background-color: ;
+.accordion:hover {
+        background-color: rgba(255, 250, 230, 0.9);
 }
 
 .panel {

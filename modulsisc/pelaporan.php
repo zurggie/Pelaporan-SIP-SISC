@@ -477,7 +477,14 @@ foreach( $result as $row ) {
                 <div class="row">
       
 <form name="frmAdd" action="" method="POST">
-    
+<style>
+.formting {
+    height:30px;
+}
+.marg {
+    margin: 10px 0px;
+}
+</style>    
     
     <?php 
     
@@ -498,24 +505,24 @@ $tahunsemasa = date('Y');
     
 <table border="0" cellpadding="10" cellspacing="0" width="80%" align="center" class="tbl-qa">  
 
-    <tr><td colspan="3"><h4>Pelaporan Bimbingan Oleh Pegawai SISC</h4></td></tr>
-<tr >
+    <tr><td colspan="3"><h4><strong>Pelaporan Bimbingan Oleh Pegawai SISC</strong></h4></td></tr>
+<tr class="formting">
     <td>
         No Kad Pengenalan</td><td>:</td><td> <b><?php echo $nokp;?></b>
     </td>
 </tr>
                     
-<tr  >
+<tr class="formting">
     <td>
         Nama Guru Yang Dibimbing</td><td>: </td><td><b><?php echo $namaguru;?></b>
     </td>
 </tr>                    
-<tr  >
+<tr class="formting">
     <td>
         Nama Sekolah </td><td>: </td><td><b><?php echo $namasekolah;?></b>
     </td>
 </tr> 
-<tr class="table-row" >
+<tr class="table-row formting" >
     <td>Bimbingan Yang Ke </td><td>:</td><td>
     
     
@@ -558,7 +565,7 @@ $tahunsemasa = date('Y');
  }
       
 
-echo " <tr><td>Tarikh </td><td>:</td><td>";
+echo " <tr class='formting'><td>Tarikh </td><td>:</td><td>";
           echo "<select name=\"dari_hari\">";
                                               for ( $counter = 1; $counter <= 31; $counter += 1) {
                                                  echo "<option value=\"$counter\""; if($hari=="$counter") { echo "selected"; } echo ">$counter</option>";
@@ -583,7 +590,7 @@ echo " <tr><td>Tarikh </td><td>:</td><td>";
     
        ?>     
     
-<tr class="table-row" >
+<tr class="table-row formting" >
     <td>Jenis Bimbingan </td><td>:</td><td>
     
     
@@ -604,7 +611,7 @@ echo " <tr><td>Tarikh </td><td>:</td><td>";
                 
             <tr><td>Standard<br>SKPMg2</td><td>:</td><td colspan="3">
     
-<table width="100%" border="1">
+<table width="100%" border="1" class="marg">
 <tr><td colspan="8"><center><b>Standard </b></center></td></tr>
 <tr><td><center><b>4.1.1 </b></center> </td><td><center> <b>4.2.1 </b></center></td><td><center> <b>4.2.2 </b></center></td><td><center> <b>4.3.1 </b></center></td><td><center> <b>4.4.1 </b></center></td>
 <td><center> <b>4.4.2 </b></center></td><td><center> <b>4.5.1 </b></center></td><td><center> <b>4.6.1 </b></center></td></tr>
@@ -759,7 +766,7 @@ echo " <tr><td>Tarikh </td><td>:</td><td>";
     
     <td>
         Catatan Pegawai</td><td>: </td><td>
-        <textarea class="textarea_editor form-control" name ="CATATAN1" rows="3" placeholder=" "></textarea>
+        <textarea class="textarea_editor form-control marg" name ="CATATAN1" rows="5" placeholder=" "></textarea>
     </td>
 </tr>             
 
@@ -769,7 +776,7 @@ echo " <tr><td>Tarikh </td><td>:</td><td>";
   }
     ?>
     
- <tr class="table-row" ><td>
+ <tr class="table-row marg" ><td>
 <?php echo "<input type=\"hidden\" name=\"TAHUN\" value=\"$tahunsemasa\" />";?>        
 <?php echo "<input type=\"hidden\" name=\"NOKP\" value=\"$nokp\" />";?>     
 <?php echo "<input type=\"hidden\" name=\"NAMAGURU\" value=\"$namaguru\" />";?>
@@ -778,10 +785,10 @@ echo " <tr><td>Tarikh </td><td>:</td><td>";
 <?php echo "<input type=\"hidden\" name=\"KODSEKOLAH\" value=\"$kodsekolah\" />";?> 
 <?php echo "<input type=\"hidden\" name=\"SISC\" value=\"$namapengguna\" />";?> 
      
-</td><td></td><td><input name="save_record" type="submit" value="Simpan" 
-                         class="demo-form-submit">
+</td><td></td><td><button name="save_record" type="submit" value="Simpan" 
+                         class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i> &nbsp; Simpan</button>
      
-<a href="../modulsisc/analisa.php?id=tovar" class="demo-form-submit"> <i class="glyphicon glyphicon-fast-backward"></i> &nbsp; Batal</a> 
+<a href="../modulsisc/analisa.php?id=tovar" class="btn btn-warning"> <i class="glyphicon glyphicon-fast-backward"></i> &nbsp; Batal</a> 
           </td>
                 </tr>
 
