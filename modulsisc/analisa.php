@@ -1,5 +1,5 @@
 <?php
-
+    date_default_timezone_set("Asia/Kuala_Lumpur");
 	@require_once("../modul/session.php");
 	require_once("../modul/class.user.php");
 
@@ -481,27 +481,24 @@ $kirakelompok = $stmt->fetchColumn();
     
     //query untuk update TOV mula
     if(isset($_POST['tovupdate'])) {
-        $ctov = $auth_user->runQuery("SELECT nokp FROM tovgdb WHERE nokp=:nokp AND tahun=:tahun");
+        $ctov = $auth_user->runQuery("SELECT nokp FROM tovgdb WHERE nokp=:nokp AND tahun= YEAR(CURDATE())");
         $ctov->bindParam(':nokp',$_POST['ic']);
-        $ctov->bindParam(':tahun',date('Y'));
         $ctov->execute();
         $rtov = $ctov->fetch(PDO::FETCH_ASSOC);
 
         if($ctov->rowCount() > 0) {
-            $uptov = $auth_user->runQuery("UPDATE tovgdb SET tov = :tov WHERE nokp = :nokp AND tahun = :tahun");
+            $uptov = $auth_user->runQuery("UPDATE tovgdb SET tov = :tov WHERE nokp = :nokp AND tahun = YEAR(CURDATE())");
         } else {
-            $uptov = $auth_user->runQuery("INSERT INTO tovgdb (nokp,tov,tahun) VALUES (:nokp,:tov,:tahun)");
+            $uptov = $auth_user->runQuery("INSERT INTO tovgdb (nokp,tov,tahun) VALUES (:nokp,:tov,YEAR(CURDATE()))");
         }
         $uptov->bindParam(':tov',$_POST['tov']);
-        $uptov->bindParam(':tahun',date('Y'));
         $uptov->bindParam(':nokp',$_POST['ic']);
         $uptov->execute();
     }
     //query update TOV tamat
 
-    $dtov = $auth_user->runQuery("SELECT tov FROM tovgdb WHERE nokp=:nokp AND tahun=:tahun");
+    $dtov = $auth_user->runQuery("SELECT tov FROM tovgdb WHERE nokp=:nokp AND tahun=YEAR(CURDATE())");
     $dtov->bindParam(':nokp',$nokp);
-    $dtov->bindParam(':tahun',date('Y'));
     $dtov->execute();
     if($dtov->rowCount() > 0) {
         $drow = $dtov->fetch(PDO::FETCH_ASSOC);
