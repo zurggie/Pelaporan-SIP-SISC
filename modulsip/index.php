@@ -31,7 +31,7 @@
 
  @$id= $_GET['id'];
 
-if($userlevel=="5"){
+if($userlevel=="20"){
 
 if(!empty($_POST["save_record"])) {
 
@@ -415,177 +415,22 @@ $dari=$_POST['TARIKHBESARA'];
                 
                 
                 <div class="row">
-<?php       
-                     
-                     
-                     
-    if($id=="daftar"){
-        
-        
-         $hari = date('d');
-         $bln = date('m');
-         $tahunni = date("Y");
-         $thnlps = $tahunni - 10;
-         $thndpn = $tahunni + 10;   
-        
-        
-        
-        
-        
-     ?>                            
-<table border="0" cellpadding="10" cellspacing="0" width="100%" align="center" class="tbl-qa">                           
-<form name="frmAdd" action="" method="POST">
-<tr class="table-row" >
-                              
-                              
-                              
-       <td>BORANG PENDAFTARAN PESARAAN STAF :</td><td>
-            
- 
- 
-  <?php 
-        $jawatan='';$gred='';$jenissara='';
-    
-    ?>      
- 
-         
-         
- <tr class="table-row" >
-    <td>No Kad Pengenalan <br>
-        <input type="text"  maxlength="12" size="40" name="NOKP"  class="txtField" required > Contoh: 123456014321</td>
-</tr>
- <tr class="table-row" >
-    <td>Nama Penuh Staf:<br>
-        <input type="text"  size="70" name="NAMAGURU"  class="txtField" required ></td>
-</tr>
-<tr class="table-row" >
-    <td>Jawatan:<br>
-        <input type="text"  size="40" name="JAWATAN"  class="txtField" required ></td>
-</tr>
-                            
-                
-<tr class="table-row" >
-    <td>Gred Gaji:<br>
-    
-    
-    <select name="GRED" id="GRED">
- <?php
- 	$stmt = $auth_user->runQuery("SELECT kod,perkara FROM kodgred");
-	$stmt->execute();
-	foreach ($stmt as $row) 
- {
- ?>
- 
-<?php print "<option value='";?><?php echo $row['kod']; ?>'<?php if ($row['kod']==$gred) { ?>selected<?php } ?>><?php
- echo $row['perkara']; ?></option>
 
- <?php } ?>
- </select></td></tr>                              
-                            
-                
-<tr class="table-row" >
-    <td>Jenis Pesaraan:<br>
-    
-    
-    <select name="JENISBESARA" id="JENISBESARA">
- <?php
- 	$stmt = $auth_user->runQuery("SELECT SKALA,PENERANGAN FROM bersara_kodbesara");
-	$stmt->execute();
-	foreach ($stmt as $row) 
- {
- ?>
- 
-<?php print "<option value='";?><?php echo $row['SKALA']; ?>'<?php if ($row['SKALA']==$jenissara) { ?>selected<?php } ?>><?php
- echo $row['PENERANGAN']; ?></option>
+                <!-- =============================================================== -->
+                <!-- PAGE SEMUA BERMULA DI SINI -->
 
- <?php } ?>
- </select></td></tr>  
- <?php
- echo "<tr><td>Tarikh Besara: <br>";
-                echo "<select name=\"dari_hari\">";
-                                              for ( $counter = 1; $counter <= 31; $counter += 1) {
-                                                 echo "<option value=\"$counter\""; if($hari=="$counter") { echo "selected"; } echo ">$counter</option>";
-                                              }
-                       echo "</select>";
-                       echo "<select name=\"dari_bulan\">";
-                                              for ( $counter = 1; $counter <= 12; $counter += 1) {
-                                                  if($counter=="1") { $bulan = "Jan"; }if($counter=="2") { $bulan = "Feb"; }if($counter=="3") { $bulan = "Mac"; }if($counter=="4") { $bulan = "Apr"; }
-                                                  if($counter=="5") { $bulan = "Mei"; }if($counter=="6") { $bulan = "Jun"; }if($counter=="7") { $bulan = "Jul"; }if($counter=="8") { $bulan = "Aug"; }
-                                                  if($counter=="9") { $bulan = "Sep"; }if($counter=="10") { $bulan = "Okt"; }if($counter=="11") { $bulan = "Nov"; }if($counter=="12") { $bulan = "Dis"; }
-                                                  echo "<option value=\"$counter\"";if($bln==$counter) {echo " selected";} echo">$bulan</option>";
-                                              }
-                       echo "</select>";
+                <?php
+                    if($_GET['page']=="lapor") {
+                        include 'lapor.php';
+                    }
+                    elseif($_GET['page']=="pelaporan") {
+                        include 'pelaporan.php';
+                    }
+                ?>
 
-                       echo "<select name=\"dari_tahun\">";
-                                         for ( $counter = $thnlps; $counter <= $tahunni; $counter += 1) {
-                                            echo "<option value=\"$counter\"";if($tahunni==$counter) {echo " selected";} echo">$counter</option>";
-                                         }
-                         echo "<option value=\"$thndpn\">$thndpn</option>";
-                        echo " </select>";                    
-                    
-                    
-                    
-  ?>                  
-                    
-                    
-                    
-  <tr class="table-row" ><td><br>
-<?php echo "<input type=\"hidden\" name=\"KODPPD\" value=\"$kodppd\" />";?>      
-<?php echo "<input type=\"hidden\" name=\"KODSEKOLAH\" value=\"$namapengguna\" />";?>
-<input name="save_record" type="submit" value="Simpan" class="demo-form-submit">
-</td></tr>
-
-</table>  
-    
-    </form>       
-        
-        
-        
-   <?php     
-        
-        
-    }                 
-                     
-                     
-              
-                     
-                     
-          
- 
-                     
-        
-    
-    
-    
-      
-                    
-                    
-                    
-                    
-
-                     
-   
-                     ?>
-                                    
-                    
-                    
-                    
-                    
+                <!-- PAGE BERAKHIR DI SINI -->             
+                <!-- =============================================================== -->    
                 </div>
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
                 
                 <!-- /.row -->
                 <!-- ============================================================== -->

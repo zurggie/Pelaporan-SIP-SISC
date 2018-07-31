@@ -1,6 +1,6 @@
 <?php
 
-require_once('../data/dbconfig.php');
+require_once ('../data/dbconfig.php');
 require_once ('../modul/passwordLib.php');
 class USER
 {	
