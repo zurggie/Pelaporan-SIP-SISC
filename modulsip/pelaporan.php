@@ -1,4 +1,8 @@
 <?php
+if(isset($_POST['pgbfokus'])) {
+    
+}
+
 if (isset($_GET['idpgb'])) {
     $idpgb = $_GET['idpgb'];
 
@@ -55,10 +59,10 @@ $sensem->bindParam(':sip',$namapengguna);
                 </select>
             </div>
             <div class="col-xs-2">
-                <button type="submit" class="btn btn-primary btn-block">RUMUSAN</button>
+                <button type="submit" name="pgbfokus" class="btn btn-primary btn-block">RUMUSAN</button>
             </div>
             <div class="col-xs-2">
-                <button type="submit" class="btn btn-success btn-block">CARTA</button>
+                <button class="btn btn-success btn-block">CARTA</button>
             </div>
         </form>
         <div class="row mtb">
