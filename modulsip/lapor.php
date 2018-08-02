@@ -35,7 +35,7 @@ if (isset($_GET['idpgb'])) {
     }
 </style>
 
-<form action="index.php?page=pelaporan&inpage=rumusan&id=<?php echo $idpgb;?>" method="POST" class="col-xs-12" style="background-color:white;">
+<form action="proclapor.php" method="POST" class="col-xs-12" style="background-color:white;">
     <div class="container">
         <div class="row mtb">
             <h3>Pelaporan Bimbingan Oleh Pegawai SIP+</h3>
@@ -197,7 +197,7 @@ if (isset($_GET['idpgb'])) {
                                         <td><input type="checkbox" name="f251" value="99"></td>
                                         <td><input type="checkbox" name="f252" value="99"></td>
                                         <td><input type="checkbox" name="f261" value="99"></td>
-                                        <td><input type="checkbox" name="f272" value="99"></td>
+                                        <td><input type="checkbox" name="f271" value="99"></td>
                                     </tr>
                                     <tr>
                                         <th colspan="12">SKOR</th>
@@ -211,7 +211,7 @@ if (isset($_GET['idpgb'])) {
                                         <td><input type="number" class="wik" name="s251"></td>
                                         <td><input type="number" class="wik" name="s252"></td>
                                         <td><input type="number" class="wik" name="s261"></td>
-                                        <td><input type="number" class="wik" name="s272"></td>
+                                        <td><input type="number" class="wik" name="s271"></td>
                                     </tr>
                                 </table>
                             </td>
@@ -227,6 +227,7 @@ if (isset($_GET['idpgb'])) {
                             <td>
                                 <div class="row mtb">
                                     <div class="col-xs-3">
+                                        <input type="hidden" name="idpgb" value="<?php echo $idpgb;?>">
                                         <input type="hidden" name="icpgb" value="<?php echo $rpgb['NOKP'];?>">
                                         <button type="submit" name="fromlapor" class="btn btn-primary btn-block">SIMPAN</button>
                                     </div>
