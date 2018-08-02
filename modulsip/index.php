@@ -32,58 +32,7 @@
  @$id= $_GET['id'];
 
 if($userlevel=="20"){
-
-if(!empty($_POST["save_record"])) {
-
-$sql = $auth_user->runQuery("INSERT INTO bersara_nama
-        (NOKP,NAMAGURU,KODSEKOLAH,KODPPD,JAWATAN,GRED,JENISBESARA,TARIKHBESARA) VALUES (:1,:2,:3,:4,:5,:6,:7,:8)");  
-    
-        $nokp=$_POST['NOKP'];
-		$nama= $_POST['NAMAGURU'];
-        $kodsekolah=$_POST['KODSEKOLAH'];
-		$kodppd= $_POST['KODPPD'];
-        $gred=$_POST['GRED'];
-		$jawatan= $_POST['JAWATAN'];
-        $jenissara=$_POST['JENISBESARA'];
-$dari=$_POST['TARIKHBESARA'];
-    
-         $dari_hari = $_POST['dari_hari'];
-         $dari_bulan = $_POST['dari_bulan'];
-         $dari_tahun = $_POST['dari_tahun'];
-         $dari_jam = "00";
-         $dari_minit = "00";
-
-           $dari = $dari_tahun."-".$dari_bulan."-".$dari_hari." ".$dari_jam.":".$dari_minit.":00";
-    
-
-          $nama = strtoupper($nama); 
-          $jawatan = strtoupper($jawatan); 
-    
-        $sql->bindParam(':1',$nokp);
-		$sql->bindParam(':2',$nama);
-        $sql->bindParam(':3',$kodsekolah);
-		$sql->bindParam(':4',$kodppd);
-        $sql->bindParam(':5',$jawatan);
-        $sql->bindParam(':6',$gred);
-		$sql->bindParam(':7',$jenissara);
-        $sql->bindParam(':8',$dari);
-    
-		if($sql->execute()) {
-			$success_message = "Added Successfully";
-            
-             header("Location: index.php?id=pencen");
-             
-            
-		} else {
-			$error_message = "Problem in Adding New Record";
-		}
-    
-}    
-    
-    
- 
-
-    
+        
 ?>
 
 <!DOCTYPE html>
@@ -118,6 +67,7 @@ $dari=$_POST['TARIKHBESARA'];
     <link href="css/style.css" rel="stylesheet">
     <!-- color CSS -->
     <link href="css/colors/default.css" id="theme" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -590,9 +540,10 @@ $http3=$row3['HTTP'];
                 <?php
                     if($_GET['page']=="lapor") {
                         include 'lapor.php';
-                    }
-                    elseif($_GET['page']=="pelaporan") {
+                    } elseif($_GET['page']=="pelaporan") {
                         include 'pelaporan.php';
+                    } elseif($_GET['page']=="senarai") {
+                        include 'senarai.php';
                     }
                 ?>
 

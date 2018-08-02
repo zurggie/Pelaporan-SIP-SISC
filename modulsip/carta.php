@@ -5,11 +5,11 @@
 </style>
 <h3 class="centex"><strong>CARTA RADAR RUMUSAN BIMBINGAN PGB</strong></h3>
 <div class="row mtb">
-    <div class="col-xs-12 mtb">
+    <div class="col-md-12 mtb">
         <h4 class="centex"><strong>STANDARD 1</strong></h4>
         <canvas id="std1"></canvas>
     </div>
-    <div class="col-xs-12 mtb">
+    <div class="col-md-12 mtb">
         <h4 class="centex"><strong>STANDARD 2</strong></h4>
         <canvas id="std2"></canvas>
     </div>

@@ -1,18 +1,8 @@
 <?php
-if(isset($_POST['pgbfokus'])) {
-    
-}
-
-if (isset($_GET['idpgb'])) {
+if (isset($_GET['idpgb']) || isset($_GET['inpage'])) {
     $idpgb = $_GET['idpgb'];
-
-    $sqlpgb = $auth_user->runQuery("SELECT NOKP FROM sip_pgb WHERE ID = :id");
-    $sqlpgb->bindParam(':id',$idpgb);
-    $sqlpgb->execute();
-    $rpgb = $sqlpgb->fetch(PDO::FETCH_ASSOC);
-    $ic2 = $rpgb['NOKP'];
 }
-$sensem = $auth_user->runQuery("SELECT NOKP, NAMAGURU FROM sip_pgb WHERE SIP = :sip");
+$sensem = $auth_user->runQuery("SELECT ID, NOKP, NAMAGURU FROM sip_pgb WHERE SIP = :sip");
 $sensem->bindParam(':sip',$namapengguna);
 ?>
 
@@ -43,30 +33,31 @@ $sensem->bindParam(':sip',$namapengguna);
     }
 </style>
 
-<div class="col-xs-12 backwhite">
+<div class="row col-md-12 backwhite">
     <div class="container">
-        <form class="row mtb" action="index.php?page=pelaporan&inpage=rumusan" method="POST">
-            <div class="col-xs-8">
-                <select class="form-control">
+        <form class="row mtb">
+            <div class="col-md-8">
+                <select class="form-control" name="idpgb">
                     <option>Sila Pilih PGB...</option>
                     <?php
                         $sensem->execute();
                         while($sSemua = $sensem->fetch(PDO::FETCH_ASSOC)) {
-                            if($sSemua['NOKP']==$ic2) {$selic = 'selected';} else {$selic = "";}
-                            echo'<option value="'.$sSemua['NOKP'].'" '.$selic.'>'.$sSemua['NAMAGURU'].'</option>';
+                            if($sSemua['ID']==$idpgb) {$selic = 'selected';} else {$selic = '';}
+                            echo'<option value="'.$sSemua['ID'].'" '.$selic.'>'.$sSemua['NAMAGURU'].'</option>';
                         }
                     ?>
                 </select>
             </div>
-            <div class="col-xs-2">
-                <button type="submit" name="pgbfokus" class="btn btn-primary btn-block">RUMUSAN</button>
+            <div class="col-md-2">
+                <input type="hidden" name="page" value="pelaporan">
+                <button type="submit" name="inpage" value="rumusan" class="btn btn-primary btn-block">RUMUSAN</button>
             </div>
-            <div class="col-xs-2">
-                <button class="btn btn-success btn-block">CARTA</button>
+            <div class="col-md-2">
+                <button type="submit" name="inpage" value="carta" class="btn btn-success btn-block">CARTA</button>
             </div>
         </form>
         <div class="row mtb">
-            <div class="col-xs-12">
+            <div class="col-md-12">
                 <div class="mypanel">
                     <div class="mypanel-body">
                         <!-- ============ START RUMUSAN & GRAF PAGE ============== -->
