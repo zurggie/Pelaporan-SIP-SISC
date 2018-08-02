@@ -92,6 +92,6 @@ if($userlevel=="15"){?>
         }
 
 if($userlevel==""){
-	   header("Location: ../modulppd/logout.php?logout=true");
+	   header("Location: ../modul/logout.php?logout=true");
 
         }
