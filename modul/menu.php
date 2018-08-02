@@ -75,7 +75,7 @@ if($userlevel=="7"){?>
         }
 
 
-if($userlevel==20){?>
+if($userlevel=="20"){?>
 	<script type="text/javascript">
             window.location.href = "../modulsip/"
         

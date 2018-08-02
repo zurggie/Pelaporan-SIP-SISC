@@ -62,14 +62,47 @@ if (isset($_GET['idpgb'])) {
                         <tr>
                             <td><strong>Bimbingan yang ke</strong></td>
                             <td>:</td>
-                            <td>1/<?php echo date('Y');?></td>
+                            <td>
+                                <select name="bilke">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
+                                 / <?php echo date('Y');?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tarikh Bimbingan</strong></td>
+                            <td>:</td>
+                            <td>
+                                <select name="hari">
+                                    <?php
+                                    for($h=1;$h<=31;$h++) {
+                                        echo'<option value="'.$h.'">'.$h.'</option>';
+                                    }
+                                    ?>
+                                </select> / 
+                                <select name="bulan">
+                                    <option value="01">Januari</option>
+                                    <option value="02">Februari</option>
+                                    <option value="03">Mac</option>
+                                    <option value="04">April</option>
+                                    <option value="05">Mei</option>
+                                    <option value="06">Jun</option>
+                                    <option value="07">Julai</option>
+                                    <option value="08">Ogos</option>
+                                    <option value="09">September</option>
+                                    <option value="10">Oktober</option>
+                                    <option value="11">November</option>
+                                    <option value="12">Disember</option>
+                                </select>
+                            </td>
                         </tr>
                         <tr>
                             <td><strong>Jenis Bimbingan</strong></td>
                             <td>:</td>
                             <td>
-                                <select name="jenisb" class="form-control">
-                                    <option disabled>Sila Pilih...</option>
+                                <select name="jenisb">
+                                    <option selected disabled>Sila Pilih...</option>
                                     <option value="TOV">TOV</option>
                                 </select>
                             </td>
