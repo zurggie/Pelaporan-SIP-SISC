@@ -35,17 +35,44 @@ if($userlevel=="15"){
 
 if(!empty($_POST["save_record"])) {
 
-$sql = $auth_user->runQuery("INSERT INTO bersara_nama
-        (NOKP,NAMAGURU,KODSEKOLAH,KODPPD,JAWATAN,GRED,JENISBESARA,TARIKHBESARA) VALUES (:1,:2,:3,:4,:5,:6,:7,:8)");  
     
+  
+	//--------------------------- carian untuk nokp yg dah didaftarkan --------------	
+	$admin =  $auth_user->runQuery("SELECT * FROM sisc_guru WHERE NOKP= :nokp ");
+        
+    $admin->bindParam(':nokp',$nokp);
+    
+    
+    
+	$admin->execute();
+	$kira = $admin->rowCount();
+	if($kira > 0){
+		$userRow=$admin->fetch(PDO::FETCH_ASSOC);
+        $namaguru=$userRow['NAMAGURU'];
+		$nokp=$userRow['NOKP'];
+         
+  
+
+        
+		
+     echo "<script>alert('Nama Guru $namaguru telah dihantar, sila buat semakan.');</script>";
+	}else{		
+          
+    
+    
+    
+$sql = $auth_user->runQuery("INSERT INTO sisc_guru
+        (SISC,NOKP,NAMAGURU,KODSEKOLAH,KODPPD,TARIKHAKTIF) VALUES (:1,:2,:3,:4,:5,:6)"); 
+    
+        $namapengguna=$_POST['SISC'];
         $nokp=$_POST['NOKP'];
 		$nama= $_POST['NAMAGURU'];
         $kodsekolah=$_POST['KODSEKOLAH'];
 		$kodppd= $_POST['KODPPD'];
-        $gred=$_POST['GRED'];
-		$jawatan= $_POST['JAWATAN'];
-        $jenissara=$_POST['JENISBESARA'];
-$dari=$_POST['TARIKHBESARA'];
+    
+   
+
+       // $dari=$_POST['TARIKHAKTIF'];
     
          $dari_hari = $_POST['dari_hari'];
          $dari_bulan = $_POST['dari_bulan'];
@@ -57,21 +84,19 @@ $dari=$_POST['TARIKHBESARA'];
     
 
           $nama = strtoupper($nama); 
-          $jawatan = strtoupper($jawatan); 
-    
-        $sql->bindParam(':1',$nokp);
-		$sql->bindParam(':2',$nama);
-        $sql->bindParam(':3',$kodsekolah);
-		$sql->bindParam(':4',$kodppd);
-        $sql->bindParam(':5',$jawatan);
-        $sql->bindParam(':6',$gred);
-		$sql->bindParam(':7',$jenissara);
-        $sql->bindParam(':8',$dari);
+         
+        $sql->bindParam(':1',$namapengguna);
+        $sql->bindParam(':2',$nokp);
+		$sql->bindParam(':3',$nama);
+        $sql->bindParam(':4',$kodsekolah);
+		$sql->bindParam(':5',$kodppd);
+        $sql->bindParam(':6',$dari);
+       
     
 		if($sql->execute()) {
 			$success_message = "Added Successfully";
             
-             header("Location: index.php?id=pencen");
+             header("Location: index.php?id=senaraiguru");
              
             
 		} else {
@@ -80,7 +105,7 @@ $dari=$_POST['TARIKHBESARA'];
     
 }    
     
-    
+}
  
 
     
@@ -97,7 +122,7 @@ $dari=$_POST['TARIKHBESARA'];
     <meta name="author" content="">
     <link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.png">
     <title>Sistem Pengurusan Maklumat Pencen Pegawai dan AKP PPD Kluang</title>
-      <!-- Bootstrap Core CSS -->
+    <!-- Bootstrap Core CSS -->
     <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../plugins/bower_components/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
     <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
@@ -111,89 +136,23 @@ $dari=$_POST['TARIKHBESARA'];
     
     
     
+    
     <!-- animation CSS -->
     <link href="css/animate.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
     <!-- color CSS -->
     <link href="css/colors/default.css" id="theme" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <!-- fontawesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-
-
 <![endif]-->
 </head>
-<style>
 
-.tooltip {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black;
-}
-
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: #555;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -60px;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.tooltip .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #555 transparent transparent transparent;
-}
-
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
-}
-    </style>
-<style>    
-.accordion {
-        background-color: white;
-        color: #444;
-        cursor: pointer;
-        padding: 10px;
-        width: 100%;
-        border: none;
-        text-align: left;
-        outline: none;
-        font-size: 15px;
-        transition: 0.4s;
-}
-
-.active, .accordion:hover {
-        background-color: ;
-}
-
-.panel {
-        padding: 0 11px;
-        background-color: white;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.2s ease-out;
-}
-</style>
 <body class="fix-header">
     <!-- ============================================================== -->
     <!-- Preloader -->
@@ -212,16 +171,7 @@ $dari=$_POST['TARIKHBESARA'];
         <!-- ============================================================== -->
         <nav class="navbar navbar-default navbar-static-top m-b-0">
             <div class="navbar-header">
-                <div class="top-left-part">
-                    <!-- Logo -->
-                    <a class="logo" href="#">
-                        <!-- Logo icon image, you can use font-icon also --><b>
-                        <!--This is dark logo icon--><img src="../logo.png" alt="home" class="dark-logo" /><!--This is light logo icon--><img src="../" alt="home" class="light-logo" />
-                     </b>
-                        <!-- Logo text image you can use text also --><span class="hidden-xs">
-                        <!--This is dark logo text--><img src="../" alt="home" class="dark-logo" /><!--This is light logo text--><img src="../" alt="home" class="light-logo" />
-                     </span> </a>
-                </div>
+                
                 <!-- /Logo -->
                 <!-- Search input and Toggle icon -->
                 <ul class="nav navbar-top-links navbar-left">
@@ -367,11 +317,11 @@ $dari=$_POST['TARIKHBESARA'];
         <!-- ============================================================== -->
         <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
-        <div class="navbar-default sidebar" role="navigation">
+        <div class="navbar-default sidebar" role="navigation" style="background: linear-gradient(#FFFFF0, #FFF8DC);">
             <div class="sidebar-nav slimscrollsidebar">
                 <div class="sidebar-head">
                     <h3><span class="fa-fw open-close"><i class="ti-close ti-menu"></i></span> <span class="hide-menu">Navigation</span></h3> </div>
-                <div class="user-profile">
+                <div class="user-profile" style="margin-top:2rem;">
                     <div class="dropdown user-pro-body">
                         <div><img src="../logo.png" alt="user-img" class="img-circle"></div>
                         <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $namapenuh;?><span class="caret"></span></a>
@@ -388,21 +338,27 @@ $dari=$_POST['TARIKHBESARA'];
                 </div>
                 <ul class="nav" id="side-menu">
                  
-                  <li> <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-cart-outline fa-fw" data-icon="v"></i> 
+                  <li> <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-plus fa-fw" data-icon="v"></i> 
                         
                         <span class="hide-menu">Pendaftaran<span class="fa arrow"></span> </span></a>
                         <ul class="nav nav-second-level">
-                            <li> <a href="index.php?id=daftar"><i class="fa-fw"></i><span class="hide-menu">Rekod Baru</span></a> </li>
+                            <li> <a href="index.php?id=daftar"><i class="mdi mdi-account-multiple-plus fa-fw"></i><span class="hide-menu">Rekod Baru</span></a> </li>
                             
                             
                         </ul>
                     </li>
                        
-                      <li> <a href="#" class="waves-effect"><i class="mdi mdi-format-color-fill fa-fw"></i> <span class="hide-menu">Laporan<span class="fa arrow"></span> </a>
+<?php
+$stmt = $auth_user->runQuery("SELECT count(*) FROM sisc_guru WHERE SISC ='$namapengguna' ");
+$stmt->execute([':nokp','$nokp']);
+$bilgyb = $stmt->fetchColumn();
+    ?>
+                    
+                    <li> <a href="#" class="waves-effect"><i class="mdi mdi-book-open-page-variant fa-fw"></i> <span class="hide-menu">Bimbingan<span class="fa arrow"></span> <span class="label label-rouded label-info pull-right"><?php echo $bilgyb;?> </span> </span></a>
                         <ul class="nav nav-second-level">
                             
-                            <li><a href="index.php?id=senaraiguru"><i data-icon="&#xe026;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Senarai Guru </span></a></li>
-                            <li><a href="index.php?id=kedatangan"><i data-icon="&#xe026;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Kedatangan</span></a></li>
+                            <li><a href="index.php?id=senaraiguru"><i data-icon="&#xe026;" class="mdi mdi-playlist-check fa-fw"></i> <span class="hide-menu">Senarai Guru </span></a></li>
+                            <li><a href="index.php?id=kedatangan"><i data-icon="&#xe026;" class="mdi mdi-playlist-check fa-fw"></i> <span class="hide-menu">Kedatangan</span></a></li>
                          
                          
                             
@@ -414,19 +370,17 @@ $dari=$_POST['TARIKHBESARA'];
                     
                     
                     
-                    <li> <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-cart-outline fa-fw" data-icon="v"></i> 
+                    <li> <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-chart-bar fa-fw" data-icon="v"></i> 
                         
                         <span class="hide-menu">Analisa<span class="fa arrow"></span> </span></a>
                         <ul class="nav nav-second-level">
-                            <li> <a href="analisa.php?id=jenis"><i class="fa-fw"></i><span class="hide-menu">Jenis Bimbingan</span></a> </li>
-                           <li> <a href="analisa.php?id=tovar"><i class="fa-fw"></i><span class="hide-menu">Kekerapan</span></a> </li>
+                            <li> <a href="analisa.php?id=jenis"><i class="mdi mdi-book-open-page-variant fa-fw"></i><span class="hide-menu">Bimbingan</span></a> </li>
+                            
                             
                         </ul>
                     </li>
                     
-                    
-                    
-                 
+                
      
                         
                     <li class="devider"></li>
@@ -455,7 +409,7 @@ $dari=$_POST['TARIKHBESARA'];
                         <ol class="breadcrumb">
                         
                             <li><a href="#"><?php echo $namapengguna;?></a></li>
-                            <li class="active"><?php echo $namappd;?></li>
+                            <li class="active"><?php echo "$kodppd $namappd";?></li>
                         </ol>
                     </div>
                     <!-- /.col-lg-12 -->
@@ -467,214 +421,119 @@ $dari=$_POST['TARIKHBESARA'];
 <?php       
                      
                      
-             
-  if($id=="tovar"){
-      
-    $bil=0;
-
-$stmt3 = $auth_user->runQuery("SELECT * FROM sisc_guru WHERE SISC='$namapengguna' ORDER BY NAMAGURU ASC");
-$stmt3->execute();
-foreach ($stmt3 as $row) {
-$nokp= $row['NOKP'];
-$nama=$row['NAMAGURU'];
-
-    
-
-$max = $auth_user->runQuery("SELECT * FROM sisc_guru_data WHERE NOKP=:nokp and JENISBIMBINGAN='PENILAIAN AKHIR'");
-$max->bindParam(':nokp',$nokp);    
-$max->execute();
-$maxRow=$max->fetch(PDO::FETCH_ASSOC);
-$maxs421=$maxRow['S421']*10/4;
-$maxs411=$maxRow['S411']*10/4;
-$maxs422=$maxRow['S422']*5/4;    
-$maxs431=$maxRow['S431']*15/4; 
-$maxs441=$maxRow['S441']*25/4;    
-$maxs442=$maxRow['S442']*5/4; 
-$maxs451=$maxRow['S451']*10/4;    
-$maxs461=$maxRow['S461']*20/4;
- $jumlahwajaran=$maxs411+$maxs421+$maxs422+$maxs431+$maxs441+$maxs442+$maxs451+$maxs461;   
-    
-                     $bil++;
-    
- //-------------------- Kira Jenis Bimbingan --------------------   
-$stmt = $auth_user->runQuery("SELECT count(*) FROM sisc_guru_data WHERE JENISBIMBINGAN = 'DTP' AND NOKP='$nokp' ");
-$stmt->execute([':nokp','$nokp']);
-$kiradtp = $stmt->fetchColumn();
-    
-$stmt = $auth_user->runQuery("SELECT count(*) FROM sisc_guru_data WHERE JENISBIMBINGAN = 'PRIME' AND NOKP='$nokp' ");
-$stmt->execute([':nokp','$nokp']);
-$kiraprime = $stmt->fetchColumn();     
-
-$stmt = $auth_user->runQuery("SELECT count(*) FROM sisc_guru_data WHERE JENISBIMBINGAN = 'TS25' AND NOKP='$nokp' ");
-$stmt->execute([':nokp','$nokp']);
-$kirats25 = $stmt->fetchColumn(); 
-
-$stmt = $auth_user->runQuery("SELECT count(*) FROM sisc_guru_data WHERE JENISBIMBINGAN = 'KELOMPOK' AND NOKP='$nokp' ");
-$stmt->execute([':nokp','$nokp']);
-$kirakelompok = $stmt->fetchColumn(); 
- //-------------------- Tamat Jenis Bimbingan --------------------  
-    
-    
- $sqln = $auth_user->runQuery("SELECT * FROM tkppd WHERE KODPPD=:kodppd");
-	$sqln->execute(array(":kodppd"=>$kodppd));
-    $sqlnRow=$sqln->fetch(PDO::FETCH_ASSOC);
-    $namappd=$sqlnRow['NAMAPPD'];    
-    
-    
-
-?>
-<?$tov = 50?>
-<a role="button" class="accordion col-sm-12">
-        <table style="width:100%;">
-            <tr>
-                <td style="width:10%;" rowspan="2"><? echo $nokp?></td>
-                <td style="width:27%;" rowspan="2"><? echo $nama?></td>
-                <td style="width:5%;" rowspan="2"><strong>TOV : </strong></td>
-                <td style="width:5%;" rowspan="2"><?echo $tov?></td>
-                <td rowspan="2"><strong>Wajaran : </strong></td>
-                <? $beza = $jumlahwajaran-$tov; if($beza > 0){$beza = '+'.$beza;}
-                if ($jumlahwajaran>=$tov) { echo'
-                    <td style="width:14%;" rowspan="2">'.$jumlahwajaran.'% <span class="text-success"><i class="fa fa-arrow-up"></i>'.$beza.'%</span></td>';}
-                else { echo'
-                    <td style="width:14%;" rowspan="2">'.$jumlahwajaran.'% <span class="text-danger"><i class="fa fa-arrow-down"></i>'.$beza.'%</span></td>';} ?>
-                <td style="width:4%;border: 1px solid black;text-align:center;background-color:#DCDCDC;">4.1.1</td>
-                <td style="width:4%;border: 1px solid black;text-align:center;background-color:#DCDCDC;">4.2.1</td>
-                <td style="width:4%;border: 1px solid black;text-align:center;background-color:#DCDCDC;">4.2.2</td>
-                <td style="width:4%;border: 1px solid black;text-align:center;background-color:#DCDCDC;">4.3.1</td>
-                <td style="width:4%;border: 1px solid black;text-align:center;background-color:#DCDCDC;">4.4.1</td>
-                <td style="width:4%;border: 1px solid black;text-align:center;background-color:#DCDCDC;">4.4.2</td>
-                <td style="width:4%;border: 1px solid black;text-align:center;background-color:#DCDCDC;">4.5.1</td>
-                <td style="width:4%;border: 1px solid black;text-align:center;background-color:#DCDCDC;">4.6.1</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black;text-align:center;"><? echo $maxs411?></td>
-                <td style="border: 1px solid black;text-align:center;"><? echo $maxs421?></td>
-                <td style="border: 1px solid black;text-align:center;"><? echo $maxs422?></td>
-                <td style="border: 1px solid black;text-align:center;"><? echo $maxs431?></td>
-                <td style="border: 1px solid black;text-align:center;"><? echo $maxs441?></td>
-                <td style="border: 1px solid black;text-align:center;"><? echo $maxs442?></td>
-                <td style="border: 1px solid black;text-align:center;"><? echo $maxs451?></td>
-                <td style="border: 1px solid black;text-align:center;"><? echo $maxs461?></td>
-            </tr>
-        </table>
-</a>
-<div class="panel">
-
-    <table border="1" width="100%">
-        <tr><td colspan="10" style="background-color:#DCDCDC;"> <center><b>Standard</b></center></td></tr>
-        <tr><td><center><b>BILANGAN <br>JENIS BIMBINGAN</b></center></td>
-            <td><center><b> TARIKH <br>BIMBINGAN</b></center></td>
-            <td><center><b>4.1.1 <br>(10)</b></center></td><td><center><b>4.2.1<br>(10) </b></center></td>
-            <td><center><b>4.2.2<br>(5)</b></center></td><td><center><b>4.3.1<br>(15)</b></center></td>
-            <td><center><b>4.4.1<br>(25) </b></center></td><td><center><b>4.4.2 <br>(5)</b></center></td>
-            <td><center><b>4.5.1<br>(10)</b></center></td><td><center><b>4.6.1 <br>(20)</b></center></td>
-        </tr>   
-    
-   
-<?php
-   
-$stmt3 = $auth_user->runQuery("SELECT * FROM sisc_guru_data WHERE NOKP='$nokp' ORDER BY BILKE ASC");
-$stmt3->execute();
-foreach ($stmt3 as $sqlnRow) {
-
-    $jenis=$sqlnRow['JENISBIMBINGAN']; 
-    $catatan=$sqlnRow['CATATAN1'];
-    $s411=$sqlnRow['S411']; 
-    $s421=$sqlnRow['S421'];
-    $s422=$sqlnRow['S422'];
-    $s431=$sqlnRow['S431'];
-    $s441=$sqlnRow['S441']; 
-    $s442=$sqlnRow['S442']; 
-    $s451=$sqlnRow['S451'];
-    $s461=$sqlnRow['S461'];     
-    
-    $bilke=$sqlnRow['BILKE'];
-    $pp1 = $sqlnRow['PP1'];
-    
-    if($s411 == 0) {$s411 = '';}
-     if($s421 == 0) {$s421 = '';}
-     if($s422 == 0) {$s422 = '';}
-     if($s431 == 0) {$s431 = '';}
-     if($s441 == 0) {$s441 = '';}
-     if($s442 == 0) {$s442 = '';}
-     if($s451 == 0) {$s451 = '';}
-     if($s461 == 0) {$s461 = '';}
-    
-                       if($pp1=="0000-00-00") { $pp1= ""; }
-                       if($pp1!="") { $pp1 = date('d/m/Y',strtotime($pp1)); }
-    
-?>
-
-
-
-        
-    <tr>
-       
-        <td >
-   <?php echo "$bilke-$jenis";?>
-  <div class="tooltip"> xxxx          
-  <span class="tooltiptext">Tooltip text</span>
-</div>
-      </td> 
-        <td><center>  <?php echo "$pp1";?></center>
-           
-        
-        </td>
-
-        
-    
-        <td><center><?php echo $s411;?></center></td>
+                     
+    if($id=="daftar"){
         
         
-        <td><center><?php echo $s421;?></center></td>
-        <td><center><?php echo $s422;?></center></td>
-        <td><center><?php echo $s431;?></center></td>
-        <td><center><?php echo $s441;?></center></td>
-        <td><center><?php echo $s442;?></center></td>
-         <td><center><?php echo $s451;?></center></td>
-        <td><center><?php echo $s461;?></center></td>
+         $hari = date('d');
+         $bln = date('m');
+         $tahunni = date("Y");
+         $thnlps = $tahunni - 10;
+         $thndpn = $tahunni + 10;   
         
-        </tr>
-    
+        
+        
+        
+        
+     ?>                            
+<table border="0" cellpadding="10" cellspacing="0" width="100%" align="center" class="tbl-qa">                           
+<form name="frmAdd" action="" method="POST">
+<tr class="table-row" >
+                              
+                              
+                              
+       <td>BORANG PENDAFTARAN GURU YANG DIBIMBING:</td><td>
+            
  
-<?php
-        
-    
-   
-  }
-   
-    
-    ?>
  
-        
-        <tr><td colspan=2><Center> <b>WAJARAN (%)</b></Center></td><td><center><b> <? echo $maxs411; ?></b></center></td><td><center><b> <? echo $maxs421; ?></b></center></td> <td> <center><b><? echo $maxs422; ?></b></center></td> <td><center><b> <? echo $maxs431; ?></b></center></td> 
-            <td><center><b> <? echo $maxs441; ?></b></center></td> <td><center><b> <? echo $maxs442; ?></b></center></td> <td><center><b> <? echo $maxs451; ?></b></center></td> <td><center><b> <? echo $maxs461; ?></b></center></td> 
-        </tr>
-        <tr><td colspan=2><Center> <b>JUMLAH WAJARAN (%) </b></Center></td><td colspan=8> <center><b> <? echo $jumlahwajaran; ?></b></center></td>  </tr>
-  </table> 
+  <?php 
+        $jawatan='';$gred='';$jenissara='';$kodsekolah="";
     
-    
-    
+    ?>      
+ 
+         
+         
+ <tr class="table-row" >
+    <td>No Kad Pengenalan <br>
+        <input type="text"  maxlength="12" size="40" name="NOKP"  class="txtField" required > Contoh: 123456014321</td>
+</tr>
+ <tr class="table-row" >
+    <td>Nama Penuh Guru:<br>
+        <input type="text"  size="70" name="NAMAGURU"  class="txtField" required ></td>
+</tr>
+<tr class="table-row" >
+    <td>Jawatan:<br>
+        <input type="text"  size="40" name="JAWATAN"  class="txtField" required ></td>
+</tr>
 
-</div>
+<tr class="table-row" >
+       <td>Nama Sekolah:<br>
+          
+            <select name="KODSEKOLAH" id="KODSEKOLAH">
+ <?php
+ 	$stmt = $auth_user->runQuery("SELECT KODSEKOLAH,NAMASEKOLAH FROM tssekolah WHERE KODPPD='$kodppd' ORDER BY KODSEKOLAH ASC");
+	$stmt->execute();
+	foreach ($stmt as $row) 
+ {
+ ?>
+ 
+<?php print "<option value='";?><?php echo $row['KODSEKOLAH']; ?>'<?php if ($row['KODSEKOLAH']==$kodsekolah) { ?>selected<?php } ?>><?php
+ echo $row['NAMASEKOLAH']; ?></option>
 
+ <?php } ?>
+ </select> </td></tr>	                             
+                            
+                
+
+ <?php
+ echo "<tr><td>Tarikh : <br>";
+                echo "<select name=\"dari_hari\">";
+                                              for ( $counter = 1; $counter <= 31; $counter += 1) {
+                                                 echo "<option value=\"$counter\""; if($hari=="$counter") { echo "selected"; } echo ">$counter</option>";
+                                              }
+                       echo "</select>";
+                       echo "<select name=\"dari_bulan\">";
+                                              for ( $counter = 1; $counter <= 12; $counter += 1) {
+                                                  if($counter=="1") { $bulan = "Jan"; }if($counter=="2") { $bulan = "Feb"; }if($counter=="3") { $bulan = "Mac"; }if($counter=="4") { $bulan = "Apr"; }
+                                                  if($counter=="5") { $bulan = "Mei"; }if($counter=="6") { $bulan = "Jun"; }if($counter=="7") { $bulan = "Jul"; }if($counter=="8") { $bulan = "Aug"; }
+                                                  if($counter=="9") { $bulan = "Sep"; }if($counter=="10") { $bulan = "Okt"; }if($counter=="11") { $bulan = "Nov"; }if($counter=="12") { $bulan = "Dis"; }
+                                                  echo "<option value=\"$counter\"";if($bln==$counter) {echo " selected";} echo">$bulan</option>";
+                                              }
+                       echo "</select>";
+
+                       echo "<select name=\"dari_tahun\">";
+                                         for ( $counter = $thnlps; $counter <= $tahunni; $counter += 1) {
+                                            echo "<option value=\"$counter\"";if($tahunni==$counter) {echo " selected";} echo">$counter</option>";
+                                         }
+                         echo "<option value=\"$thndpn\">$thndpn</option>";
+                        echo " </select>";                    
                     
                     
-<?php  } 
-  
-      
-      
-      
-      
-      
-      
-      
-      
-  }
+                    
+  ?>                  
+                    
+                    
+                    
+  <tr class="table-row" ><td><br>
+<?php echo "<input type=\"hidden\" name=\"KODPPD\" value=\"$kodppd\" />";?>      
+<?php echo "<input type=\"hidden\" name=\"SISC\" value=\"$namapengguna\" />";?>
+<input name="save_record" type="submit" value="Simpan" class="demo-form-submit">
+</td></tr>
+
+</table>  
+    
+    </form>       
+        
+        
+        
+   <?php     
+        
+        
+    }                 
                      
                      
               
-  if($id=="jenis"){
+  if($id=="senaraiguru"){
       
      
        ?>                    
@@ -692,7 +551,7 @@ sisc_guru.NAMAGURU,
 sisc_guru.KODSEKOLAH,
 sisc_guru.JAWATAN,
 sisc_guru.KODPPD,
-sisc_guru.TAHUN,
+sisc_guru.TAHUN,sisc_guru.TARIKHAKTIF,
 tssekolah.NAMASEKOLAH
 FROM
 users
@@ -707,29 +566,21 @@ WHERE sisc_guru.SISC=:namapengguna  ORDER BY sisc_guru.NAMAGURU ASC";
 $result = $auth_user->runQuery($sql);
 $result->bindParam(':namapengguna', $namapengguna);	
 $result->execute();
-      
-      
-
-    
-      
-      
-      
     ?>                          
                             
 
-                            <h3 class="box-title m-b-0">Analisa Jenis Kekerapan Guru Yang Dibimbing</h3>
+                            <h3 class="box-title m-b-0">Senarai Nama Guru Yang Dibimbing</h3>
                             <p class="text-muted m-b-30">Eksport data Ke Salin, CSV, Excel, PDF & Print</p>
                             <div class="table-responsive">
                                 <table id="example23" class="display nowrap" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
-                                            
+                                            <th>Nokp</th>
                                             <th>Nama Guru Dibimbing</th>
                                             <th>Nama Sekolah</th>
-                                            <th>DTP</th>
-                                            <th>INDIVIDU</th>
-                                            <th>TS25</th>
-                                            <th>KELOMPOK</th>
+                                            <th>Tarikh Aktif</th>
+                                            <th> ARAHAN</th>
+                                            <th> </th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -744,49 +595,41 @@ $result->execute();
 $bil=0;
 if ($result->rowCount() > 0) {		
 foreach ($result as $row) {
-
+                        $kod=$row['ID'];
                         $id=$row['ID'];
                         $nama=$row['NAMAGURU'];
                         $nokp=$row['NOKP'];
                         $namasekolah=$row['NAMASEKOLAH'];
-                       
+                        $pp1=$row['TARIKHAKTIF'];
+                       if($pp1=="0000-00-00") { $pp1= ""; }
+                       if($pp1!="") { $pp1 = date('d/m/Y',strtotime($pp1)); }
     
            
                         $bil++;
-    
- //-------------------- Kira Jenis Bimbingan --------------------   
-$stmt = $auth_user->runQuery("SELECT count(*) FROM sisc_guru_data WHERE JENISBIMBINGAN = 'DTP' AND NOKP='$nokp' ");
-$stmt->execute([':nokp','$nokp']);
-$kiradtp = $stmt->fetchColumn();
-    
-$stmt = $auth_user->runQuery("SELECT count(*) FROM sisc_guru_data WHERE JENISBIMBINGAN = 'INDIVIDU' AND NOKP='$nokp' ");
-$stmt->execute([':nokp','$nokp']);
-$kiraprime = $stmt->fetchColumn();     
-
-$stmt = $auth_user->runQuery("SELECT count(*) FROM sisc_guru_data WHERE JENISBIMBINGAN = 'TS25' AND NOKP='$nokp' ");
-$stmt->execute([':nokp','$nokp']);
-$kirats25 = $stmt->fetchColumn(); 
-
-$stmt = $auth_user->runQuery("SELECT count(*) FROM sisc_guru_data WHERE JENISBIMBINGAN = 'KELOMPOK' AND NOKP='$nokp' ");
-$stmt->execute([':nokp','$nokp']);
-$kirakelompok = $stmt->fetchColumn(); 
- //-------------------- Tamat Jenis Bimbingan --------------------                          
+                        
 			?>                                       
                                         
                                         
                                         
                                         <tr>
+                                            <td><?php echo $nokp;?></td>
+                                            <td><?php echo $nama;?></td>
+                                            <td><?php echo $namasekolah;?></td>
+                                            <td><?php echo $pp1;?></td>
+                                           
+                                            <td>
                                             
-                                            <td><?php echo "
-                                            <a href=\"../modulsisc/pelaporan.php?id=$id\" title=\"Pepaloran[ $id ]$nama \"> 
-                                            $nama</a>";?>
+   <?php
+      echo"
+   <a href=\"../modulsisc/pelaporan.php?id=$kod\" title=\"Pepaloran[ $id ]$nama \"> 
+   <span class=\"label label-success\">Lapor</span></a></td>";?>
+   
+                                                
+   <td><a href="../modulsisc/padam.php?ID=<?php echo $row["ID"]; ?>" class="link"><img name="delete" id="delete" title="Padam" onclick="return confirm('Anda Pasti Hendak Padam Rekod Ini?')" src="../icon/delete.png"/></a></td>
+                                            
                                             
                                             </td>
-                                            <td><?php echo $namasekolah;?></td>
-                                            <td><?php echo $kiradtp;?> </td>
-                                            <td><?php echo $kiraprime;?> </td>
-                                            <td><?php echo $kirats25;?> </td>
-                                            <td><?php echo $kirakelompok;?> </td>
+                                            
                                         </tr>
                          <?php
 }
@@ -802,10 +645,245 @@ $kirakelompok = $stmt->fetchColumn();
                     
                     
      <?php     
-     
+      
+      
+      
+      
       
   }                   
+                     
+             
+  if($id=="kedatangan"){
+      
+     
+       ?>                    
+<div class="col-sm-12">
+                        <div class="white-box">
+  <?php                          
+ 
+
+$sql = "SELECT
+
+users.user_name,
+users.real_name,
+sisc_guru.SISC,
+sisc_guru.NOKP,sisc_guru.ID,
+sisc_guru.NAMAGURU,
+sisc_guru.KODSEKOLAH,
+sisc_guru.JAWATAN,sisc_guru.STATUSKEH,
+sisc_guru.KODPPD,
+sisc_guru.TAHUN,
+sisc_guru.PP1,sisc_guru.PP2,sisc_guru.PP3,sisc_guru.PP4,sisc_guru.PP5,
+tssekolah.NAMASEKOLAH
+FROM
+users
+JOIN sisc_guru
+ON users.user_name = sisc_guru.SISC 
+JOIN tssekolah
+ON sisc_guru.kodsekolah = tssekolah.KODSEKOLAH
+
+
+WHERE sisc_guru.SISC=:namapengguna  ORDER BY sisc_guru.NAMAGURU ASC";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+    ?>                          
+                            
+
+                            <h3 class="box-title m-b-0">Senarai Nama Guru Yang Dibimbing</h3>
+                            <p class="text-muted m-b-30">Eksport data Ke Salin, CSV, Excel, PDF & Print</p>
+                            <div class="table-responsive">
+                                <table id="example23" class="display nowrap" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                           
+                                            <th>Nama Guru Dibimbing</th>
+                                            
+                                            <th>PP1</th>
+                                            <th>PP2</th>
+                                            <th>PP3</th>
+                                            <th>PP4</th>
+                                            <th>PP5</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                              
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        
+ <?php
+            
+$bil=0;
+if ($result->rowCount() > 0) {		
+foreach ($result as $row) {
+
+                        $kod=$row['ID'];
+                        $nama=$row['NAMAGURU'];
+                        $nokp=$row['NOKP'];
+                        $namasekolah=$row['NAMASEKOLAH'];
+                        $statuskeh=$row['STATUSKEH'];
+                       
+                  $pp1 = $row['PP1'];
+                       if($pp1=="0000-00-00") { $pp1= ""; }
+                       if($pp1!="") { $pp1 = date('d/m/Y',strtotime($pp1)); }
+                  $pp2 = $row['PP2'];
+                       if($pp2=="0000-00-00") { $pp2= ""; }
+                       if($pp2!="") { $pp2 = date('d/m/Y',strtotime($pp2)); }
+                  $pp3 = $row['PP3'];
+                       if($pp3=="0000-00-00") { $pp3= ""; }
+                       if($pp3!="") { $pp3 = date('d/m/Y',strtotime($pp3)); }
+                  $pp4 = $row['PP4'];
+                       if($pp4=="0000-00-00") { $pp4= ""; }
+                       if($pp4!="") { $pp4 = date('d/m/Y',strtotime($pp4)); }
+                        $bil++;
+    
+                  $pp5 = $row['PP5'];
+                       if($pp5=="0000-00-00") { $pp5= ""; }
+                       if($pp5!="") { $pp5 = date('d/m/Y',strtotime($pp5)); }      
+			?>                                       
+                                        
+                                        
+                                        
+                                        <tr>
+                                            
+                                            <td><?php echo $nama;?><br>
+                                            <?php echo $namasekolah;?></td>
+                                            
+<td>
+<?php
+    
+if($pp1==''){
+   echo"
+   <a href=\"../modulsisc/pengesahan1.php?id=$kod\" title=\"Pengesahan[ $id ]$nama \"> 
+   <span class=\"label label-danger\">Tidak Rekod</span></a></td>";
+   }
+    
+    
+    if($pp1<>'' AND $statuskeh==''){
+   echo"
+   <a href=\"../modulsisc/pengesahan1.php?id=$kod\" title=\"Pengesahan [ $id ]$nama \"> 
+   <span class=\"label label-warning\">
+   <i>$pp1</i>
+   
+   </span> </a>";
+   } 
+
+    if($pp1<>'' AND $statuskeh=='1'){
+   echo"
+   <a href=\"../modulsisc/pengesahan1.php?id=$kod\" title=\"Pengesahan [ $id ]$nama \"> 
+   <span class=\"label label-success\">
+   <i>$pp1</i>
+   
+   </span> </a>";
+   } 
+ 
+    
+    ?>
+   </td>
+ <td>
+<?php
+    
+if($pp2==''){
+   echo"
+   <a href=\"../modulsisc/pengesahan2.php?id=$kod\" title=\"Pengesahan[ $id ]$nama \"> 
+   <span class=\"label label-danger\">Tidak Rekod</span></a></td>";
+   }
+    
+    if($pp2<>''){
+   echo"
+   <a href=\"../modulsisc/pengesahan2.php?id=$kod\" title=\"Pengesahan [ $id ]$nama \"> 
+   <span class=\"label label-success\">
+   <i>$pp2</i>
+   
+   </span> </a>";
+   } 
+
+    ?>
+   </td>
+<td>
+<?php
+    
+if($pp3==''){
+   echo"
+   <a href=\"../modulsisc/pengesahan3.php?id=$kod\" title=\"Pengesahan[ $id ]$nama \"> 
+   <span class=\"label label-danger\">Tidak Rekod</span></a></td>";
+   }
+    if($pp3<>''){
+   echo"
+   <a href=\"../modulsisc/pengesahan3.php?id=$kod\" title=\"Pengesahan [ $id ]$nama \"> 
+   <span class=\"label label-success\">
+   <i>$pp3</i>
+   
+   </span> </a>";
+   } 
+
+    ?>
+   </td>
+<td>
+<?php
+    
+if($pp4==''){
+   echo"
+   <a href=\"../modulsisc/pengesahan4.php?id=$kod\" title=\"Pengesahan[ $id ]$nama \"> 
+   <span class=\"label label-danger\">Tidak Rekod</span></a></td>";
+   }
+    if($pp4<>''){
+   echo"
+   <a href=\"../modulsisc/pengesahan4.php?id=$kod\" title=\"Pengesahan [ $id ]$nama \"> 
+   <span class=\"label label-success\">
+   <i>$pp4</i>
+   
+   </span> </a>";
+   } 
+
+    ?>
+   </td>
+<td>
+<?php
+    
+if($pp5==''){
+   echo"
+   <a href=\"../modulsisc/pengesahan5.php?id=$kod\" title=\"Pengesahan[ $id ]$nama \"> 
+   <span class=\"label label-danger\">Tidak Rekod</span></a></td>";
+   }
+    if($pp5<>''){
+   echo"
+   <a href=\"../modulsisc/pengesahan5.php?id=$kod\" title=\"Pengesahan [ $id ]$nama \"> 
+   <span class=\"label label-success\">
+   <i>$pp5</i>
+   
+   </span> </a>";
+   } 
+
+    ?>
+   </td>
+                                        </tr>
+                         <?php
+}
+}
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                     
+         
+                    
+                    
+     <?php     
+      
+      
+      
+      
+      
+  }                   
+                
+ 
+                     
 
                      ?>
                                     
@@ -815,7 +893,20 @@ $kirakelompok = $stmt->fetchColumn();
                     
                 </div>
                 
-  
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 <!-- /.row -->
                 <!-- ============================================================== -->
                 <!-- Right sidebar -->
@@ -826,8 +917,8 @@ $kirakelompok = $stmt->fetchColumn();
                         <div class="rpanel-title"> Manual<span><i class="ti-close right-side-toggle"></i></span> </div>
                         <div class="r-panel-body">
                             <ul id="themecolors" class="m-t-20">
-                                <li><b>1. TOV/AR1</b></li>
-                                <li> Pemantuan Dalam Kelas, Pencerapan Pertama Tahun Semasa </li>
+                                <li><b>1. Manual 1</b></li>
+                                <li>1.1 Manual 1</li>
                                
                             </ul>
                             <ul class="m-t-20 all-demos">
@@ -950,28 +1041,6 @@ $kirakelompok = $stmt->fetchColumn();
     </script>
     <!--Style Switcher -->
     <script src="../plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>
-    
-    
-    
- <script>
-var acc = document.getElementsByClassName("accordion");
-var i;
-
-for (i = 0; i < acc.length; i++) {
-    acc[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        var panel = this.nextElementSibling;
-        if (panel.style.maxHeight){
-            panel.style.maxHeight = null;
-        } else {
-            panel.style.maxHeight = panel.scrollHeight + "px";
-        }
-    });
-}
-</script>   
-    
-    
-    
 </body>
 
 </html>

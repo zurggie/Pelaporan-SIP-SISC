@@ -1,5 +1,5 @@
 <?php
-    date_default_timezone_set("Asia/Kuala_Lumpur");
+
 	@require_once("../modul/session.php");
 	require_once("../modul/class.user.php");
 
@@ -345,46 +345,236 @@ $dari=$_POST['TARIKHBESARA'];
                         </ul>
                     </div>
                 </div>
-                <ul class="nav" id="side-menu">
-                  <li> <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-cart-outline fa-fw" data-icon="v"></i> 
-                        
-                        <span class="hide-menu">Pendaftaran<span class="fa arrow"></span> </span></a>
+                
+<ul class="nav" id="side-menu">
+    
+<li><a href="index.php" class="waves-effect"><i class="mdi mdi-logout fa-fw"></i> <span class="hide-menu">Muka Depan</span></a></li>     
+    
+    
+    
+    
+    
+    
+                 
+ <li> <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-plus fa-fw" data-icon="v"></i> 
+                       
+ <?php                     
+$sql = "SELECT bar_menu.ID,
+bar_menu.KOD,
+bar_menu.MENU,
+bar_menu.TAG
+FROM
+bar_menu
+
+WHERE bar_menu.KOD ='1' AND bar_menu.TAG='SISCSIP'";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+         
+   
+if ($result->rowCount() > 0) {		
+foreach ($result as $row) {
+$menu=$row['MENU']; ?>                    
+                      
+                      
+                      
+                        <span class="hide-menu"> 
+                            <?php echo $menu;?>
+                            <span class="fa arrow"></span> </span></a>
+                      
+    <?php }
+}
+    ?>
                         <ul class="nav nav-second-level">
-                            <li> <a href="index.php?id=daftar"><i class="fa-fw"></i><span class="hide-menu">Rekod Baru</span></a> </li>
                             
+                           <?php                          
+  
+
+$sql = "SELECT bar_sub.ID,bar_sub.KOD,bar_sub.MENU AS SUBMENU,bar_sub.HTTP,bar_sub.TAG
+FROM
+bar_sub
+WHERE bar_sub.KOD ='1' AND bar_sub.TAG='SISC'
+ORDER BY bar_sub.KOD ASC";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+         
+   
+if ($result->rowCount() > 0) {		
+foreach ($result as $row) {
+$submenu=$row['SUBMENU'];
+$http=$row['HTTP'];                           
+                            ?>
+    
+                            <li>
+                                
+                                
+                                <?php
+                                echo "<a href=\"$http\">";?>
+                                
+                                
+                                
+                                <i class="mdi mdi-account-multiple-plus fa-fw"></i><span class="hide-menu"><?php echo "$submenu";?></span></a> </li>
                             
+                            <?php } ?>
                         </ul>
                     </li>
                        
-                      <li> <a href="#" class="waves-effect"><i class="mdi mdi-format-color-fill fa-fw"></i> <span class="hide-menu">Laporan<span class="fa arrow"></span> </a>
+<?php } ?>
+                    
+ 
+    
+    
+ <li> <a href="javascript:void(0);" class="waves-effect">
+     
+    <i class="mdi mdi-format-color-fill fa-fw"></i> 
+                       
+ <?php                     
+$sql = "SELECT bar_menu.ID,
+bar_menu.KOD,
+bar_menu.MENU,
+bar_menu.TAG
+FROM
+bar_menu
+
+WHERE bar_menu.KOD ='2' AND bar_menu.TAG='SISCSIP'";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+         
+   
+if ($result->rowCount() > 0) {		
+foreach ($result as $row) {
+$menu=$row['MENU']; 
+  
+     ?>                    
+                      
+                      
+                      
+                        <span class="hide-menu"> 
+                            <?php echo $menu;?>
+                            <span class="fa arrow"></span> </span></a>
+                      
+    <?php }
+}
+    ?>
                         <ul class="nav nav-second-level">
                             
-                            <li><a href="index.php?id=senaraiguru"><i data-icon="&#xe026;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Senarai Guru </span></a></li>
-                            <li><a href="index.php?id=kedatangan"><i data-icon="&#xe026;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Kedatangan</span></a></li>
-                         
-                         
+                           <?php                          
+  
+
+$sql = "SELECT bar_sub.ID,bar_sub.KOD,bar_sub.MENU AS SUBMENU,bar_sub.HTTP,bar_sub.TAG
+FROM
+bar_sub
+WHERE bar_sub.KOD ='2' AND bar_sub.TAG='SISC'
+ORDER BY bar_sub.KOD ASC";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+         
+   
+if ($result->rowCount() > 0) {		
+foreach ($result as $row) {
+$submenu=$row['SUBMENU']; 
+$http=$row['HTTP'];                               
+                            ?>
+    
+                            <li> 
+                                
+                              <?php
+                                echo "<a href=\"$http\">";?>
+                               <i class="fa fa-circle-o text-info"></i> <span class="hide-menu"><?php echo "$submenu";?></span></a> </li>
                             
+                            <?php } ?>
                         </ul>
                     </li>
-                     
-                    
-                    
-                    
-                    
-                    
-                    <li> <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-cart-outline fa-fw" data-icon="v"></i> 
-                        
-                        <span class="hide-menu">Analisa<span class="fa arrow"></span> </span></a>
+                       
+<?php } ?>    
+    
+    
+    
+
+ <li> <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-cart-outline fa-fw" data-icon="v"></i> 
+                       
+ <?php                     
+$sql = "SELECT bar_menu.ID,
+bar_menu.KOD,
+bar_menu.MENU,
+bar_menu.TAG
+FROM
+bar_menu
+
+WHERE bar_menu.KOD ='3' AND bar_menu.TAG='SISCSIP'";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+         
+   
+if ($result->rowCount() > 0) {		
+foreach ($result as $row) {
+$menu=$row['MENU']; ?>                    
+                      
+                      
+                      
+                        <span class="hide-menu"> 
+                            <?php echo $menu;?>
+                            <span class="fa arrow"></span> </span></a>
+                      
+    <?php }
+}
+    ?>
                         <ul class="nav nav-second-level">
-                            <li> <a href="analisa.php?id=jenis"><i class="fa-fw"></i><span class="hide-menu">Jenis Bimbingan</span></a> </li>
-                           <li> <a href="analisa.php?id=tovar"><i class="fa-fw"></i><span class="hide-menu">Kekerapan</span></a> </li>
-                         <li> <a href="analisa.php?id=graf"><i class="fa-fw"></i><span class="hide-menu">Analisa</span></a> </li>   
+                            
+                           <?php                          
+  
+
+$sql = "SELECT bar_sub.ID,bar_sub.KOD,bar_sub.MENU AS SUBMENU,bar_sub.HTTP,bar_sub.TAG
+FROM
+bar_sub
+WHERE bar_sub.KOD ='3' AND bar_sub.TAG='SISC'
+ORDER BY bar_sub.KOD ASC";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+         
+   
+if ($result->rowCount() > 0) {		
+foreach ($result as $row3) {
+$submenu3=$row3['SUBMENU']; 
+$http3=$row3['HTTP'];
+                            ?>
+    
+                            <li> 
+                                
+                             <?php
+    
+                                echo "<a href=\"$http3\">";?>
+                                
+                                
+                                <i class="mdi mdi-cart-outline fa-fw" data-icon="v"></i><span class="hide-menu"><?php echo "$submenu3";?></span></a> </li>
+                            
+                            <?php } ?>
                         </ul>
                     </li>
+                       
+<?php } ?>    
+    
+    
                     
                     
+    
+          
                     
-                 
+                    
+          
+                    
+                
      
                         
                     <li class="devider"></li>
@@ -481,24 +671,27 @@ $kirakelompok = $stmt->fetchColumn();
     
     //query untuk update TOV mula
     if(isset($_POST['tovupdate'])) {
-        $ctov = $auth_user->runQuery("SELECT nokp FROM tovgdb WHERE nokp=:nokp AND tahun= YEAR(CURDATE())");
+        $ctov = $auth_user->runQuery("SELECT nokp FROM tovgdb WHERE nokp=:nokp AND tahun=:tahun");
         $ctov->bindParam(':nokp',$_POST['ic']);
+        $ctov->bindParam(':tahun',date('Y'));
         $ctov->execute();
         $rtov = $ctov->fetch(PDO::FETCH_ASSOC);
 
         if($ctov->rowCount() > 0) {
-            $uptov = $auth_user->runQuery("UPDATE tovgdb SET tov = :tov WHERE nokp = :nokp AND tahun = YEAR(CURDATE())");
+            $uptov = $auth_user->runQuery("UPDATE tovgdb SET tov = :tov WHERE nokp = :nokp AND tahun = :tahun");
         } else {
-            $uptov = $auth_user->runQuery("INSERT INTO tovgdb (nokp,tov,tahun) VALUES (:nokp,:tov,YEAR(CURDATE()))");
+            $uptov = $auth_user->runQuery("INSERT INTO tovgdb (nokp,tov,tahun) VALUES (:nokp,:tov,:tahun)");
         }
         $uptov->bindParam(':tov',$_POST['tov']);
+        $uptov->bindParam(':tahun',date('Y'));
         $uptov->bindParam(':nokp',$_POST['ic']);
         $uptov->execute();
     }
     //query update TOV tamat
 
-    $dtov = $auth_user->runQuery("SELECT tov FROM tovgdb WHERE nokp=:nokp AND tahun=YEAR(CURDATE())");
+    $dtov = $auth_user->runQuery("SELECT tov FROM tovgdb WHERE nokp=:nokp AND tahun=:tahun");
     $dtov->bindParam(':nokp',$nokp);
+    $dtov->bindParam(':tahun',date('Y'));
     $dtov->execute();
     if($dtov->rowCount() > 0) {
         $drow = $dtov->fetch(PDO::FETCH_ASSOC);

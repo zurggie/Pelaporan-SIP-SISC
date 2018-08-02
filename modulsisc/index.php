@@ -336,49 +336,244 @@ $sql = $auth_user->runQuery("INSERT INTO sisc_guru
                         </ul>
                     </div>
                 </div>
-                <ul class="nav" id="side-menu">
+                
+                
+                
+                
+<ul class="nav" id="side-menu">
+
+    
+  <!-- ============================= MULA MENU 1 ================================= -->   
+    
+    
+<li><a href="index.php" class="waves-effect"><i class="mdi mdi-logout fa-fw"></i> <span class="hide-menu">Muka Depan</span></a></li>     
+    
+    
+    
+    
+    
+    
                  
-                  <li> <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-plus fa-fw" data-icon="v"></i> 
-                        
-                        <span class="hide-menu">Pendaftaran<span class="fa arrow"></span> </span></a>
+ <li> <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-plus fa-fw" data-icon="v"></i> 
+                       
+ <?php                     
+$sql = "SELECT bar_menu.ID,
+bar_menu.KOD,
+bar_menu.MENU,
+bar_menu.TAG
+FROM
+bar_menu
+
+WHERE bar_menu.KOD ='1' AND bar_menu.TAG='SISCSIP'";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+         
+   
+if ($result->rowCount() > 0) {		
+foreach ($result as $row) {
+$menu=$row['MENU']; ?>                    
+                      
+                      
+                      
+                        <span class="hide-menu"> 
+                            <?php echo $menu;?>
+                            <span class="fa arrow"></span> </span></a>
+                      
+    <?php }
+}
+    ?>
+      <!-- ========================== MULA SUB MENU 1 ==================================== -->
                         <ul class="nav nav-second-level">
-                            <li> <a href="index.php?id=daftar"><i class="mdi mdi-account-multiple-plus fa-fw"></i><span class="hide-menu">Rekod Baru</span></a> </li>
                             
+<?php                          
+
+$sql = "SELECT bar_sub.ID,bar_sub.KOD,bar_sub.MENU AS SUBMENU,bar_sub.HTTP,bar_sub.TAG
+FROM
+bar_sub
+WHERE bar_sub.KOD ='1' AND bar_sub.TAG='SISC'
+ORDER BY bar_sub.KOD ASC";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+         
+   
+if ($result->rowCount() > 0) {		
+foreach ($result as $row) {
+$submenu=$row['SUBMENU'];
+$http=$row['HTTP'];                           
+                            ?>
+    
+                            <li>
+                                
+                                
+                                <?php
+                                echo "<a href=\"$http\">";?>
+                                
+                                
+                                
+                                <i class="mdi mdi-account-multiple-plus fa-fw"></i><span class="hide-menu"><?php echo "$submenu";?></span></a> </li>
                             
+                            <?php } ?>
                         </ul>
                     </li>
                        
-<?php
-$stmt = $auth_user->runQuery("SELECT count(*) FROM sisc_guru WHERE SISC ='$namapengguna' ");
-$stmt->execute([':nokp','$nokp']);
-$bilgyb = $stmt->fetchColumn();
+<?php } ?>
+                    
+ 
+   <!-- ============================ MULA MENU 2 ================================== -->  
+    
+ <li> <a href="javascript:void(0);" class="waves-effect">
+     
+    <i class="mdi mdi-format-color-fill fa-fw"></i> 
+                       
+ <?php                     
+$sql = "SELECT bar_menu.ID,
+bar_menu.KOD,
+bar_menu.MENU,
+bar_menu.TAG
+FROM
+bar_menu
+
+WHERE bar_menu.KOD ='2' AND bar_menu.TAG='SISCSIP'";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+         
+   
+if ($result->rowCount() > 0) {		
+foreach ($result as $row) {
+$menu=$row['MENU']; 
+  
+     ?>                    
+                      
+                      
+                      
+                        <span class="hide-menu"> 
+                            <?php echo $menu;?>
+                            <span class="fa arrow"></span> </span></a>
+                      
+    <?php }
+}
     ?>
-                    
-                    <li> <a href="#" class="waves-effect"><i class="mdi mdi-book-open-page-variant fa-fw"></i> <span class="hide-menu">Bimbingan<span class="fa arrow"></span> <span class="label label-rouded label-info pull-right"><?php echo $bilgyb;?> </span> </span></a>
+     <!-- ========================== MULA SUB MENU 2 ==================================== -->
+     
                         <ul class="nav nav-second-level">
                             
-                            <li><a href="index.php?id=senaraiguru"><i data-icon="&#xe026;" class="mdi mdi-playlist-check fa-fw"></i> <span class="hide-menu">Senarai Guru </span></a></li>
-                            <li><a href="index.php?id=kedatangan"><i data-icon="&#xe026;" class="mdi mdi-playlist-check fa-fw"></i> <span class="hide-menu">Kedatangan</span></a></li>
-                         
-                         
+                           <?php                          
+  
+
+$sql = "SELECT bar_sub.ID,bar_sub.KOD,bar_sub.MENU AS SUBMENU,bar_sub.HTTP,bar_sub.TAG
+FROM
+bar_sub
+WHERE bar_sub.KOD ='2' AND bar_sub.TAG='SISC'
+ORDER BY bar_sub.KOD ASC";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+         
+   
+if ($result->rowCount() > 0) {		
+foreach ($result as $row) {
+$submenu=$row['SUBMENU']; 
+$http=$row['HTTP'];                               
+                            ?>
+    
+                            <li> 
+                                
+                              <?php
+                                echo "<a href=\"$http\">";?>
+                               <i class="fa fa-circle-o text-info"></i> <span class="hide-menu"><?php echo "$submenu";?></span></a> </li>
                             
+                            <?php } ?>
                         </ul>
                     </li>
-                     
-                    
-                    
-                    
-                    
-                    
-                    <li> <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-chart-bar fa-fw" data-icon="v"></i> 
-                        
-                        <span class="hide-menu">Analisa<span class="fa arrow"></span> </span></a>
+                       
+<?php } ?>    
+    
+    
+  <!-- ============================= MULA MENU 3 ================================= -->   
+
+ <li> <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-cart-outline fa-fw" data-icon="v"></i> 
+                       
+ <?php                     
+$sql = "SELECT bar_menu.ID,
+bar_menu.KOD,
+bar_menu.MENU,
+bar_menu.TAG
+FROM
+bar_menu
+
+WHERE bar_menu.KOD ='3' AND bar_menu.TAG='SISCSIP'";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+         
+   
+if ($result->rowCount() > 0) {		
+foreach ($result as $row) {
+$menu=$row['MENU']; ?>                    
+                      
+                      
+                      
+                        <span class="hide-menu"> 
+                            <?php echo $menu;?>
+                            <span class="fa arrow"></span> </span></a>
+                      
+    <?php }
+}
+    ?>
+     <!-- ========================== MULA SUB MENU 3 ==================================== -->
                         <ul class="nav nav-second-level">
-                            <li> <a href="analisa.php?id=jenis"><i class="mdi mdi-book-open-page-variant fa-fw"></i><span class="hide-menu">Bimbingan</span></a> </li>
                             
+                           <?php                          
+  
+
+$sql = "SELECT bar_sub.ID,bar_sub.KOD,bar_sub.MENU AS SUBMENU,bar_sub.HTTP,bar_sub.TAG
+FROM
+bar_sub
+WHERE bar_sub.KOD ='3' AND bar_sub.TAG='SISC'
+ORDER BY bar_sub.KOD ASC";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+         
+   
+if ($result->rowCount() > 0) {		
+foreach ($result as $row3) {
+$submenu3=$row3['SUBMENU']; 
+$http3=$row3['HTTP'];
+                            ?>
+    
+                            <li> 
+                                
+                             <?php
+    
+                                echo "<a href=\"$http3\">";?>
+                                
+                                
+                                <i class="mdi mdi-cart-outline fa-fw" data-icon="v"></i><span class="hide-menu"><?php echo "$submenu3";?></span></a> </li>
                             
+                            <?php } ?>
                         </ul>
                     </li>
+                       
+<?php } ?>    
+    
+    
+                    
+                    
+    
+          
+                    
+                    
+          
                     
                 
      
@@ -388,6 +583,12 @@ $bilgyb = $stmt->fetchColumn();
                  <li><a href="logout.php?logout=true" class="waves-effect"><i class="mdi mdi-logout fa-fw"></i> <span class="hide-menu">Log Keluar</span></a></li>           
                             
                 </ul>
+
+ <!-- ============================= MENU TAMAT ================================= -->
+
+
+
+
             </div>
         </div>
         <!-- ============================================================== -->
@@ -539,20 +740,15 @@ $bilgyb = $stmt->fetchColumn();
        ?>                    
 <div class="col-sm-12">
                         <div class="white-box">
-  <?php                          
+  
+<?php                          
  
 
 $sql = "SELECT
-users.user_name,
-users.real_name,
-sisc_guru.SISC,
-sisc_guru.NOKP,sisc_guru.ID,
-sisc_guru.NAMAGURU,
-sisc_guru.KODSEKOLAH,
-sisc_guru.JAWATAN,
-sisc_guru.KODPPD,
-sisc_guru.TAHUN,sisc_guru.TARIKHAKTIF,
-tssekolah.NAMASEKOLAH
+users.user_name,users.real_name,sisc_guru.SISC,sisc_guru.NOKP,sisc_guru.ID,
+sisc_guru.NAMAGURU,sisc_guru.KODSEKOLAH,sisc_guru.JAWATAN,sisc_guru.KODPPD,
+sisc_guru.TAHUN,sisc_guru.TARIKHAKTIF,tssekolah.NAMASEKOLAH,sisc_guru.TARIKHSTATUS,
+sisc_guru.STATUS
 FROM
 users
 JOIN sisc_guru
@@ -579,6 +775,8 @@ $result->execute();
                                             <th>Nama Guru Dibimbing</th>
                                             <th>Nama Sekolah</th>
                                             <th>Tarikh Aktif</th>
+                                            <th>Status <br>Tarikh</th>
+                                            
                                             <th> ARAHAN</th>
                                             <th> </th>
                                         </tr>
@@ -600,11 +798,15 @@ foreach ($result as $row) {
                         $nama=$row['NAMAGURU'];
                         $nokp=$row['NOKP'];
                         $namasekolah=$row['NAMASEKOLAH'];
+                        $status=$row['STATUS'];
                         $pp1=$row['TARIKHAKTIF'];
                        if($pp1=="0000-00-00") { $pp1= ""; }
                        if($pp1!="") { $pp1 = date('d/m/Y',strtotime($pp1)); }
     
            
+                       $tarikhstatus=$row['TARIKHSTATUS'];
+                       if($tarikhstatus=="0000-00-00") { $tarikhstatus= ""; }
+                       if($tarikhstatus!="") { $tarikhstatus = date('d/m/Y',strtotime($tarikhstatus)); }
                         $bil++;
                         
 			?>                                       
@@ -616,10 +818,19 @@ foreach ($result as $row) {
                                             <td><?php echo $nama;?></td>
                                             <td><?php echo $namasekolah;?></td>
                                             <td><?php echo $pp1;?></td>
-                                           
-                                            <td>
-                                            
-   <?php
+                                            <td><?php 
+    
+    if($status=="1"){
+        
+     echo "<span class=\"label label-success\">$tarikhstatus</span><td>";  
+        
+    }
+   if($status==""){
+        
+     echo "<td>";  
+        
+    }
+
       echo"
    <a href=\"../modulsisc/pelaporan.php?id=$kod\" title=\"Pepaloran[ $id ]$nama \"> 
    <span class=\"label label-success\">Lapor</span></a></td>";?>
@@ -652,236 +863,8 @@ foreach ($result as $row) {
       
   }                   
                      
-             
-  if($id=="kedatangan"){
-      
-     
-       ?>                    
-<div class="col-sm-12">
-                        <div class="white-box">
-  <?php                          
- 
-
-$sql = "SELECT
-
-users.user_name,
-users.real_name,
-sisc_guru.SISC,
-sisc_guru.NOKP,sisc_guru.ID,
-sisc_guru.NAMAGURU,
-sisc_guru.KODSEKOLAH,
-sisc_guru.JAWATAN,sisc_guru.STATUSKEH,
-sisc_guru.KODPPD,
-sisc_guru.TAHUN,
-sisc_guru.PP1,sisc_guru.PP2,sisc_guru.PP3,sisc_guru.PP4,sisc_guru.PP5,
-tssekolah.NAMASEKOLAH
-FROM
-users
-JOIN sisc_guru
-ON users.user_name = sisc_guru.SISC 
-JOIN tssekolah
-ON sisc_guru.kodsekolah = tssekolah.KODSEKOLAH
-
-
-WHERE sisc_guru.SISC=:namapengguna  ORDER BY sisc_guru.NAMAGURU ASC";
-	
-$result = $auth_user->runQuery($sql);
-$result->bindParam(':namapengguna', $namapengguna);	
-$result->execute();
-    ?>                          
-                            
-
-                            <h3 class="box-title m-b-0">Senarai Nama Guru Yang Dibimbing</h3>
-                            <p class="text-muted m-b-30">Eksport data Ke Salin, CSV, Excel, PDF & Print</p>
-                            <div class="table-responsive">
-                                <table id="example23" class="display nowrap" cellspacing="0" width="100%">
-                                    <thead>
-                                        <tr>
-                                           
-                                            <th>Nama Guru Dibimbing</th>
-                                            
-                                            <th>PP1</th>
-                                            <th>PP2</th>
-                                            <th>PP3</th>
-                                            <th>PP4</th>
-                                            <th>PP5</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                              
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        
- <?php
-            
-$bil=0;
-if ($result->rowCount() > 0) {		
-foreach ($result as $row) {
-
-                        $kod=$row['ID'];
-                        $nama=$row['NAMAGURU'];
-                        $nokp=$row['NOKP'];
-                        $namasekolah=$row['NAMASEKOLAH'];
-                        $statuskeh=$row['STATUSKEH'];
-                       
-                  $pp1 = $row['PP1'];
-                       if($pp1=="0000-00-00") { $pp1= ""; }
-                       if($pp1!="") { $pp1 = date('d/m/Y',strtotime($pp1)); }
-                  $pp2 = $row['PP2'];
-                       if($pp2=="0000-00-00") { $pp2= ""; }
-                       if($pp2!="") { $pp2 = date('d/m/Y',strtotime($pp2)); }
-                  $pp3 = $row['PP3'];
-                       if($pp3=="0000-00-00") { $pp3= ""; }
-                       if($pp3!="") { $pp3 = date('d/m/Y',strtotime($pp3)); }
-                  $pp4 = $row['PP4'];
-                       if($pp4=="0000-00-00") { $pp4= ""; }
-                       if($pp4!="") { $pp4 = date('d/m/Y',strtotime($pp4)); }
-                        $bil++;
     
-                  $pp5 = $row['PP5'];
-                       if($pp5=="0000-00-00") { $pp5= ""; }
-                       if($pp5!="") { $pp5 = date('d/m/Y',strtotime($pp5)); }      
-			?>                                       
-                                        
-                                        
-                                        
-                                        <tr>
-                                            
-                                            <td><?php echo $nama;?><br>
-                                            <?php echo $namasekolah;?></td>
-                                            
-<td>
-<?php
-    
-if($pp1==''){
-   echo"
-   <a href=\"../modulsisc/pengesahan1.php?id=$kod\" title=\"Pengesahan[ $id ]$nama \"> 
-   <span class=\"label label-danger\">Tidak Rekod</span></a></td>";
-   }
-    
-    
-    if($pp1<>'' AND $statuskeh==''){
-   echo"
-   <a href=\"../modulsisc/pengesahan1.php?id=$kod\" title=\"Pengesahan [ $id ]$nama \"> 
-   <span class=\"label label-warning\">
-   <i>$pp1</i>
-   
-   </span> </a>";
-   } 
-
-    if($pp1<>'' AND $statuskeh=='1'){
-   echo"
-   <a href=\"../modulsisc/pengesahan1.php?id=$kod\" title=\"Pengesahan [ $id ]$nama \"> 
-   <span class=\"label label-success\">
-   <i>$pp1</i>
-   
-   </span> </a>";
-   } 
- 
-    
-    ?>
-   </td>
- <td>
-<?php
-    
-if($pp2==''){
-   echo"
-   <a href=\"../modulsisc/pengesahan2.php?id=$kod\" title=\"Pengesahan[ $id ]$nama \"> 
-   <span class=\"label label-danger\">Tidak Rekod</span></a></td>";
-   }
-    
-    if($pp2<>''){
-   echo"
-   <a href=\"../modulsisc/pengesahan2.php?id=$kod\" title=\"Pengesahan [ $id ]$nama \"> 
-   <span class=\"label label-success\">
-   <i>$pp2</i>
-   
-   </span> </a>";
-   } 
-
-    ?>
-   </td>
-<td>
-<?php
-    
-if($pp3==''){
-   echo"
-   <a href=\"../modulsisc/pengesahan3.php?id=$kod\" title=\"Pengesahan[ $id ]$nama \"> 
-   <span class=\"label label-danger\">Tidak Rekod</span></a></td>";
-   }
-    if($pp3<>''){
-   echo"
-   <a href=\"../modulsisc/pengesahan3.php?id=$kod\" title=\"Pengesahan [ $id ]$nama \"> 
-   <span class=\"label label-success\">
-   <i>$pp3</i>
-   
-   </span> </a>";
-   } 
-
-    ?>
-   </td>
-<td>
-<?php
-    
-if($pp4==''){
-   echo"
-   <a href=\"../modulsisc/pengesahan4.php?id=$kod\" title=\"Pengesahan[ $id ]$nama \"> 
-   <span class=\"label label-danger\">Tidak Rekod</span></a></td>";
-   }
-    if($pp4<>''){
-   echo"
-   <a href=\"../modulsisc/pengesahan4.php?id=$kod\" title=\"Pengesahan [ $id ]$nama \"> 
-   <span class=\"label label-success\">
-   <i>$pp4</i>
-   
-   </span> </a>";
-   } 
-
-    ?>
-   </td>
-<td>
-<?php
-    
-if($pp5==''){
-   echo"
-   <a href=\"../modulsisc/pengesahan5.php?id=$kod\" title=\"Pengesahan[ $id ]$nama \"> 
-   <span class=\"label label-danger\">Tidak Rekod</span></a></td>";
-   }
-    if($pp5<>''){
-   echo"
-   <a href=\"../modulsisc/pengesahan5.php?id=$kod\" title=\"Pengesahan [ $id ]$nama \"> 
-   <span class=\"label label-success\">
-   <i>$pp5</i>
-   
-   </span> </a>";
-   } 
-
-    ?>
-   </td>
-                                        </tr>
-                         <?php
-}
-}
-                                        ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    
-         
-                    
-                    
-     <?php     
-      
-      
-      
-      
-      
-  }                   
-                
+           
  
                      
 
