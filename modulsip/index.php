@@ -319,71 +319,239 @@ $dari=$_POST['TARIKHBESARA'];
                     </div>
                 </div>
                 <ul class="nav" id="side-menu">
+                
                  
-                  <li> <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-cart-outline fa-fw" data-icon="v"></i> 
-                        
-                        <span class="hide-menu">Pendaftaran<span class="fa arrow"></span> </span></a>
+  <!-- ============================= MULA MENU 1 ================================= -->   
+    
+    
+<li><a href="index.php" class="waves-effect"><i class="mdi mdi-logout fa-fw"></i> <span class="hide-menu">Muka Depan</span></a></li>     
+    
+    
+    
+    
+    
+    
+                 
+ <li> <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-plus fa-fw" data-icon="v"></i> 
+                       
+ <?php                     
+$sql = "SELECT bar_menu.ID,
+bar_menu.KOD,
+bar_menu.MENU,
+bar_menu.TAG
+FROM
+bar_menu
+
+WHERE bar_menu.KOD ='1' AND bar_menu.TAG='SISCSIP'";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+         
+   
+if ($result->rowCount() > 0) {		
+foreach ($result as $row) {
+$menu=$row['MENU']; ?>                    
+                      
+                      
+                      
+                        <span class="hide-menu"> 
+                            <?php echo $menu;?>
+                            <span class="fa arrow"></span> </span></a>
+                      
+    <?php }
+}
+    ?>
+      <!-- ========================== MULA SUB MENU 1 ==================================== -->
                         <ul class="nav nav-second-level">
-                            <li> <a href="index.php?id=daftar"><i class="fa-fw"></i><span class="hide-menu">Profil SIP </span></a> </li>
-                             <li> <a href="#"><i class="fa-fw"></i><span class="hide-menu">Profil PGB </span></a> </li>
-                            <li> <a href="#"><i class="fa-fw"></i><span class="hide-menu">Profil Sekolah </span></a> </li>
+                            
+<?php                          
+
+$sql = "SELECT bar_sub.ID,bar_sub.KOD,bar_sub.MENU AS SUBMENU,bar_sub.HTTP,bar_sub.TAG
+FROM
+bar_sub
+WHERE bar_sub.KOD ='1' AND bar_sub.TAG='SIP'
+ORDER BY bar_sub.KOD ASC";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+         
+   
+if ($result->rowCount() > 0) {		
+foreach ($result as $row) {
+$submenu=$row['SUBMENU'];
+$http=$row['HTTP'];                           
+                            ?>
+    
+                            <li>
+                                
+                                
+                                <?php
+                                echo "<a href=\"$http\">";?>
+                                
+                                
+                                
+                                <i class="mdi mdi-account-multiple-plus fa-fw"></i><span class="hide-menu"><?php echo "$submenu";?></span></a> </li>
+                            
+                            <?php } ?>
                         </ul>
                     </li>
                        
+<?php } ?>
                     
-                    
-                    
-                    
-                    
-                    
-                    <li> <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-cart-outline fa-fw" data-icon="v"></i> 
-                        
-                        <span class="hide-menu">Bimbingan<span class="fa arrow"></span> </span></a>
+ 
+   <!-- ============================ MULA MENU 2 ================================== -->  
+    
+ <li> <a href="javascript:void(0);" class="waves-effect">
+     
+    <i class="mdi mdi-format-color-fill fa-fw"></i> 
+                       
+ <?php                     
+$sql = "SELECT bar_menu.ID,
+bar_menu.KOD,
+bar_menu.MENU,
+bar_menu.TAG
+FROM
+bar_menu
+
+WHERE bar_menu.KOD ='2' AND bar_menu.TAG='SISCSIP'";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+         
+   
+if ($result->rowCount() > 0) {		
+foreach ($result as $row) {
+$menu=$row['MENU']; 
+  
+     ?>                    
+                      
+                      
+                      
+                        <span class="hide-menu"> 
+                            <?php echo $menu;?>
+                            <span class="fa arrow"></span> </span></a>
+                      
+    <?php }
+}
+    ?>
+     <!-- ========================== MULA SUB MENU 2 ==================================== -->
+     
                         <ul class="nav nav-second-level">
-                            <li> <a href="#"><i class="fa-fw"></i><span class="hide-menu">Lapor Bimbingan</span></a> </li>
-                           
                             
+                           <?php                          
+  
+
+$sql = "SELECT bar_sub.ID,bar_sub.KOD,bar_sub.MENU AS SUBMENU,bar_sub.HTTP,bar_sub.TAG
+FROM
+bar_sub
+WHERE bar_sub.KOD ='2' AND bar_sub.TAG='SIP'
+ORDER BY bar_sub.KOD ASC";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+         
+   
+if ($result->rowCount() > 0) {		
+foreach ($result as $row) {
+$submenu=$row['SUBMENU']; 
+$http=$row['HTTP'];                               
+                            ?>
+    
+                            <li> 
+                                
+                              <?php
+                                echo "<a href=\"$http\">";?>
+                               <i class="fa fa-circle-o text-info"></i> <span class="hide-menu"><?php echo "$submenu";?></span></a> </li>
+                            
+                            <?php } ?>
                         </ul>
                     </li>
-                    
-                    
-                    
-                    <li> <a href="#" class="waves-effect"><i class="mdi mdi-format-color-fill fa-fw"></i> <span class="hide-menu">Laporan<span class="fa arrow"></span></a>
+                       
+<?php } ?>    
+    
+    
+  <!-- ============================= MULA MENU 3 ================================= -->   
+
+ <li> <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-cart-outline fa-fw" data-icon="v"></i> 
+                       
+ <?php                     
+$sql = "SELECT bar_menu.ID,
+bar_menu.KOD,
+bar_menu.MENU,
+bar_menu.TAG
+FROM
+bar_menu
+
+WHERE bar_menu.KOD ='3' AND bar_menu.TAG='SISCSIP'";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+         
+   
+if ($result->rowCount() > 0) {		
+foreach ($result as $row) {
+$menu=$row['MENU']; ?>                    
+                      
+                      
+                      
+                        <span class="hide-menu"> 
+                            <?php echo $menu;?>
+                            <span class="fa arrow"></span> </span></a>
+                      
+    <?php }
+}
+    ?>
+     <!-- ========================== MULA SUB MENU 3 ==================================== -->
                         <ul class="nav nav-second-level">
-                            <li><a href="#"><i data-icon="&#xe026;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Bimbingan SIP</span></a></li>
-                            <li><a href="#"><i data-icon="&#xe026;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Kekerapan SIP</span></a></li>
-                         
-                         
                             
+                           <?php                          
+  
+
+$sql = "SELECT bar_sub.ID,bar_sub.KOD,bar_sub.MENU AS SUBMENU,bar_sub.HTTP,bar_sub.TAG
+FROM
+bar_sub
+WHERE bar_sub.KOD ='3' AND bar_sub.TAG='SIP'
+ORDER BY bar_sub.KOD ASC";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+         
+   
+if ($result->rowCount() > 0) {		
+foreach ($result as $row3) {
+$submenu3=$row3['SUBMENU']; 
+$http3=$row3['HTTP'];
+                            ?>
+    
+                            <li> 
+                                
+                             <?php
+    
+                                echo "<a href=\"$http3\">";?>
+                                
+                                
+                                <i class="mdi mdi-cart-outline fa-fw" data-icon="v"></i><span class="hide-menu"><?php echo "$submenu3";?></span></a> </li>
+                            
+                            <?php } ?>
                         </ul>
                     </li>
-                        
-                        
-                 <li> <a href="#" class="waves-effect"><i class="mdi mdi-format-color-fill fa-fw"></i> <span class="hide-menu">Data Sokongan<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li><a href="#"><i data-icon="&#xe026;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Data</span></a></li>
-                            <li><a href="#"><i data-icon="&#xe026;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">SKPMg2</span></a></li>
-                         
-                         
-                            
-                        </ul>
-                    </li>
-                                 
+                       
+<?php } ?>    
+         
                     
-       <li> <a href="#" class="waves-effect"><i class="mdi mdi-format-color-fill fa-fw"></i> <span class="hide-menu">Keberhasilan<span class="fa arrow"></span> </a>
-                        <ul class="nav nav-second-level">
-                            <li><a href="#"><i data-icon="&#xe026;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Bimbingan</span></a></li>
-                     
-                         
-                         
-                            
-                        </ul>
-                    </li>
-                        
-                    <li class="devider"></li>
-                  
-                 <li><a href="logout.php?logout=true" class="waves-effect"><i class="mdi mdi-logout fa-fw"></i> <span class="hide-menu">Log Keluar</span></a></li>           
-                            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                 </ul>
             </div>
         </div>
