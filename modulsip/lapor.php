@@ -1,3 +1,14 @@
+<?php
+if (isset($_GET['idpgb'])) {
+    $idpgb = $_GET['idpgb'];
+
+    $sqlpgb = $auth_user->runQuery("SELECT sip_pgb.*, tssekolah.NAMASEKOLAH FROM sip_pgb
+    INNER JOIN tssekolah ON sip_pgb.KODSEKOLAH = tssekolah.KODSEKOLAH WHERE ID = :id");
+    $sqlpgb->bindParam(':id',$idpgb);
+    $sqlpgb->execute();
+    $rpgb = $sqlpgb->fetch(PDO::FETCH_ASSOC);
+?>
+
 <style>
     .mtb {
         margin-top:1rem;
@@ -24,7 +35,7 @@
     }
 </style>
 
-<div class="col-xs-12" style="background-color:white;">
+<form action="index.php?page=pelaporan&inpage=rumusan&id=<?php echo $idpgb;?>" method="POST" class="col-xs-12" style="background-color:white;">
     <div class="container">
         <div class="row mtb">
             <h3>Pelaporan Bimbingan Oleh Pegawai SIP+</h3>
@@ -34,32 +45,37 @@
                 <table class="tbllapor" style="width:100%">
                     <tbody>
                         <tr>
-                            <td>No Kad Pengenalan</td>
+                            <td><strong>No Kad Pengenalan</strong></td>
                             <td style="width:3%;">:</td>
-                            <td>896897891</td>
+                            <td><?php echo $rpgb['NOKP'];?></td>
                         </tr>
                         <tr>
-                            <td>Nama PGB Yang Dibimbing</td>
+                            <td><strong>Nama PGB Yang Dibimbing</strong></td>
                             <td>:</td>
-                            <td>Sipolan bin Siolan</td>
+                            <td><?php echo $rpgb['NAMAGURU'];?></td>
                         </tr>
                         <tr>
-                            <td>Nama Sekolah</td>
+                            <td><strong>Nama Sekolah</strong></td>
                             <td>:</td>
-                            <td>SMK Dato' Haji Hassan Yunos</td>
+                            <td><?php echo $rpgb['NAMASEKOLAH'];?></td>
                         </tr>
                         <tr>
-                            <td>Bimbingan yang ke</td>
+                            <td><strong>Bimbingan yang ke</strong></td>
                             <td>:</td>
-                            <td>1/2018</td>
+                            <td>1/<?php echo date('Y');?></td>
                         </tr>
                         <tr>
-                            <td>Jenis Bimbingan</td>
+                            <td><strong>Jenis Bimbingan</strong></td>
                             <td>:</td>
-                            <td>Kat Sini</td>
+                            <td>
+                                <select name="jenisb" class="form-control">
+                                    <option disabled>Sila Pilih...</option>
+                                    <option value="TOV">TOV</option>
+                                </select>
+                            </td>
                         </tr>
                         <tr>
-                            <td>Standard 1 SKPMg2</td>
+                            <td><strong>Standard 1 SKPMg2</strong></td>
                             <td>:</td>
                             <td>
                                 <table class="tblstd mtb" style="width:100%;text-align:center;">
@@ -84,41 +100,41 @@
                                         <th colspan="12">FOKUS</th>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td><input type="checkbox"></td>
-                                        <td><input type="checkbox"></td>
-                                        <td><input type="checkbox"></td>
-                                        <td><input type="checkbox"></td>
-                                        <td><input type="checkbox"></td>
-                                        <td><input type="checkbox"></td>
-                                        <td><input type="checkbox"></td>
-                                        <td><input type="checkbox"></td>
-                                        <td><input type="checkbox"></td>
-                                        <td><input type="checkbox"></td>
-                                        <td><input type="checkbox"></td>
+                                        <td><input type="checkbox" name="f111" value="99"></td>
+                                        <td><input type="checkbox" name="f112" value="99"></td>
+                                        <td><input type="checkbox" name="f113" value="99"></td>
+                                        <td><input type="checkbox" name="f114" value="99"></td>
+                                        <td><input type="checkbox" name="f115" value="99"></td>
+                                        <td><input type="checkbox" name="f116" value="99"></td>
+                                        <td><input type="checkbox" name="f117" value="99"></td>
+                                        <td><input type="checkbox" name="f121" value="99"></td>
+                                        <td><input type="checkbox" name="f122" value="99"></td>
+                                        <td><input type="checkbox" name="f131" value="99"></td>
+                                        <td><input type="checkbox" name="f132" value="99"></td>
+                                        <td><input type="checkbox" name="f133" value="99"></td>
                                     </tr>
                                     <tr>
                                         <th colspan="12">SKOR</th>
                                     </tr>
                                     <tr>
-                                        <td><input type="number" class="wik"></td>
-                                        <td><input type="number" class="wik"></td>
-                                        <td><input type="number" class="wik"></td>
-                                        <td><input type="number" class="wik"></td>
-                                        <td><input type="number" class="wik"></td>
-                                        <td><input type="number" class="wik"></td>
-                                        <td><input type="number" class="wik"></td>
-                                        <td><input type="number" class="wik"></td>
-                                        <td><input type="number" class="wik"></td>
-                                        <td><input type="number" class="wik"></td>
-                                        <td><input type="number" class="wik"></td>
-                                        <td><input type="number" class="wik"></td>
+                                        <td><input type="number" class="wik" name="s111"></td>
+                                        <td><input type="number" class="wik" name="s112"></td>
+                                        <td><input type="number" class="wik" name="s113"></td>
+                                        <td><input type="number" class="wik" name="s114"></td>
+                                        <td><input type="number" class="wik" name="s115"></td>
+                                        <td><input type="number" class="wik" name="s116"></td>
+                                        <td><input type="number" class="wik" name="s117"></td>
+                                        <td><input type="number" class="wik" name="s121"></td>
+                                        <td><input type="number" class="wik" name="s122"></td>
+                                        <td><input type="number" class="wik" name="s131"></td>
+                                        <td><input type="number" class="wik" name="s132"></td>
+                                        <td><input type="number" class="wik" name="s133"></td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
                         <tr>
-                            <td>Standard 2 SKPMg2</td>
+                            <td><strong>Standard 2 SKPMg2</strong></td>
                             <td>:</td>
                             <td>
                                 <table class="tblstd mtb" style="width:100%;text-align:center;">
@@ -140,37 +156,37 @@
                                         <th colspan="12">FOKUS</th>
                                     </tr>
                                     <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td><input type="checkbox"></td>
-                                        <td><input type="checkbox"></td>
-                                        <td><input type="checkbox"></td>
-                                        <td><input type="checkbox"></td>
-                                        <td><input type="checkbox"></td>
-                                        <td><input type="checkbox"></td>
-                                        <td><input type="checkbox"></td>
-                                        <td><input type="checkbox"></td>
+                                        <td><input type="checkbox" name="f211" value="99"></td>
+                                        <td><input type="checkbox" name="f212" value="99"></td>
+                                        <td><input type="checkbox" name="f221" value="99"></td>
+                                        <td><input type="checkbox" name="f231" value="99"></td>
+                                        <td><input type="checkbox" name="f241" value="99"></td>
+                                        <td><input type="checkbox" name="f251" value="99"></td>
+                                        <td><input type="checkbox" name="f252" value="99"></td>
+                                        <td><input type="checkbox" name="f261" value="99"></td>
+                                        <td><input type="checkbox" name="f272" value="99"></td>
                                     </tr>
                                     <tr>
                                         <th colspan="12">SKOR</th>
                                     </tr>
                                     <tr>
-                                        <td><input type="number" max="4" class="wik"></td>
-                                        <td><input type="number" class="wik"></td>
-                                        <td><input type="number" class="wik"></td>
-                                        <td><input type="number" class="wik"></td>
-                                        <td><input type="number" class="wik"></td>
-                                        <td><input type="number" class="wik"></td>
-                                        <td><input type="number" class="wik"></td>
-                                        <td><input type="number" class="wik"></td>
-                                        <td><input type="number" class="wik"></td>
+                                        <td><input type="number" max="4" class="wik" name="s211"></td>
+                                        <td><input type="number" class="wik" name="s212"></td>
+                                        <td><input type="number" class="wik" name="s221"></td>
+                                        <td><input type="number" class="wik" name="s231"></td>
+                                        <td><input type="number" class="wik" name="s241"></td>
+                                        <td><input type="number" class="wik" name="s251"></td>
+                                        <td><input type="number" class="wik" name="s252"></td>
+                                        <td><input type="number" class="wik" name="s261"></td>
+                                        <td><input type="number" class="wik" name="s272"></td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
                         <tr>
-                            <td>Catatan</td>
+                            <td><strong>Catatan</strong></td>
                             <td>:</td>
-                            <td><textarea class="form-control" rows="5"></textarea></td>
+                            <td><textarea name="catatan" class="form-control" rows="5"></textarea></td>
                         </tr>
                         <tr>
                             <td></td>
@@ -178,10 +194,11 @@
                             <td>
                                 <div class="row mtb">
                                     <div class="col-xs-3">
-                                        <button type="submit" class="btn btn-primary btn-block">SIMPAN</button>
+                                        <input type="hidden" name="icpgb" value="<?php echo $rpgb['NOKP'];?>">
+                                        <button type="submit" name="fromlapor" class="btn btn-primary btn-block">SIMPAN</button>
                                     </div>
                                     <div class="col-xs-3">
-                                        <button type="submit" class="btn btn-danger btn-block">BATAL</button>
+                                        <button class="btn btn-danger btn-block">BATAL</button>
                                     </div>
                                 </div>
                             </td>
@@ -191,4 +208,10 @@
             </div>
         </div>
     </div>
-</div>
+</form>
+
+<?php
+} else {
+   echo 'Tiada';
+}
+?>

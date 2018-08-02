@@ -1,5 +1,5 @@
 <?php
-
+    date_default_timezone_set("Asia/Kuala_Lumpur");
 	@require_once("../modul/session.php");
 	require_once("../modul/class.user.php");
 	$auth_user = new USER();
