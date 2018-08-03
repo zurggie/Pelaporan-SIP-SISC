@@ -39,7 +39,7 @@ $sensem->bindParam(':sip',$namapengguna);
         <form class="row mtb">
             <div class="col-md-8">
                 <select class="form-control" name="idpgb">
-                    <option>Sila Pilih PGB...</option>
+                    <option selected disabled>Sila Pilih PGB...</option>
                     <?php
                         $sensem->execute();
                         while($sSemua = $sensem->fetch(PDO::FETCH_ASSOC)) {

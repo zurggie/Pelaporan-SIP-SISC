@@ -538,13 +538,20 @@ $http3=$row3['HTTP'];
                 <!-- PAGE SEMUA BERMULA DI SINI -->
 
                 <?php
-                    if($_GET['page']=="lapor") {
-                        include 'lapor.php';
-                    } elseif($_GET['page']=="pelaporan") {
-                        include 'pelaporan.php';
-                    } elseif($_GET['page']=="senarai") {
+                    if(isset($_GET['page'])) {
+                        if($_GET['page']=="lapor") {
+                            include 'lapor.php';
+                        } elseif($_GET['page']=="pelaporan") {
+                            include 'pelaporan.php';
+                        } elseif($_GET['page']=="senarai") {
+                            include 'senarai.php';
+                        } elseif($_GET['page']=="daftar") {
+                            include 'daftar.php';
+                        }
+                    } else {
                         include 'senarai.php';
                     }
+                    
                 ?>
 
                 <!-- PAGE BERAKHIR DI SINI -->             

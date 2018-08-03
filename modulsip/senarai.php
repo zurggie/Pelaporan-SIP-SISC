@@ -7,6 +7,7 @@ $senq->bindParam(':icsip',$namapengguna);
 <style>
     .backwhite {
         background-color:white;
+        min-height:500px;
     }
     .mtb {
         margin-top:1rem;
@@ -31,7 +32,7 @@ $senq->bindParam(':icsip',$namapengguna);
                                 <th>NAMA RAKAN PGB</th>
                                 <th>NAMA SEKOLAH</th>
                                 <th>TARIKH AKTIF</th>
-                                <th colspan="2">ARAHAN</th>
+                                <th colspan="4">ARAHAN</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -44,8 +45,12 @@ $senq->bindParam(':icsip',$namapengguna);
                                     <td>'.$rsen['NAMAGURU'].'</td>
                                     <td>'.$rsen['NAMASEKOLAH'].'</td>
                                     <td>'.$rsen['TARIKHAKTIF'].'</td>
+                                    <td><a href="index.php?page=daftar&idpgb='.$rsen['ID'].'" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Kemaskini Maklumat">
+                                    <i class="fa fa-pencil"></i></a></td>
                                     <td><a href="index.php?page=lapor&idpgb='.$rsen['ID'].'" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Tambah Bimbingan">
-                                    <i class="fa fa-plus-square"></i></a></td>
+                                    <i class="fa fa-plus"></i></a></td>
+                                    <td><a href="index.php?page=pelaporan&inpage=rumusan&idpgb='.$rsen['ID'].'" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Lihat Pelaporan">
+                                    <i class="fa fa-file-text-o"></i></a></td>
                                     <td><a href="" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Buang PGB">
                                     <i class="fa fa-trash"></i></a></td>
                                 </tr>';
@@ -56,6 +61,11 @@ $senq->bindParam(':icsip',$namapengguna);
                         </tfoot>
                     </table>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-md-offset-9">
+                <a href="index.php?page=daftar" class="btn btn-primary btn-block">DAFTAR RAKAN PGB</a>
             </div>
         </div>
     </div>
