@@ -82,6 +82,7 @@ if (isset($_GET['idpgb'])) {
 
                                         if($chkmis->rowCount() <> 0) {
                                             $diff1 = array();
+                                            $chkmis->execute();
                                             while($row2=$chkmis->fetch(PDO::FETCH_ASSOC)) {
                                                 $diff1[] = $row2['BILKE'];
                                             }
@@ -91,7 +92,6 @@ if (isset($_GET['idpgb'])) {
 
                                         $bilkeo = $row['BILKE'];
                                         $bilkeb = $bilkeo+1;
-
                                         if(count($missing) > 0) {
                                             echo'<select name="bilke" required>';
                                             foreach($missing as $mis) {

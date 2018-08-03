@@ -77,7 +77,14 @@ if(isset($_POST['compare'])) {
 <h3 class="centex"><strong>CARTA RADAR RUMUSAN BIMBINGAN PGB</strong></h3>
 <div class="row mtb">
     <div class="col-md-10 mtb">
-        <canvas id="std1"></canvas>
+        <?php
+        if(isset($_POST['choose']) && isset($_POST['graf1']) && isset($_POST['graf2'])) {
+          echo '<canvas id="std1" height="200"></canvas>';
+        } else {
+          echo '<div class="text-center"><h1>SILA BUAT PILIHAN STANDARD DAN BIMBINGAN DI MENU SEBELAH KANAN</h1></div>';
+        }
+        ?>
+        
     </div>
     <form class="col-md-2 mtb" action="index.php?idpgb=<?php echo $_GET['idpgb'];?>&page=pelaporan&inpage=carta" method="POST">
         <h6>PILIH STANDARD & 2 BIMBINGAN UNTUK PERBANDINGAN</h6>
@@ -148,7 +155,7 @@ new Chart(document.getElementById("std1"), {
           pointBorderColor: "rgba(14,221,18,1)",
           pointBackgroundColor: "rgba(179,181,198,1)",
           data: graf1,
-          pointBorderWidth: 12
+          pointBorderWidth: 15
         }, {
           label: cname2,
           fill: false,
@@ -157,25 +164,44 @@ new Chart(document.getElementById("std1"), {
           pointBorderColor: "rgba(255,99,132,1)",
           pointBackgroundColor: "rgba(255,99,132,1)",
           data: graf2,
-          pointBorderWidth: 12
+          pointBorderWidth: 15
         }
       ]
     },
     options: {
       title: {
         display: true,
-        text: namastd
+        text: namastd,
+        fontSize: 16,
+        fontStyle: 'bold'
+      },
+      legend: {
+        position: 'left',
+        labels: {
+          fontSize: 16,
+          padding: 20
+        }
       },
       scale: {
         ticks: {
           beginAtZero: true,
           max: 4,
-          stepSize: 1
+          stepSize: 1,
+          fontSize: 16,
+          fontStyle: 'bold'
+        },
+        pointLabels: {
+          fontSize: 14,
+          fontStyle: 'bold'
         }
       },
       plugins: {
         datalabels: {
-          color: 'white'
+          color: 'white',
+          font: {
+            size: 14,
+            weight: 'bold'
+          }
         }
       }
     }
