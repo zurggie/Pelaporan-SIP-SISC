@@ -6,6 +6,16 @@ function displaystd($std) {
     return $op;
 }
 
+if(isset($_POST['delbim'])) {
+    $xbim = $auth_user->runQuery("DELETE FROM sip_pgb_data WHERE ID = :id");
+    $xbim->bindParam(':id',$_POST['id']);
+    $xbim->execute();
+    echo'
+    <script>
+        window.alert("Proses buang berjaya");
+    </script>';
+}
+
 $sqlpgb = $auth_user->runQuery("SELECT NOKP FROM sip_pgb WHERE ID = :id");
 $sqlpgb->bindParam(':id',$idpgb);
 $sqlpgb->execute();
@@ -18,7 +28,7 @@ $sqlbim->bindParam(':nokp',$ic2);
 
 <h3><strong>RUMUSAN LAPORAN BIMBINGAN PGB</strong></h3>
 <div class="row mtb">
-    <div class="col-md-12">
+    <div class="col-md-12" style="overflow-x:auto;">
         <table class="std1" style="width:100%;text-align:center;">
             <thead>
                 <tr style="height:30px;background-color:silver;">
@@ -73,7 +83,7 @@ $sqlbim->bindParam(':nokp',$ic2);
 </div>
 <div class="row mtb"></div>
 <div class="row mtb">
-    <div class="col-md-12">
+    <div class="col-md-12" style="overflow-x:auto;">
         <table class="std1" style="width:100%;text-align:center;">
             <thead>
                 <tr style="height:30px;background-color:silver;">
@@ -119,7 +129,42 @@ $sqlbim->bindParam(':nokp',$ic2);
     </div>
 </div>
 <div class="row mtb">
-    <div class="col-md-3 col-md-offset-9">
-        <a href="index.php?page=lapor&idpgb=<?php echo $idpgb;?>" class="btn btn-primary btn-block">TAMBAH BIMBINGAN</a>
+    <div class="col-md-3 col-md-offset-6">
+        <a href="index.php?page=lapor&idpgb=<?php echo $idpgb;?>" class="btn btn-primary btn-block"><i class="fa fa-plus-circle"></i> TAMBAH BIMBINGAN</a>
+    </div>
+    <div class="col-md-3">
+        <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#buang"><i class="fa fa-minus-circle"></i> BUANG BIMBINGAN</button>
     </div>
 </div>
+
+<!-- MODAL BUANG BIMBINGAN -->
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="buang">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">MENU BUANG BIMBINGAN</h4>
+        </div>
+        <div class="modal-body text-center">
+            <p>Sila pilih bimbingan yang ingin dibuang. Sistem akan membuang semua maklumat bimbingan pada sesi berkenaan.</p>
+            <form class="row" method="POST">
+                <div class="col-md-12">
+                    <select name="id" class="form-control">
+                        <option value="" disabled selected>Sila Pilih...</option>
+                        <?php
+                        $sqlbim->execute();
+                        while($xbil = $sqlbim->fetch(PDO::FETCH_ASSOC)) {
+                            echo '<option value="'.$xbil['ID'].'">Bimbingan Ke-'.$xbil['BILKE'].' Pada '.date('d/m/Y',strtotime($xbil['TARIKH'])).'</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-md-12 mtb">
+                    <button type="submit" name="delbim" class="btn btn-danger btn-block"><i class="fa fa-trash"></i> BUANG</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+</div>
+<!-- MODAL BUANG BIMBINGAN -->

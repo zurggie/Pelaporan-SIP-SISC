@@ -9,6 +9,7 @@ $sensem->bindParam(':sip',$namapengguna);
 <style>
     .backwhite {
         background-color:white;
+        min-height:500px;
     }
     .mtb {
         margin-top:1rem;
@@ -33,7 +34,7 @@ $sensem->bindParam(':sip',$namapengguna);
     }
 </style>
 
-<div class="row col-md-12 backwhite">
+<div class="col-md-12 backwhite">
     <div class="container">
         <form class="row mtb">
             <div class="col-md-8">
@@ -50,10 +51,10 @@ $sensem->bindParam(':sip',$namapengguna);
             </div>
             <div class="col-md-2">
                 <input type="hidden" name="page" value="pelaporan">
-                <button type="submit" name="inpage" value="rumusan" class="btn btn-primary btn-block">RUMUSAN</button>
+                <button type="submit" name="inpage" value="rumusan" class="btn btn-primary btn-block"><i class="fa fa-file-text"></i> RUMUSAN</button>
             </div>
             <div class="col-md-2">
-                <button type="submit" name="inpage" value="carta" class="btn btn-success btn-block">CARTA</button>
+                <button type="submit" name="inpage" value="carta" class="btn btn-success btn-block"><i class="fa fa-bar-chart"></i> CARTA</button>
             </div>
         </form>
         <div class="row mtb">
