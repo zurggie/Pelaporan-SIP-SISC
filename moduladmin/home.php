@@ -72,6 +72,16 @@ if($userlevel=="255"){
             <li><a href="../moduladmin/sign-up.php">Daftar Pengguna</a></li>
             
           </ul>
+          <ul class="nav navbar-nav">
+    
+            <li><a href="home.php?id=senaraisip">Senarai SIP</a></li>
+            
+          </ul>  
+           <ul class="nav navbar-nav">
+    
+            <li><a href="home.php?id=senaraisisc">Senarai SISC+</a></li>
+            
+          </ul>  
           <ul class="nav navbar-nav navbar-right">
             
             <li class="dropdown">
@@ -149,7 +159,7 @@ $result->execute();
     
   ?> 
   
-    <table border=1 width=100%>
+    <table border=2 width=100%>
     <tr><th>#</th>
         <th>Nama</th><th>Nama Pengguna</th><th>Katalaluan</th><th>Aras</th>
         <th>Kod PPD</th><th>Kod Negeri</th>
@@ -195,19 +205,203 @@ foreach ($result as $row) {
     }
                 
                 
-         else
-     {
-         
-     header("Location: ../modul/logout.php?logout=true");     
-         
-     }    
+
+    
+        
+//=========== SENARAI SIP ===========       
+          
+if($id=="senaraisip"){
+    
+                        
+
+$sql = "SELECT
+`sip+`.KODNEGERI,
+`sip+`.KODPPD,
+`sip+`.KPUTAMA,
+`sip+`.NAMA_SISP,
+`sip+`.GREDJAWATAN,
+`sip+`.TARIKHLAHIR,
+`sip+`.ALAMATTPTBERTUGAS,
+`sip+`.TELEFONPEJABAT,
+`sip+`.TELEFONBIMBIT,
+`sip+`.FAX,
+`sip+`.ALAMATSURAT,
+`sip+`.DIREKODOLEH,
+`sip+`.TATATERTIB,
+`sip+`.TARIKHREKOD,
+`sip+`.TARIKHBERSARA,
+`sip+`.TARIKHTBBK,
+`sip+`.TARIKHPANGKUSISP,
+`sip+`.TARIKHPENEMPATANSISP,
+`sip+`.TARIKHSAHLANTIKANDG41,
+`sip+`.EMAIL,
+`sip+`.TARIKHLANTIKANDG29,
+`sip+`.STATUSKAHWIN,
+`sip+`.TARIKHLANTIKANDG41,
+`sip+`.id,
+tkppd.NAMAPPD,
+tknegeri.NAMANEGERI
+FROM
+`sip+`
+JOIN tkppd
+ON `sip+`.KODPPD = tkppd.KODPPD 
+JOIN tknegeri
+ON tkppd.KODNEGERI = tknegeri.KODNEGERI
+
+ORDER BY `sip+`.KODNEGERI,`sip+`.KODPPD ASC  ";
+
+
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':kodnegeri', $kodnegeri);	
+$result->execute();
+       
+    
+  ?> 
+  
+    <table border=1 width=100%>
+    <tr><th>#</th>
+     <th>No KP</th><th>Nama SIP</th><th>Nama PPD</th><th>Negeri</th><th>Arahan</th>
+        </tr>
+    
+    
+    <?php
+    
+$bil=0;
+    
+if ($result->rowCount() > 0) {		
+foreach ($result as $row) {
+                        $kputama=$row['KPUTAMA'];
+                        $nama=$row['NAMA_SISP'];
+                        $kodppd=$row['KODPPD'];
+                        $ppd=$row['NAMAPPD'];
+                        $negeri=$row['NAMANEGERI'];
+                        $kodnegeri=$row['KODNEGERI'];
+ $bil++;   
+                        ?>
+    
+  
+        <tr><td><?php echo $bil;?></td>
+        <td>
+            <?php
+            echo"<a href=\"./sign-up.php?KPUTAMA=$kputama\" title=\"Kemaskini Maklumat: $nama \" > $kputama</a>";
+           ?>
+            
+            
+            </td><td><?php echo $nama;?> </td><td><?php echo "$kodppd $ppd";?> </td>
+            
+            <td><?php echo "$kodnegeri $negeri";?> </td>
+              <td><a href="../moduladmin/padam.php?user_id=<?php echo $row["user_id"]; ?>" class="link"><img name="delete" id="delete" title="Padam" onclick="return confirm('Anda Pasti Hendak Padam Rekod Ini?')" src="../icon/delete.png"/></a></td>
+        </tr>
+
+<?php
+}
+}
+?>
+    </table>
+            
+  <?php          
+}
+    
+    
+    
+      
+//=========== SENARAI SISC ===========       
+          
+if($id=="senaraisisc"){
+    
+                        
+
+$sql = "SELECT
+`sip+`.KODNEGERI,
+`sip+`.KODPPD,
+`sip+`.KPUTAMA,
+`sip+`.NAMA_SISP,
+`sip+`.GREDJAWATAN,
+`sip+`.TARIKHLAHIR,
+`sip+`.ALAMATTPTBERTUGAS,
+`sip+`.TELEFONPEJABAT,
+`sip+`.TELEFONBIMBIT,
+`sip+`.FAX,
+`sip+`.ALAMATSURAT,
+`sip+`.DIREKODOLEH,
+`sip+`.TATATERTIB,
+`sip+`.TARIKHREKOD,
+`sip+`.TARIKHBERSARA,
+`sip+`.TARIKHTBBK,
+`sip+`.TARIKHPANGKUSISP,
+`sip+`.TARIKHPENEMPATANSISP,
+`sip+`.TARIKHSAHLANTIKANDG41,
+`sip+`.EMAIL,
+`sip+`.TARIKHLANTIKANDG29,
+`sip+`.STATUSKAHWIN,
+`sip+`.TARIKHLANTIKANDG41,
+`sip+`.id,
+tkppd.NAMAPPD,
+tknegeri.NAMANEGERI
+FROM
+`sip+`
+JOIN tkppd
+ON `sip+`.KODPPD = tkppd.KODPPD 
+JOIN tknegeri
+ON tkppd.KODNEGERI = tknegeri.KODNEGERI
+
+ORDER BY `sip+`.KODNEGERI,`sip+`.KODPPD ASC  ";
+
+
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':kodnegeri', $kodnegeri);	
+$result->execute();
+       
+    
+  ?> 
+  
+    <table border=1 width=100%>
+    <tr><th>#</th>
+     <th>No KP</th><th>Nama SIP</th><th>Nama PPD</th><th>Negeri</th><th>Arahan</th>
+        </tr>
+    
+    
+    <?php
+    
+$bil=0;
+    
+if ($result->rowCount() > 0) {		
+foreach ($result as $row) {
+                        $kputama=$row['KPUTAMA'];
+                        $nama=$row['NAMA_SISP'];
+                        $kodppd=$row['KODPPD'];
+                        $ppd=$row['NAMAPPD'];
+                        $negeri=$row['NAMANEGERI'];
+                        $kodnegeri=$row['KODNEGERI'];
+ $bil++;   
+                        ?>
+    
+  
+        <tr><td><?php echo $bil;?></td>
+        <td>
+            <?php
+            echo"<a href=\"./sign-up.php?KPUTAMA=$kputama\" title=\"Kemaskini Maklumat: $nama \" > $kputama</a>";
+           ?>
+            
+            
+            </td><td><?php echo $nama;?> </td><td><?php echo "$kodppd $ppd";?> </td>
+            
+            <td><?php echo "$kodnegeri $negeri";?> </td>
+              <td><a href="../moduladmin/padam.php?user_id=<?php echo $row["user_id"]; ?>" class="link"><img name="delete" id="delete" title="Padam" onclick="return confirm('Anda Pasti Hendak Padam Rekod Ini?')" src="../icon/delete.png"/></a></td>
+        </tr>
+
+<?php
+}
+}
+?>
+    </table>
+            
+  <?php          
+}
     
     
         
-        ?>
-        
-        
-        
+        ?>      
         
   
     
