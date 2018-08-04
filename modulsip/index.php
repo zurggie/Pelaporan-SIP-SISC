@@ -547,6 +547,8 @@ $http3=$row3['HTTP'];
                             include 'senarai.php';
                         } elseif($_GET['page']=="daftar") {
                             include 'daftar.php';
+                        } elseif($_GET['page']=="analisasemua") {
+                            include 'analisasemua.php';
                         }
                     } else {
                         include 'senarai.php';

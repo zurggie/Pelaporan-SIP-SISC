@@ -16,6 +16,9 @@ $sensem->bindParam(':sip',$namapengguna);
         margin-bottom:1rem;
     }
     .mypanel {
+        border-style: solid;
+        border-width: 1px;
+        border-color: silver;
         margin-top: 2rem;
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
         transition: 0.3s;
