@@ -20,33 +20,38 @@ class USER
 		return $stmt;
 	}
 	
-	public function register($uname,$upass)
+	public function register($umail,$uname,$upass,$uaras,$ukodppd,$ukodnegeri)
 	{
 		try
 		{
 			$new_password = password_hash($upass, PASSWORD_DEFAULT);
 			$new_password2 = $upass;
             
-          //  $umail = strtoupper($umail);
+            $umail = strtoupper($umail);
            $ukelas = '10';
             
             
-			$stmt = $this->conn->prepare("INSERT INTO users(real_name,user_name,user_email,user_pass,userlevel,txtpassword,kodppd,
-            kodsekolah,kodnegeri) 
-		     VALUES(:kodsekolah, :kodsekolah, :kodsekolah, :upass, :ukelas, :upass2, :kodppd, :kodsekolah,:kodnegeri)");
-												  
-			//$stmt->bindparam(":uname", $uname);
-			$stmt->bindparam(":umail", $umail);
-			$stmt->bindparam(":upass", $new_password);		
-            $stmt->bindparam(":kodsekolah", $kodsekolah); 
-			$stmt->bindparam(":kodppd", $kodppd);
-            $stmt->bindparam(":kodnegeri", $kodnegeri);
-            $stmt->bindparam(":ukelas", $ukelas);
-            $stmt->bindparam(":upass2", $new_password2);
+$stmt = $this->conn->prepare("INSERT INTO users(real_name,user_name,user_pass,txtpassword,userlevel,kodppd,kodnegeri) 
+		     VALUES(:uname,:umail,:upass,:upass2,:uaras,:ukodppd,:ukodnegeri)");
             
-            $kodppd=$_POST['kodppd'];
-            $kodsekolah=$_POST['kodsekolah'];
-            $kodnegeri=$_POST['kodnegeri'];
+			$stmt->bindparam(":umail", $umail);									  
+			$stmt->bindparam(":uname", $uname);
+			$stmt->bindparam(":upass2", $new_password2);
+            $stmt->bindparam(":uaras", $uaras);
+            $stmt->bindparam(":ukodppd",$ukodppd);
+            $stmt->bindparam(":ukodnegeri",$ukodnegeri);
+            
+			$stmt->bindparam(":upass", $new_password);	
+            
+            //$stmt->bindparam(":kodsekolah", $kodsekolah); 
+			//$stmt->bindparam(":kodppd", $kodppd);
+            
+          
+           
+            
+           // $kodppd=$_POST['kodppd'];
+           // $kodsekolah=$_POST['kodsekolah'];
+           // $kodnegeri=$_POST['kodnegeri'];
             
              
 			$stmt->execute();	

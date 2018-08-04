@@ -1,66 +1,9 @@
 <?php
-//session_start();
-//require_once('class.user.php');
-//$user = new USER();
-
- @require_once("../modul/session.php");
-	require_once("../modul/class.user.php");
-	$auth_user = new USER();
+session_start();
+require_once('class.user.php');
+$user = new USER();
 
 
-
-
-$kputama=isset($_GET['KPUTAMA']) ? $_GET['KPUTAMA'] : null;  
-
-
-
-$sql = " 
-SELECT
-`sip+`.KODNEGERI,
-`sip+`.KODPPD,
-`sip+`.KPUTAMA,
-`sip+`.NAMA_SISP,
-`sip+`.GREDJAWATAN,
-`sip+`.TARIKHLAHIR,
-`sip+`.ALAMATTPTBERTUGAS,
-`sip+`.TELEFONPEJABAT,
-`sip+`.TELEFONBIMBIT,
-`sip+`.FAX,
-`sip+`.ALAMATSURAT,
-`sip+`.DIREKODOLEH,
-`sip+`.TATATERTIB,
-`sip+`.TARIKHREKOD,
-`sip+`.TARIKHBERSARA,
-`sip+`.TARIKHTBBK,
-`sip+`.TARIKHPANGKUSISP,
-`sip+`.TARIKHPENEMPATANSISP,
-`sip+`.TARIKHSAHLANTIKANDG41,
-`sip+`.EMAIL,
-`sip+`.TARIKHLANTIKANDG29,
-`sip+`.STATUSKAHWIN,
-`sip+`.TARIKHLANTIKANDG41,
-`sip+`.id,
-tkppd.NAMAPPD,
-tknegeri.NAMANEGERI
-FROM
-`sip+`
-JOIN tkppd
-ON `sip+`.KODPPD = tkppd.KODPPD 
-JOIN tknegeri
-ON tkppd.KODNEGERI = tknegeri.KODNEGERI
- 
- where `sip+`.KPUTAMA=:kputama";
-
-$result = $auth_user->runQuery($sql);
-$result->bindParam(':kputama', $kputama);	
-$result->execute(); 
-
-
-     $row=$result->fetch(PDO::FETCH_ASSOC);
-    $uname=$row['KPUTAMA'];
-    $umail=$row['NAMA_SISP'];
-    $ukodppd=$row['KODPPD'];
- $ukodnegeri=$row['KODNEGERI'];
 
 if(isset($_POST['btn-signup']))
 {
@@ -70,7 +13,7 @@ if(isset($_POST['btn-signup']))
 	$uaras = strip_tags($_POST['txt_aras']);
     $ukodppd = strip_tags($_POST['txt_kodppd']);
     $ukodnegeri= strip_tags($_POST['txt_kodnegeri']);
-    //$ukodsekolah= strip_tags($_POST['txt_kodsekolah']);
+   // $ukodsekolah= strip_tags($_POST['txt_kodsekolah']);
     
 	if($uname=="")	{
 		$error[] = "Taipkan Nama Pengguna!";	
@@ -98,7 +41,7 @@ if(isset($_POST['btn-signup']))
 	{
 		try
 		{
-			$stmt = $auth_user->runQuery("SELECT user_name, user_email FROM users WHERE user_name=:uname OR user_email=:umail");
+			$stmt = $user->runQuery("SELECT user_name, user_email FROM users WHERE user_name=:uname OR user_email=:umail");
 			$stmt->execute(array(':uname'=>$uname, ':umail'=>$umail));
 			$row=$stmt->fetch(PDO::FETCH_ASSOC);
 				
@@ -110,8 +53,8 @@ if(isset($_POST['btn-signup']))
 			}
 			else
 			{
-if($auth_user->register($uname,$umail,$upass,$uaras,$ukodppd,$ukodnegeri)){	
-					$auth_user->redirect('sign-up.php?joined');
+				if($user->register($uname,$umail,$upass,$uaras,$ukodppd,$ukodnegeri,$ukodsekolah)){	
+					$user->redirect('sign-up.php?joined');
 				}
 			}
 		}
@@ -200,40 +143,26 @@ if($auth_user->register($uname,$umail,$upass,$uaras,$ukodppd,$ukodnegeri)){
 			}
 			?>
             <div class="form-group">
-              <input type="text" size="50" name="txt_uname" class="demo-form-field" value="<?php echo $uname; ?>" required  />   
-                
-          
-                
+            <input type="text" class="form-control" name="txt_uname" placeholder="Masukkan Nama Pengguna" value="<?php if(isset($error)){echo $uname;}?>" />
             </div>
             
-
-            
-            
             <div class="form-group">
-          <input type="text" size="50" name="txt_umail" class="form-control" value="<?php echo $umail; ?>" required  /> 
-         
+            <input type="text" class="form-control" name="txt_umail" placeholder="Nama Penuh Pengguna" value="<?php if(isset($error)){echo $umail;}?>" />
             </div>
             <div class="form-group">
             	<input type="password" class="form-control" name="txt_upass" placeholder="Taipkan Kata laluan" />
             </div>
              <div class="form-group">
-            	<input type="userlevel" class="form-control" name="txt_aras" placeholder=" SISC=15 : SIP=20 :PPD=50 :SEK=10 :JPN=60 :KPM=100 " />
-            </div>
-            
-             <div class="form-group">
-                 
-             <input type="text" size="50" name="txt_kodppd" class="form-control" value="<?php echo $ukodppd; ?>" required  />  
-                 
-          
-                 
-                 
+            	<input type="userlevel" class="form-control" name="txt_aras" placeholder="Aras Pengguna" />
             </div>
              <div class="form-group">
-               <input type="text" size="50" name="txt_kodnegeri" class="form-control" value="<?php echo $ukodnegeri; ?>" required  /> 
-                
-              
-                 
-                 
+            	<input type="kodsekolah" class="form-control" name="txt_kodsekolah" placeholder="Kod Sekolah untuk pengguna PGYB" />
+            </div>
+             <div class="form-group">
+            	<input type="kodppd" class="form-control" name="txt_kodppd" placeholder="Kod PPD" />
+            </div>
+             <div class="form-group">
+            	<input type="kodnegeri" class="form-control" name="txt_kodnegeri" placeholder="Kod Negeri" />
             </div>
             
             
