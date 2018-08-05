@@ -248,7 +248,7 @@ ON `sip+`.KODPPD = tkppd.KODPPD
 JOIN tknegeri
 ON tkppd.KODNEGERI = tknegeri.KODNEGERI
 
-ORDER BY `sip+`.KODNEGERI,`sip+`.KODPPD ASC  ";
+ORDER BY `sip+`.KODNEGERI,`sip+`.KODPPD,`sip+`.NAMA_SISP ASC  ";
 
 
 $result = $auth_user->runQuery($sql);
@@ -305,47 +305,47 @@ foreach ($result as $row) {
     
     
       
-//=========== SENARAI SISC ===========       
+//=========== SENARAI SIP ===========       
           
 if($id=="senaraisisc"){
     
                         
 
 $sql = "SELECT
-`sip+`.KODNEGERI,
-`sip+`.KODPPD,
-`sip+`.KPUTAMA,
-`sip+`.NAMA_SISP,
-`sip+`.GREDJAWATAN,
-`sip+`.TARIKHLAHIR,
-`sip+`.ALAMATTPTBERTUGAS,
-`sip+`.TELEFONPEJABAT,
-`sip+`.TELEFONBIMBIT,
-`sip+`.FAX,
-`sip+`.ALAMATSURAT,
-`sip+`.DIREKODOLEH,
-`sip+`.TATATERTIB,
-`sip+`.TARIKHREKOD,
-`sip+`.TARIKHBERSARA,
-`sip+`.TARIKHTBBK,
-`sip+`.TARIKHPANGKUSISP,
-`sip+`.TARIKHPENEMPATANSISP,
-`sip+`.TARIKHSAHLANTIKANDG41,
-`sip+`.EMAIL,
-`sip+`.TARIKHLANTIKANDG29,
-`sip+`.STATUSKAHWIN,
-`sip+`.TARIKHLANTIKANDG41,
-`sip+`.id,
+
+
+`sisc+`.KODNEGERI,
+`sisc+`.KODPPD,
+`sisc+`.KPUTAMA,
+`sisc+`.NAMA_SISC,
+`sisc+`.GREDJAWATAN,
+`sisc+`.TARIKHLAHIR,
+`sisc+`.ALAMATTPTBERTUGAS,
+`sisc+`.TELEFONPEJABAT,
+`sisc+`.TELEFONBIMBIT,
+`sisc+`.FAX,
+`sisc+`.ALAMATSURAT,
+`sisc+`.TARIKHLANTIKANDG41,
+`sisc+`.STATUSKAHWIN,
+`sisc+`.TARIKHLANTIKANDG29,
+`sisc+`.EMAIL,
+`sisc+`.TARIKHSAHLANTIKANDG41,
+`sisc+`.TARIKHPENEMPATANSISC,
+`sisc+`.TARIKHPANGKUSISC,
+`sisc+`.TARIKHTBBK,
+`sisc+`.TARIKHBERSARA,
+`sisc+`.TATATERTIB,
 tkppd.NAMAPPD,
 tknegeri.NAMANEGERI
 FROM
-`sip+`
+`sisc+`
 JOIN tkppd
-ON `sip+`.KODPPD = tkppd.KODPPD 
+ON `sisc+`.KODPPD = tkppd.KODPPD 
 JOIN tknegeri
 ON tkppd.KODNEGERI = tknegeri.KODNEGERI
 
-ORDER BY `sip+`.KODNEGERI,`sip+`.KODPPD ASC  ";
+ORDER BY `sisc+`.KODNEGERI,`sisc+`.KODPPD,`sisc+`.NAMA_SISC ASC  ";
+
 
 
 $result = $auth_user->runQuery($sql);
@@ -368,7 +368,7 @@ $bil=0;
 if ($result->rowCount() > 0) {		
 foreach ($result as $row) {
                         $kputama=$row['KPUTAMA'];
-                        $nama=$row['NAMA_SISP'];
+                        $nama=$row['NAMA_SISC'];
                         $kodppd=$row['KODPPD'];
                         $ppd=$row['NAMAPPD'];
                         $negeri=$row['NAMANEGERI'];
@@ -380,7 +380,7 @@ foreach ($result as $row) {
         <tr><td><?php echo $bil;?></td>
         <td>
             <?php
-            echo"<a href=\"./sign-up.php?KPUTAMA=$kputama\" title=\"Kemaskini Maklumat: $nama \" > $kputama</a>";
+            echo"<a href=\"./sign-up-sisc.php?KPUTAMA=$kputama\" title=\"Kemaskini Maklumat: $nama \" > $kputama</a>";
            ?>
             
             

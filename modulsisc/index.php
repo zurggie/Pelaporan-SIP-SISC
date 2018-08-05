@@ -108,6 +108,44 @@ $sql = $auth_user->runQuery("INSERT INTO sisc_guru
 }
  
 
+if(!empty($_POST["save_record2"])) {
+	
+
+$status=isset($_POST['STATUS']) ? $_POST['STATUS'] : null; 
+$tarikhmula=isset($_POST['TARIKHSTATUS']) ? $_POST['TARIKHSTATUS'] : null; 
+   
+$nokp=isset($_GET['NOKP']) ? $_GET['NOKP'] :null;  
+$tarikhmula=isset($_GET['TARIKHSTATUS']) ? $_GET['TARIKHSTATUS'] :null; 
+    
+           $dari_hari = $_POST['dari_hari'];
+           $dari_bulan = $_POST['dari_bulan'];
+           $dari_tahun = $_POST['dari_tahun'];
+           
+
+           $tarikhmula = $dari_tahun."-".$dari_bulan."-".$dari_hari;  
+    
+    
+    
+	$pdo_statement=$auth_user->runQuery("update sisc_guru set STATUS=:status,TARIKHSTATUS=:tarikhmula
+    
+    where NOKP=:nokp");
+  
+    $pdo_statement->bindParam(':status',$status); 
+    $pdo_statement->bindParam(':tarikhmula',$tarikhmula); 
+    
+    $pdo_statement->bindParam(':nokp',$nokp);
+	$result = $pdo_statement->execute();
+    
+	if($result) {
+ header("Location: ../modulsisc/index.php?id=senaraiguru");
+	}
+}
+
+    
+    
+    
+    
+    
     
 ?>
 
@@ -732,7 +770,173 @@ $http3=$row3['HTTP'];
         
     }                 
                      
-                     
+  
+    
+    if($id=="kemaskini"){
+        
+        
+                       
+ $nokp=isset($_GET['NOKP']) ? $_GET['NOKP'] : null; 
+
+$sql = "SELECT
+
+sisc_guru.ID,
+sisc_guru.SISC,
+sisc_guru.NOKP,
+sisc_guru.NAMAGURU,
+sisc_guru.KODSEKOLAH,
+sisc_guru.JAWATAN,
+sisc_guru.TARIKHSTATUS,
+sisc_guru.`STATUS`
+FROM
+sisc_guru
+
+
+WHERE sisc_guru.NOKP=:nokp";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':nokp', $nokp);	
+$result->execute();
+      
+
+ $row=$result->fetch(PDO::FETCH_ASSOC);
+    $id=$row['ID'];
+    $nama=$row['NAMAGURU'];
+    $status=$row['STATUS'];   
+        
+        
+        $hari_ini = date('d');
+            $bulan_ini = date('m');
+            $tahun_ini = date('Y');
+            $hari_esok = date('d');
+            $bulan_esok = date('m');
+            $tahun_esok = date('Y');   
+    
+    $tarikhmula = $row['TARIKHSTATUS'];
+  
+           if($tarikhmula!="") {
+                 $mula_hari = date('d',strtotime($tarikhmula));
+                 $mula_bulan = date('m',strtotime($tarikhmula));
+                 $mula_tahun = date('Y',strtotime($tarikhmula));
+                 $mula_jam = date('H',strtotime($tarikhmula));
+                 $mula_minit = date('i',strtotime($tarikhmula));
+                 $hari_ini = $mula_hari;
+                 $bulan_ini = $mula_bulan;
+                 $tahun_ini = $mula_tahun;
+               }       
+        
+        
+                 
+   ?>             
+                
+<form name="frmAdd" action="" method="POST">
+<table border="0" cellpadding="10" cellspacing="0" width="100%" align="center" class="tbl-qa">  
+ PENGESAHAN STATUS
+                
+                
+
+    
+ <tr class="table-row" >
+     <td>Nama Pegawai: </td><td><?php echo $nama;?></td>
+  
+</tr>                
+<tr class="table-row" >
+<td>Status: </td><td>
+   
+<select name="STATUS" id="STATUS">
+    
+ <?php
+$stmt = $auth_user->runQuery("SELECT 
+
+kodstatuspgb.ID,
+kodstatuspgb.KOD,
+kodstatuspgb.PERKARA,
+kodstatuspgb.RANK
+FROM
+kodstatuspgb
+
+ORDER BY kodstatuspgb.KOD ASC");
+   
+    
+    
+    
+     echo "<option value=\"\"> - Sila Pilih -</option>";  
+	$stmt->execute();
+	foreach ($stmt as $row) 
+ {
+ ?>
+<?php print "<option value='";?><?php echo $row['KOD']; ?>'<?php if ($row['KOD']==$status) { ?>selected<?php } ?>><?php
+ echo $row['KOD'].'-'.$row['PERKARA']; ?></option>
+ <?php } ?>
+ </select> 
+
+    </td>
+</tr>       
+                    
+<?php                    
+echo " <tr><td>Tarikh Status </td><td>";
+         echo "        <select name=\"dari_hari\">";
+                       for ( $counter = 1; $counter<= 31; $counter++) {
+                       echo "<option value=\"$counter\"";if($counter==$hari_ini) { echo "selected"; }
+                           echo ">$counter</option>";
+                       }
+         echo "          </select><select name=\"dari_bulan\">";
+                           for ( $counter2 = 1; $counter2<= 12; $counter2++) {
+                            if($counter2=="1") { $bulan="Januari"; }if($counter2=="2") { $bulan="Februari";
+                                                                                       }if($counter2=="3") { $bulan="Mac"; }
+                            if($counter2=="4") { $bulan="April"; }if($counter2=="5") { $bulan="Mei"; }if($counter2=="6") { $bulan="Jun"; }
+                            if($counter2=="7") { $bulan="Julai"; }if($counter2=="8") { $bulan="Ogos"; }if($counter2=="9") { $bulan="September"; }
+                            if($counter2=="10") { $bulan="Oktober"; }if($counter2=="11") { $bulan="November"; }if($counter2=="12") { $bulan="Disember"; }
+
+         echo "<option value=\"$counter2\"";if($counter2==$bulan_ini) { echo "selected"; } echo ">$bulan</option>";
+                        }
+
+         echo "</select><select name=\"dari_tahun\">";
+                         for ( $counter = $tahun_ini - 1; $counter<= $tahun_ini + 50; $counter++) {
+         echo "<option value=\"$counter\"";if($counter==$tahun_ini) { echo "selected"; } echo ">$counter</option>";
+                         }
+
+        echo "</td></tr>";
+    
+       ?>                        
+                    
+                    
+                    
+                    
+                    
+                  
+                    
+                    
+                    
+                    
+                
+ <tr class="table-row" ><td>
+     <?php //echo "<input type=\"hidden\" name=\"kodnegeri\" value=\"$kodnegeri\" />";?>
+     <?php echo "<input type=\"hidden\" name=\"NOKP\" value=\"$nokp\" />";?>
+     
+          <input name="save_record2" type="submit" value="Simpan" class="demo-form-submit">
+          </td><td>
+          <a href="index.php?id=senaraiguru" class="demo-form-submit"> <i class="glyphicon glyphicon-fast-backward"></i> &nbsp; Batal</a>
+          </td>
+                </tr>
+
+  
+     </table>      
+    
+    </form>                  
+                
+                    
+        
+   <?php     
+        
+        
+    }
+    
+    
+    
+    
+    
+    
               
   if($id=="senaraiguru"){
       
@@ -762,6 +966,10 @@ WHERE sisc_guru.SISC=:namapengguna  ORDER BY sisc_guru.NAMAGURU ASC";
 $result = $auth_user->runQuery($sql);
 $result->bindParam(':namapengguna', $namapengguna);	
 $result->execute();
+      
+    
+      
+      
     ?>                          
                             
 
@@ -808,6 +1016,14 @@ foreach ($result as $row) {
                        if($tarikhstatus=="0000-00-00") { $tarikhstatus= ""; }
                        if($tarikhstatus!="") { $tarikhstatus = date('d/m/Y',strtotime($tarikhstatus)); }
                         $bil++;
+    
+    
+    $sqln = $auth_user->runQuery("SELECT * FROM kodstatuspgb  WHERE KOD=:status");
+	$sqln->execute(array(":status"=>$status));
+    $sqlnRow=$sqln->fetch(PDO::FETCH_ASSOC);
+    $perkara=$sqlnRow['PERKARA'];  
+    
+    
                         
 			?>                                       
                                         
@@ -821,19 +1037,41 @@ foreach ($result as $row) {
                                             <td><?php 
     
     if($status=="1"){
+   
+           
         
-     echo "<span class=\"label label-success\">$tarikhstatus</span><td>";  
+        
+        
+     echo "$perkara<br><a href=\"./index.php?id=kemaskini&NOKP=$nokp\" title=\"Kemaskini Maklumat: $nama \" > 
+     
+     <span class=\"label label-success\">$tarikhstatus </span></a>  <td>";  
         
     }
+     if($status=="2"){
+        
+     echo "$perkara<br><a href=\"./index.php?id=kemaskini&NOKP=$nokp\" title=\"Kemaskini Maklumat: $nama \" > 
+     <span class=\"label label-success\">$tarikhstatus </span></a><td>";  
+        
+    }
+     if($status=="3"){
+        
+     echo "$perkara<br><a href=\"./index.php?id=kemaskini&NOKP=$nokp\" title=\"Kemaskini Maklumat: $nama \" > 
+     <span class=\"label label-success\">$tarikhstatus </span></a><td>";  
+        
+    }
+    
+    
    if($status==""){
         
-     echo "<td>";  
+     echo " $perkara<br> <a href=\"./index.php?id=kemaskini&NOKP=$nokp\" title=\"Kemaskini Maklumat: $nama \" > 
+     
+     <span class=\"label label-success\">$tarikhstatus</span>Tidak Berkenaan</a> <td>";  
         
     }
 
       echo"
    <a href=\"../modulsisc/pelaporan.php?id=$kod\" title=\"Pepaloran[ $id ]$nama \"> 
-   <span class=\"label label-success\">Lapor</span></a></td>";?>
+   Lapor</a></td>";?>
    
                                                 
    <td><a href="../modulsisc/padam.php?ID=<?php echo $row["ID"]; ?>" class="link"><img name="delete" id="delete" title="Padam" onclick="return confirm('Anda Pasti Hendak Padam Rekod Ini?')" src="../icon/delete.png"/></a></td>
