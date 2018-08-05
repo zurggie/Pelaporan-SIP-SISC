@@ -112,6 +112,7 @@ if (isset($_GET['idpgb'])) {
                                 <td>:</td>
                                 <td>
                                     <select name="hari" required>
+                                        <option value="" selected required>...</option>
                                         <?php
                                         for($h=1;$h<=31;$h++) {
                                             if($h == date('d')) {$day = 'selected';} else {$day = '';}
@@ -119,7 +120,8 @@ if (isset($_GET['idpgb'])) {
                                         }
                                         ?>
                                     </select> / 
-                                    <select name="bulan">
+                                    <select name="bulan" required>
+                                        <option value="" selected required>...</option>
                                         <option value="01" <?php echo selBul('01');?>>Januari</option>
                                         <option value="02" <?php echo selBul('02');?>>Februari</option>
                                         <option value="03" <?php echo selBul('03');?>>Mac</option>
@@ -139,8 +141,8 @@ if (isset($_GET['idpgb'])) {
                                 <td><strong>Jenis Bimbingan</strong></td>
                                 <td>:</td>
                                 <td>
-                                    <select name="jenisb">
-                                        <option selected disabled>Sila Pilih...</option>
+                                    <select name="jenisb" required>
+                                        <option value="" selected disabled>Sila Pilih...</option>
                                         <?php
                                         $bimq = $auth_user->runQuery("SELECT * FROM kodbimbingan WHERE UNTUK = 'sip' OR UNTUK = 'both'");
                                         $bimq->execute();
