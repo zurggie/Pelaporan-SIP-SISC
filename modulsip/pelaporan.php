@@ -65,13 +65,15 @@ $sensem->bindParam(':sip',$namapengguna);
                 <div class="mypanel">
                     <div class="mypanel-body">
                         <!-- ============ START RUMUSAN & GRAF PAGE ============== -->
-                        <?php  
-                            if($_GET['inpage']=='rumusan') {
-                                include 'rumusan.php';
-                            } elseif ($_GET['inpage'] == 'carta') {
-                                include 'carta.php';
-                            } else {
-                                echo 'TIADA';
+                        <?php
+                            if(isset($_GET['inpage'])) {
+                                if($_GET['inpage']=='rumusan') {
+                                    include 'rumusan.php';
+                                } elseif ($_GET['inpage'] == 'carta') {
+                                    include 'carta.php';
+                                }
+                            }  else {
+                                echo '<div class="text-center"><h3>SILA PILIH NAMA PGB DARIPADA SENARAI DI ATAS DAHULU</h3></div>';
                             }
                         ?>
                         <!-- ============ START RUMUSAN & GRAF PAGE ============== -->
