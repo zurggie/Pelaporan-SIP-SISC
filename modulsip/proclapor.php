@@ -27,9 +27,10 @@ if(isset($_POST['fromlapor']) && $userlevel == 20) {
     $idpgb = $_POST['idpgb'];
     
     function insStd($f,$s) {
-        if ($f == 99) {$s = 99;}
-        else {$s = $s;}
-        return $s;
+        if ($f == 99 && $s <> "") {$x = $s;}
+        elseif($f == 99 && $s == "") {$x = 99;}
+        else {$x = $s;}
+        return $x;
     }
 
     $sqlindata = "INSERT INTO sip_pgb_data (SIP,NOKP,BILKE,TARIKH,CATATAN,JENIS,

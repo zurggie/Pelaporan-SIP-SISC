@@ -1,4 +1,12 @@
 ROADMAP SISTEM.
-1) tagging dalam kelas
-2) analisa dalam kelas
-3) tov -siap
+SIP
+1) 3 radar dataset (TOV, PT, AT)
+2) PENARAFAN = NKRA, TOV, PT, AT (keluarkan dpd jenis bimbingan)
+
+SISC
+1) Sebelum Jenis Bimbingan ada Program
+2) add kekerapan bimbingan
+3) sebelum TOV ada NKRA
+4) lepas sah TOV kene lock, PPD leh tengok, selagi x sah, xleh lapor bimbingan.
+5) tambah penilaian pertengahan tahun
+6) tarikh cadang lepaskan beserta ulasan dan ppd leh endorse

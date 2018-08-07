@@ -7,10 +7,6 @@ $sensem->bindParam(':sip',$namapengguna);
 ?>
 
 <style>
-    .backwhite {
-        background-color:white;
-        min-height:500px;
-    }
     .mtb {
         margin-top:1rem;
         margin-bottom:1rem;
@@ -38,7 +34,6 @@ $sensem->bindParam(':sip',$namapengguna);
 </style>
 
 <div class="col-md-12 backwhite">
-    <div class="container">
         <form class="row mtb">
             <div class="col-md-8">
                 <select class="form-control" name="idpgb">
@@ -76,10 +71,9 @@ $sensem->bindParam(':sip',$namapengguna);
                                 echo '<div class="text-center"><h3>SILA PILIH NAMA PGB DARIPADA SENARAI DI ATAS DAHULU</h3></div>';
                             }
                         ?>
-                        <!-- ============ START RUMUSAN & GRAF PAGE ============== -->
+                        <!-- ============ END RUMUSAN & GRAF PAGE ============== -->
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </div>

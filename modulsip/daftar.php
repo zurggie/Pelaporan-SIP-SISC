@@ -1,5 +1,5 @@
 <?php
-    $qskool = $auth_user->runQuery("SELECT NAMASEKOLAH,KODSEKOLAH FROM tssekolah WHERE KODPPD = :kod");
+    $qskool = $auth_user->runQuery("SELECT NAMASEKOLAH,KODSEKOLAH FROM tssekolah WHERE KODPPD = :kod ORDER BY KODPPD ASC");
     $qskool->bindParam(':kod',$kodppd);
 
     if(isset($_POST['addpgb'])) {
@@ -13,7 +13,7 @@
         $qadd->bindParam(':kodppd',$kodppd);
         $qadd->execute();
 
-        header("Location: index.php?page=senarai");
+        echo'<script>window.location.replace("index.php?page=senarai");</script>';
     }
 
     if(isset($_POST['editpgb'])) {
@@ -24,7 +24,7 @@
         $qadd->bindParam(':id',$_POST['id']);
         $qadd->execute();
 
-        header("Location: index.php?page=senarai");
+        echo'<script>window.location.replace("index.php?page=senarai");</script>';
     }
 
     if(isset($_GET['idpgb'])) {
@@ -46,10 +46,6 @@
 ?>
 
 <style>
-    .backwhite {
-        background-color:white;
-        min-height:500px;
-    }
     .mtb {
         margin-top:1rem;
         margin-bottom:1rem;
@@ -57,7 +53,6 @@
 </style>
 
 <div class="col-md-12 backwhite">
-    <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h2><strong>DAFTAR PGB</strong></h2>
@@ -87,7 +82,7 @@
                             while($listsk = $qskool->fetch(PDO::FETCH_ASSOC)) {
                                 if($listsk['KODSEKOLAH'] == $kodsek) {$sel = 'selected';} else {$sel = '';}
                                 echo'
-                                <option value="'.$listsk['KODSEKOLAH'].'" '.$sel.'>'.$listsk['NAMASEKOLAH'].'</option>';
+                                <option value="'.$listsk['KODSEKOLAH'].'" '.$sel.'>'.$listsk['KODSEKOLAH'].' - '.$listsk['NAMASEKOLAH'].'</option>';
                             }
                             ?>
                         </select>
@@ -107,5 +102,4 @@
                 </div>
             </form>
         </div>
-    </div>
 </div>
