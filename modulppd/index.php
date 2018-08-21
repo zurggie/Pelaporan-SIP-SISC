@@ -1,6 +1,6 @@
 <?php
-
-	require_once("../modul/session.php");
+    date_default_timezone_set("Asia/Kuala_Lumpur");
+	@require_once("../modul/session.php");
 	require_once("../modul/class.user.php");
 	$auth_user = new USER();
 
@@ -21,10 +21,18 @@
     $userlevel=$userRow['userlevel'];
 
 
+
+    $sqln = $auth_user->runQuery("SELECT * FROM tkppd  WHERE KODPPD=:kodppd");
+	$sqln->execute(array(":kodppd"=>$kodppd));
+    $sqlnRow=$sqln->fetch(PDO::FETCH_ASSOC);
+    $namappd=$sqlnRow['NAMAPPD'];
+
+
+
  @$id= $_GET['id'];
 
 if($userlevel=="50"){
-
+        
 ?>
 
 <!DOCTYPE html>
@@ -59,6 +67,7 @@ if($userlevel=="50"){
     <link href="css/style.css" rel="stylesheet">
     <!-- color CSS -->
     <link href="css/colors/default.css" id="theme" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -85,132 +94,15 @@ if($userlevel=="50"){
         <!-- ============================================================== -->
         <nav class="navbar navbar-default navbar-static-top m-b-0">
             <div class="navbar-header">
-                <div class="top-left-part">
-                    <!-- Logo -->
-                    <a class="logo" href="#">
-                        <!-- Logo icon image, you can use font-icon also --><b>
-                        <!--This is dark logo icon--><img src="../logo.png" alt="home" class="dark-logo" /><!--This is light logo icon--><img src="../" alt="home" class="light-logo" />
-                     </b>
-                        <!-- Logo text image you can use text also --><span class="hidden-xs">
-                        <!--This is dark logo text--><img src="../" alt="home" class="dark-logo" /><!--This is light logo text--><img src="../" alt="home" class="light-logo" />
-                     </span> </a>
-                </div>
                 <!-- /Logo -->
                 <!-- Search input and Toggle icon -->
                 <ul class="nav navbar-top-links navbar-left">
                     <li><a href="javascript:void(0)" class="open-close waves-effect waves-light"><i class="ti-menu"></i></a></li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#"> <i class="mdi mdi-gmail"></i>
-                            <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
-                        </a>
-                        <ul class="dropdown-menu mailbox animated bounceInDown">
-                            <li>
-                                <div class="drop-title">You have 4 new messages</div>
-                            </li>
-                            <li>
-                                <div class="message-center">
-                                   
-                             
-                                    
-                                </div>
-                            </li>
-                            <li>
-                                <a class="text-center" href="javascript:void(0);"> <strong>See all notifications</strong> <i class="fa fa-angle-right"></i> </a>
-                            </li>
-                        </ul>
-                        <!-- /.dropdown-messages -->
-                    </li>
-                    <!-- .Task dropdown -->
-                    <li class="dropdown">
-                        <a class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#"> <i class="mdi mdi-check-circle"></i>
-                            <div class="notify"><span class="heartbit"></span><span class="point"></span></div>
-                        </a>
-                        <ul class="dropdown-menu dropdown-tasks animated slideInUp">
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <p> <strong>Task 1</strong> <span class="pull-right text-muted">40% Complete</span> </p>
-                                        <div class="progress progress-striped active">
-                                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"> <span class="sr-only">40% Complete (success)</span> </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <p> <strong>Task 2</strong> <span class="pull-right text-muted">20% Complete</span> </p>
-                                        <div class="progress progress-striped active">
-                                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%"> <span class="sr-only">20% Complete</span> </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <p> <strong>Task 3</strong> <span class="pull-right text-muted">60% Complete</span> </p>
-                                        <div class="progress progress-striped active">
-                                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%"> <span class="sr-only">60% Complete (warning)</span> </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <p> <strong>Task 4</strong> <span class="pull-right text-muted">80% Complete</span> </p>
-                                        <div class="progress progress-striped active">
-                                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%"> <span class="sr-only">80% Complete (danger)</span> </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a class="text-center" href="#"> <strong>See All Tasks</strong> <i class="fa fa-angle-right"></i> </a>
-                            </li>
-                        </ul>
-                    </li>
                     <!-- .Megamenu -->
-                    <li class="mega-dropdown"> <a class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#"><span class="hidden-xs">DashboardPPD</span> <i class="icon-options-vertical"></i></a>
-                        <ul class="dropdown-menu mega-dropdown-menu animated bounceInDown">
-                            <li class="col-sm-3">
-                                <ul>
-                                    <li class="dropdown-header">Forms Elements</li>
-                                    <li><a href="form-basic.html">Basic Forms</a></li>
-                                  
-                                </ul>
-                            </li>
-                            <li class="col-sm-3">
-                                <ul>
-                                    <li class="dropdown-header">Advance Forms</li>
-                                    <li><a href="form-dropzone.html">File Dropzone</a></li>
-                                  
-                                </ul>
-                            </li>
-                         
-                            <li class="col-sm-3">
-                                <ul>
-                                    <li class="dropdown-header">Charts</li>
-                                    <li> <a href="flot.html">Flot Charts</a> </li>
-                                    
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
+                    <li><a class="navbar-brand" style="color:white;" href="#">SISTEM PELAPORAN SIP</a></li>
                     <!-- /.Megamenu -->
                 </ul>
                 <ul class="nav navbar-top-links navbar-right pull-right">
-                    <li>
-                        <form role="search" class="app-search hidden-sm hidden-xs m-r-10">
-                            
-                          
-                         </form>
-                    </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> <img src="../logo.png" alt="user-img" width="36" class="img-circle"><b class="hidden-xs"><?php echo $namapengguna;?></b><span class="caret"></span> </a>
                         <ul class="dropdown-menu dropdown-user animated flipInY">
@@ -219,7 +111,7 @@ if($userlevel=="50"){
                                     <div class="u-img"><img src="../logo.png" alt="user" /></div>
                                     <div class="u-text">
                                         <h4><?php echo $namapengguna;?></h4>
-                                        <p class="text-muted">mmazlanh@gmail.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+                                        <p class="text-muted">mmazlanh@gmail.com</p><a href="#" class="btn btn-rounded btn-danger btn-sm"><?php echo $namapenuh;?></a></div>
                                 </div>
                             </li>
                             <li role="separator" class="divider"></li>
@@ -240,60 +132,252 @@ if($userlevel=="50"){
         <!-- ============================================================== -->
         <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
-        <div class="navbar-default sidebar" role="navigation">
+        <div class="navbar-default sidebar" role="navigation" style="background: #fffde7">
             <div class="sidebar-nav slimscrollsidebar">
-                <div class="sidebar-head">
-                    <h3><span class="fa-fw open-close"><i class="ti-close ti-menu"></i></span> <span class="hide-menu">Navigation</span></h3> </div>
-                <div class="user-profile">
+
+                <div class="user-profile" style="margin-top:1rem;">
                     <div class="dropdown user-pro-body">
-                        <div><img src="../logo.png" alt="user-img" class="img-circle"></div>
-                        <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $namapenuh;?><span class="caret"></span></a>
-                        <ul class="dropdown-menu animated flipInY">
-                            <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
-                            <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
-                            <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="login.html"><i class="fa fa-power-off"></i> Logout</a></li>
-                        </ul>
+                        <div><img src="../logo.png" alt="user-img" style="width:80px;"></div>
+                        <div><strong><?php echo $namapenuh;?></strong></div>
+                        <div style="font-size:3rem;width:90%;margin: auto;">ADMIN PPD</div>
+                        <div style="font-size:1.1rem;width:90%;margin: auto;"><?php echo $namappd;?></div>
+                        <a href="logout.php?logout=true" class="btn btn-sm btn-danger" style="margin-top:1rem;">LOG KELUAR</a>
                     </div>
                 </div>
                 <ul class="nav" id="side-menu">
-                  
-                    <li> <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-cart-outline fa-fw" data-icon="v"></i> 
-                        
-                        <span class="hide-menu">Analisa<span class="fa arrow"></span> </span></a>
+                
+                 
+  <!-- ============================= MULA MENU 1 ================================= -->   
+    
+    
+<li><a href="index.php" class="waves-effect"><i class="mdi mdi-home fa-fw"></i> <span class="hide-menu">Muka Depan</span></a></li>     
+    
+    
+    
+    
+    
+    
+                 
+ <li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-certificate fa-fw" data-icon="v"></i> 
+                       
+ <?php                     
+$sql = "SELECT bar_menu.ID,
+bar_menu.KOD,
+bar_menu.MENU,
+bar_menu.TAG
+FROM
+bar_menu
+
+WHERE bar_menu.KOD ='1' AND bar_menu.TAG='PPD'";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+         
+   
+if ($result->rowCount() > 0) {		
+foreach ($result as $row) {
+$menu=$row['MENU']; ?>                    
+                      
+                      
+                      
+                        <span class="hide-menu"> 
+                            <?php echo $menu;?>
+                            <span class="fa arrow"></span> </span></a>
+                      
+    <?php }
+}
+    ?>
+      <!-- ========================== MULA SUB MENU 1 ==================================== -->
                         <ul class="nav nav-second-level">
-                            <li> <a href="analisappd.php?id=ppdsisc"><i class="fa-fw"></i><span class="hide-menu">SISC+</span></a> </li>
-                            <li> <a href="analisappd.php?id=ppdguru"><i class="fa-fw"></i><span class="hide-menu">Guru Dibimbing</span></a> </li>
-                            <li> <a href="analisappd.php?id=graf"><i class="fa-fw"></i><span class="hide-menu">Analisa Bimbingan SISC+</span></a> </li>
                             
+<?php                          
+
+$sql = "SELECT bar_sub.ID,bar_sub.KOD,bar_sub.MENU AS SUBMENU,bar_sub.HTTP,bar_sub.TAG
+FROM
+bar_sub
+WHERE bar_sub.KOD ='1' AND bar_sub.TAG='PPD'
+ORDER BY bar_sub.KOD ASC";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+         
+   
+if ($result->rowCount() > 0) {		
+foreach ($result as $row) {
+$submenu=$row['SUBMENU'];
+$http=$row['HTTP'];                           
+                            ?>
+    
+                            <li>
+                                
+                                
+                                <?php
+                                echo "<a href=\"$http\">";?>
+                                
+                                
+                                
+                                <i class="fa fa-hand-o-right fa-fw"></i><span class="hide-menu"><?php echo "$submenu";?></span></a> </li>
+                            
+                            <?php } ?>
                         </ul>
                     </li>
+                       
+<?php } ?>
                     
-                    
-                    
-                    <li> <a href="#" class="waves-effect"><i class="mdi mdi-format-color-fill fa-fw"></i> <span class="hide-menu">Laporan<span class="fa arrow"></span> <span class="label label-rouded label-info pull-right"> </span> </span></a>
-                        <ul class="nav nav-second-level">
-                            <li><a href="index.php?id=status"><i data-icon="&#xe026;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Status</span></a></li>
-                            
-                            <li><a href="index.php?id=pencen"><i data-icon="&#xe026;" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Pencen</span></a></li>
-                         
-                            
-                        </ul>
-                    </li>
-                    
+ 
+   <!-- ============================ MULA MENU 2 ================================== -->  
+    
+ <li> <a href="javascript:void(0);" class="waves-effect">
      
-                        
-                    <li class="devider"></li>
-                    <li><a href="#" class="waves-effect"><i class="fa fa-circle-o text-danger"></i> <span class="hide-menu">Bantuan</span></a></li>
-                    <li><a href="#" class="waves-effect"><i class="fa fa-circle-o text-info"></i> <span class="hide-menu">Manual Pengguna</span></a></li>
-                    <li><a href="#" class="waves-effect"><i class="fa fa-circle-o text-success"></i> <span class="hide-menu">Pekeliling</span></a></li>
+    <i class="fa fa-line-chart fa-fw"></i> 
+                       
+ <?php                     
+$sql = "SELECT bar_menu.ID,
+bar_menu.KOD,
+bar_menu.MENU,
+bar_menu.TAG
+FROM
+bar_menu
+
+WHERE bar_menu.KOD ='2' AND bar_menu.TAG='PPD'";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+         
+   
+if ($result->rowCount() > 0) {		
+foreach ($result as $row) {
+$menu=$row['MENU']; 
+  
+     ?>                    
+                      
+                      
+                      
+                        <span class="hide-menu"> 
+                            <?php echo $menu;?>
+                            <span class="fa arrow"></span> </span></a>
+                      
+    <?php }
+}
+    ?>
+     <!-- ========================== MULA SUB MENU 2 ==================================== -->
+     
+                        <ul class="nav nav-second-level">
                             
+                           <?php                          
+  
+
+$sql = "SELECT bar_sub.ID,bar_sub.KOD,bar_sub.MENU AS SUBMENU,bar_sub.HTTP,bar_sub.TAG
+FROM
+bar_sub
+WHERE bar_sub.KOD ='2' AND bar_sub.TAG='PPD'
+ORDER BY bar_sub.KOD ASC";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+         
+   
+if ($result->rowCount() > 0) {		
+foreach ($result as $row) {
+$submenu=$row['SUBMENU']; 
+$http=$row['HTTP'];                               
+                            ?>
+    
+                            <li> 
+                                
+                              <?php
+                                echo "<a href=\"$http\">";?>
+                               <i class="fa fa-bookmark fa-fw"></i> <span class="hide-menu"><?php echo "$submenu";?></span></a> </li>
                             
-                 <li><a href="logout.php?logout=true" class="waves-effect"><i class="mdi mdi-logout fa-fw"></i> <span class="hide-menu">Log Keluar</span></a></li>           
+                            <?php } ?>
+                        </ul>
+                    </li>
+                       
+<?php } ?>    
+    
+    
+  <!-- ============================= MULA MENU 3 ================================= -->   
+
+ <li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-line-chart fa-fw" data-icon="v"></i> 
+                       
+ <?php                     
+$sql = "SELECT bar_menu.ID,
+bar_menu.KOD,
+bar_menu.MENU,
+bar_menu.TAG
+FROM
+bar_menu
+
+WHERE bar_menu.KOD ='3' AND bar_menu.TAG='PPD'";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+         
+   
+if ($result->rowCount() > 0) {		
+foreach ($result as $row) {
+$menu=$row['MENU']; ?>                    
+                      
+                      
+                      
+                        <span class="hide-menu"> 
+                            <?php echo $menu;?>
+                            <span class="fa arrow"></span> </span></a>
+                      
+    <?php }
+}
+    ?>
+     <!-- ========================== MULA SUB MENU 3 ==================================== -->
+                        <ul class="nav nav-second-level">
                             
+                           <?php                          
+  
+
+$sql = "SELECT bar_sub.ID,bar_sub.KOD,bar_sub.MENU AS SUBMENU,bar_sub.HTTP,bar_sub.TAG
+FROM
+bar_sub
+WHERE bar_sub.KOD ='3' AND bar_sub.TAG='PPD'
+ORDER BY bar_sub.KOD ASC";
+	
+$result = $auth_user->runQuery($sql);
+$result->bindParam(':namapengguna', $namapengguna);	
+$result->execute();
+         
+   
+if ($result->rowCount() > 0) {		
+foreach ($result as $row3) {
+$submenu3=$row3['SUBMENU']; 
+$http3=$row3['HTTP'];
+                            ?>
+    
+                            <li> 
+                                
+                             <?php
+    
+                                echo "<a href=\"$http3\">";?>
+                                
+                                
+                                <i class="fa fa-bookmark fa-fw" data-icon="v"></i><span class="hide-menu"><?php echo "$submenu3";?></span></a> </li>
+                            
+                            <?php } ?>
+                        </ul>
+                    </li>
+                       
+<?php } ?>    
+         
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                 </ul>
             </div>
         </div>
@@ -303,726 +387,91 @@ if($userlevel=="50"){
         <!-- ============================================================== -->
         <!-- Page Content -->
         <!-- ============================================================== -->
-        <div id="page-wrapper">
+        <div id="page-wrapper" style="background: url('../img/tilekpm.png') repeat;background-size: 200px 200px;">
             <div class="container-fluid">
-                <div class="row bg-title">
-                    
-                    
-                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                         </div>
-                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                        <button class="right-side-toggle waves-effect waves-light btn-info btn-circle pull-right m-l-20"><i class="ti-settings text-white"></i></button>
-                        <a href="#" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light"><?php echo $namapenuh;?></a>
-                        <ol class="breadcrumb">
-                            <li><a href="#">Dashboard</a></li>
-                            
-                            <li class="active"><?php echo $namapengguna;?></li>
-                        </ol>
+                <div class="row bg-title" style="background: rgba(0, 0, 0, 0.2);">
+                    <div class="col-xs-12" style="font-size:2rem;">
+                        <marquee>
+                            MAKLUMAT TERKINI! : Lorem ipsum dolor sit amet consectetur, adipisicing elit. Obcaecati ipsum aperiam iusto iure accusantium enim at maxime deserunt! Voluptatibus, quibusdam!
+                        </marquee>
                     </div>
-                    <!-- /.col-lg-12 -->
                 </div>
                 <!-- /row -->
                 
                 
                 <div class="row">
-                    
-     <?php                
-    if($id=="dg"){
-        
-       ?> 
-        
-               
-     <div class="row">
-                    <div class="col-lg-12">
-                        <div class="white-box">
-                            <h3 class="box-title m-b-0">Analisa DG</h3>
-                            <p class="text-muted m-b-20">Pecahan Mengikut Gred DG32 Hingga DG52</p>
-                            
-    <?php                          
-  
+                <style>
+                .backwhite {
+                    background-color:white;
+                    border-style: solid;
+                    border-width: 1px;
+                    border-color: silver;
+                    padding:3rem;
+                    margin-bottom:2rem;
+                }
+                .mtb {
+                    margin-top:1rem;
+                    margin-bottom:1rem;
+                }
+                .mypanel {
+                    border-style: solid;
+                    border-width: 1px;
+                    border-color: silver;
+                    margin-top: 2rem;
+                    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+                    transition: 0.3s;
+                    border-radius: 5px; /* 5px rounded corners */
+                }
+                .mypanel-body {
+                    padding: 2px 16px;
+                }
+                </style>
+                <!-- =============================================================== -->
+                <!-- PAGE SEMUA BERMULA DI SINI -->
 
-$sql = "SELECT
-                     
-bersara_nama.KODSEKOLAH,bersara_nama.KODPPD,tssekolah.NAMASEKOLAH,
-sum(case when bersara_nama.GRED='DG32' then 1 else 0 END) as DG32,
-
-sum(case when bersara_nama.GRED='DG44 (KUP)' then 1 else 0 END) as DG44KUP,
-sum(case when bersara_nama.GRED='DG32 (KUP)' then 1 else 0 END) as DG32KUP,
-sum(case when bersara_nama.GRED='DG34' then 1 else 0 END) as DG34,
-Sum(case when bersara_nama.GRED='DG34 (KUP)' then 1 else 0 END) as DG34KUP,
-sum(case when bersara_nama.GRED='DG38' then 1 else 0 END) as DG38,
-sum(case when bersara_nama.GRED='DG44' then 1 else 0 END) as DG44,
-sum(case when bersara_nama.GRED='DG44 (KUP)' then 1 else 0 END) as DG44KUP,
-sum(case when bersara_nama.GRED='DG48' then 1 else 0 END) as DG48,
-sum(case when bersara_nama.GRED='DG48 (KUP)' then 1 else 0 END) as DG48KUP,
-
-sum(case when bersara_nama.GRED='DG52' then 1 else 0 END) as DG52,
-sum(case when bersara_nama.GRED='DG52 (KUP)' then 1 else 0 END) as DG52KUP,
-sum(case when bersara_nama.GRED='DG54' then 1 else 0 END) as DG54,
-sum(case when bersara_nama.GRED='DG54 (KUP)' then 1 else 0 END) as DG54KUP
-
-
-from bersara_nama
-JOIN tssekolah
-ON bersara_nama.KODSEKOLAH = tssekolah.KODSEKOLAH
-
-WHERE bersara_nama.KODPPD=:namapengguna 
-
-GROUP BY bersara_nama.KODSEKOLAH ORDER BY bersara_nama.KODSEKOLAH ASC";
-	
-$result = $auth_user->runQuery($sql);
-$result->bindParam(':namapengguna', $namapengguna);	
-$result->execute();
-    ?>                                           
-                            
-                            
-                            
-                            <table class="tablesaw table-striped table-hover table-bordered table" data-tablesaw-mode="columntoggle">
-                                <thead>
-                                    <tr>
-                                        
-                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">NAMA SEKOLAH</th>
-                                        
-                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-sortable-default-col data-tablesaw-priority="1">DG32</th>
-                                        
-                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">DG32KUP</th>
-                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="3">
-                                            <abbr title="Rotten Tomato Rating">DG34</abbr>
-                                        </th>
-                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4">DG34KUP</th>
-                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="5">DG38</th>
-                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="6">DG44</th>
-                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="7">DG44KUP</th>
-                                         <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="8">DG48</th>
-                                         <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="9">DG48KUP</th>
-                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="10">DG52</th>
-                                         <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="11">DG52KUP</th>
-                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="12">DG54</th>
-                                         <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="13">DG54KUP</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    
-                                             
-    <?php
-            
-$bil=0;
-if ($result->rowCount() > 0) {		
-foreach ($result as $row) {
-
-                        
-                        $dg32=$row['DG32'];
-                        $dg32kup=$row['DG32KUP'];
-                        $dg34=$row['DG34'];
-                        $dg34kup=$row['DG34KUP'];
-                        $dg38=$row['DG38'];
-                        $dg44=$row['DG44'];
-                        $dg44kup=$row['DG44KUP'];
-    
-                        $dg48=$row['DG48'];
-                        $dg48kup=$row['DG48KUP'];
-                        $dg52=$row['DG52'];
-                        $dg52kup=$row['DG52KUP'];
-                        $dg54=$row['DG54'];
-                        $dg54kup=$row['DG54KUP'];
-                        $kodsekolah=$row['KODSEKOLAH'];
-                        $namasekolah=$row['NAMASEKOLAH'];
-                        $bil++;
-                        
-			?>                                 
-                                    
-                                    
-                                    
-                                    <tr>
-                                        <td class="title"><a href="javascript:void(0)"><?php echo $namasekolah;?></a></td>
-                                            <td><?php echo $dg32;?></td>
-                                            <td><?php echo $dg32kup;?></td>
-                                            <td><?php echo $dg34;?></td>
-                                            <td><?php echo $dg34kup;?></td>
-                                            <td><?php echo $dg38;?></td>
-                                            <td><?php echo $dg44;?></td>
-                                            <td><?php echo $dg44kup;?></td>
-                                            <td><?php echo $dg48;?></td>
-                                            <td><?php echo $dg48kup;?></td>
-                                            <td><?php echo $dg52;?></td>
-                                            <td><?php echo $dg52kup;?></td>
-                                            <td><?php echo $dg54;?></td>
-                                            <td><?php echo $dg54kup;?></td>
-                                    </tr>
-                                  
-                    <?php }
-}
-    ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                    
-
-                
-                    
-  <?php 
-    } 
-                     
- 
-                     
-      
-    if($id=="akp"){
-        
-       ?> 
-        
-               
-     <div class="row">
-                    <div class="col-lg-12">
-                        <div class="white-box">
-                            <h3 class="box-title m-b-0">Analisa AKP</h3>
-                            <p class="text-muted m-b-20">Pecahan Mengikut Gred </p>
-                            
-    <?php                          
-  
-
-$sql = "SELECT
-                     
-bersara_nama.KODSEKOLAH,bersara_nama.KODPPD,tssekolah.NAMASEKOLAH,
-sum(case when bersara_nama.GRED='C17' then 1 else 0 END) as C17,
-
-sum(case when bersara_nama.GRED='C22' then 1 else 0 END) as C22,
-sum(case when bersara_nama.GRED='H11' then 1 else 0 END) as H11,
-sum(case when bersara_nama.GRED='N11 (KUP)' then 1 else 0 END) as N11KUP,
-sum(case when bersara_nama.GRED='N11' then 1 else 0 END) as N11,
-sum(case when bersara_nama.GRED='N17' then 1 else 0 END) as N17,
-sum(case when bersara_nama.GRED='N19' then 1 else 0 END) as N19,
-sum(case when bersara_nama.GRED='N22' then 1 else 0 END) as N22,
-sum(case when bersara_nama.GRED='N26' then 1 else 0 END) as N26
-
-from bersara_nama
-JOIN tssekolah
-ON bersara_nama.KODSEKOLAH = tssekolah.KODSEKOLAH
-
-WHERE bersara_nama.KODPPD=:namapengguna 
-
-GROUP BY bersara_nama.KODSEKOLAH ORDER BY bersara_nama.KODSEKOLAH ASC";
-	
-$result = $auth_user->runQuery($sql);
-$result->bindParam(':namapengguna', $namapengguna);	
-$result->execute();
-    ?>                                           
-                            
-                            
-                            
-                            <table class="tablesaw table-striped table-hover table-bordered table" data-tablesaw-mode="columntoggle">
-                                <thead>
-                                    <tr>
-                                        
-                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="persist">NAMA SEKOLAH</th>
-                                        
-                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-sortable-default-col data-tablesaw-priority="1">C17</th>
-                                        
-                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="2">C22</th>
-                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="3">
-                                            <abbr title="Rotten Tomato Rating">H11</abbr>
-                                        </th>
-                                       <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="4">N11</th>
-                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="5">N11KUP</th>
-                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="6">N17</th>
-                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="7">N19</th>
-                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="8">N22</th>
-                                        <th scope="col" data-tablesaw-sortable-col data-tablesaw-priority="9">C26</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    
-                                             
-    <?php
-            
-$bil=0;
-if ($result->rowCount() > 0) {		
-foreach ($result as $row) {
-
-                        
-                        $c17=$row['C17'];
-                        $c22=$row['C22'];
-                        $h11=$row['H11'];
-                        $n11=$row['N11'];
-                        $n11kup=$row['N11KUP'];
-                        $n17=$row['N17'];
-                        $n19=$row['N19'];
-                        $n22=$row['N22'];
-                        $n26=$row['N26'];
-    
-                        $kodsekolah=$row['KODSEKOLAH'];
-                        $namasekolah=$row['NAMASEKOLAH'];
-                        $bil++;
-                        
-			?>                                 
-                                    
-                                    
-                                    
-                                    <tr>
-                                        <td class="title"><a href="javascript:void(0)"><?php echo $namasekolah;?></a></td>
-                                            <td><?php echo $c17;?></td>
-                                            <td><?php echo $c22;?></td>
-                                            <td><?php echo $h11;?></td>
-                                        
-                                            <td><?php echo $n11;?></td>
-                                            <td><?php echo $n11kup;?></td>
-                                            <td><?php echo $n17;?></td>
-                                            <td><?php echo $n19;?></td>
-                                        <td><?php echo $n22;?></td>
-                                        <td><?php echo $n26;?></td>
-                                           
-                                    </tr>
-                                  
-                    <?php }
-}
-    ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                    
-
-                
-                    
-  <?php 
-    }                     
-                     
-                     
-    if($id=="pencen"){
-        
-       ?>                    
-<div class="col-sm-12">
-                        <div class="white-box">
-  <?php                          
- 
-
-$sql = "SELECT
-bersara_nama.NOKP,bersara_nama.ID,
-bersara_nama.NAMAGURU,
-bersara_nama.JAWATAN,
-bersara_nama.GRED,
-bersara_nama.KODPPD,
-bersara_nama.TAHUN,
-bersara_nama.`STATUS`,
-bersara_nama.TARIKHSTATUS,
-bersara_nama.TARIKHBESARA,
-bersara_nama.JENISBESARA,
-bersara_nama.S1,
-bersara_nama.TARIKHS1,
-bersara_nama.S2,
-bersara_nama.TARIKHS2,
-bersara_nama.S3,
-bersara_nama.TARIKHS3,
-bersara_nama.S4,
-bersara_nama.TARIKHS4,
-bersara_nama.CATATAN,
-bersara_nama.CATATANSEKOLAH,
-tssekolah.NAMASEKOLAH
-FROM
-bersara_nama
-JOIN tssekolah
-ON bersara_nama.KODSEKOLAH = tssekolah.KODSEKOLAH
-
-
-WHERE bersara_nama.KODPPD=:namapengguna  ORDER BY bersara_nama.NAMAGURU ASC";
-	
-$result = $auth_user->runQuery($sql);
-$result->bindParam(':namapengguna', $namapengguna);	
-$result->execute();
-    ?>                          
-                            
-
-                            <h3 class="box-title m-b-0">Data Export</h3>
-                            <p class="text-muted m-b-30">Export data to Copy, CSV, Excel, PDF & Print</p>
-                            <div class="table-responsive">
-                                <table id="example23" class="display nowrap" cellspacing="0" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Nokp</th>
-                                            <th>Nama</th>
-                                            <th>Tempat Kerja</th>
-                                            <th>Tarikh Besara</th>
-                                            <th>Bil Hari</th>
-                                            <th>Jenis Besara</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                              <th>Nokp</th>
-                                            <th>Nama</th>
-                                            <th>Tempat Kerja</th>
-                                            <th>Tarikh Besara</th>
-                                            <th>Bil Hari</th>
-                                            <th>Jenis Besara</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        
- <?php
-            
-$bil=0;
-if ($result->rowCount() > 0) {		
-foreach ($result as $row) {
-
-                        $id=$row['ID'];
-                        $nama=$row['NAMAGURU'];
-                        $nokp=$row['NOKP'];
-                        $namasekolah=$row['NAMASEKOLAH'];
-                        $jenisbesara=$row['JENISBESARA'];
-    
-//----------------------- untuk kiraan tempoh selepas mohon / disahkan ------------------------------------
-                       $tarikh = $row['TARIKHBESARA'];
-                       if($tarikh=="0000-00-00") { $tarikh= ""; }
-                       if($tarikh!="") { $tarikh = date('d/m/Y',strtotime($tarikh)); }
-                        
-                        
-                       $tarikhbesara = $row['TARIKHBESARA'];
-                       if( $tarikhbesara =="0000-00-00") {  $tarikhbesara = ""; }
-                       if( $tarikhbesara !="") {  $tarikhbesara  = date('d/m/Y',strtotime( $tarikhbesara )); }
-
-$today = date('d F Y',strtotime("now"));
-                        $today = date("Y-m-d");
-                        $tarikhm = $row['TARIKHBESARA'];
-						//$tarikhl = $row['tarikh_lulus'];
-    
-    
-$datetime1 = date_create($tarikhm);
-$datetime2 = date_create($today);
-$interval = date_diff($datetime1, $datetime2);
-$kira= $interval->format('%a');						
-					
-// ---------------------------------------------------------------------------------------------------------                         
-                        
-                        $bil++;
-                        
-			?>                                       
-                                        
-                                        
-                                        
-                                        <tr>
-                                            <td><?php echo $nokp;?></td>
-                                            <td><?php echo $nama;?></td>
-                                            <td><?php echo $namasekolah;?></td>
-                                            <td><?php echo $tarikhbesara;?></td>
-                                            <td><?php echo $kira;?></td>
-                                            <td><?php echo $jenisbesara;?></td>
-                                        </tr>
-                         <?php
-}
-}
-                                        ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    
-         
-                    
-                    
-     <?php }
-                   
-                    
-                    
-                    
-                    
-    if($id=="status"){
-        
-       ?>                    
-<div class="col-sm-12">
-                        <div class="white-box">
-  <?php                          
- 
-
-$sql = "SELECT
-bersara_nama.NOKP,bersara_nama.ID,
-bersara_nama.NAMAGURU,
-bersara_nama.JAWATAN,
-bersara_nama.GRED,
-bersara_nama.KODPPD,
-bersara_nama.TAHUN,
-bersara_nama.`STATUS`,
-bersara_nama.TARIKHSTATUS,
-bersara_nama.TARIKHBESARA,
-bersara_nama.JENISBESARA,
-bersara_nama.S1,
-bersara_nama.TARIKHS1,
-bersara_nama.S2,
-bersara_nama.TARIKHS2,
-bersara_nama.S3,
-bersara_nama.TARIKHS3,
-bersara_nama.S4,
-bersara_nama.TARIKHS4,
-bersara_nama.CATATAN,
-bersara_nama.CATATANSEKOLAH,
-tssekolah.NAMASEKOLAH
-FROM
-bersara_nama
-JOIN tssekolah
-ON bersara_nama.KODSEKOLAH = tssekolah.KODSEKOLAH
-
-
-WHERE bersara_nama.KODPPD=:namapengguna  ORDER BY bersara_nama.NAMAGURU ASC";
-	
-$result = $auth_user->runQuery($sql);
-$result->bindParam(':namapengguna', $namapengguna);	
-$result->execute();
-    ?>                          
-                            
-
-                            <h3 class="box-title m-b-0">STATUS PROSES MAKLUMAT PENCEN</h3>
-                            <p class="text-muted m-b-30">Eksport data Ke Copy, CSV, Excel, PDF & Print</p>
-                            <div class="table-responsive">
-                                <table id="example23" class="display nowrap" cellspacing="0" width="100%">
-                                    <thead>
-                                        <tr>
-                                           
-<th>Maklumat Staf</th>
-<th>Tahun Besara</th>
-<th>Penyediaan Kew <br>8 Persaraan <br><i>Tindakan sekolah </th>
-<th>Kelulusan Kew 8<br> persaraan <br><i>Tindakan PPD</i></th>
-<th>Penghantaran Kew 8<br> yang telah diluluskan <br>beserta borang SG 20 
-<br><i>Tindakan Sekolah</i></th>
-<th>Penghantaran Kew 8<br> Dan Borang <br>SG 20 Ke AG 
-    <br><i>Tindakan Kewangan</i></th>
-                                        
-<th>Catatan Sekolah</th><th>Catatan PPD</th>                                          
-                                        </tr>
-                                        
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                             
-                                           
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        
- <?php
-            
-$bil=0;
-if ($result->rowCount() > 0) {		
-foreach ($result as $row) {
-
-                        $kod=$row['ID'];
-                        $nama=$row['NAMAGURU'];
-                        $nokp=$row['NOKP'];
-                        $namasekolah=$row['NAMASEKOLAH'];
-                        $jenisbesara=$row['JENISBESARA'];
-    $catatansekolah=$row['CATATANSEKOLAH'];
-    $catatan=$row['CATATAN'];
-    
-    
-       $s1=$row['S1'];
-       $s2=$row['S2'];
-       $s3=$row['S3'];
-       $s4=$row['S4'];
-       
-       $tarikh1=$row['TARIKHS1'];
-       $tarikh2=$row['TARIKHS2'];
-       $tarikh3=$row['TARIKHS3'];
-       $tarikh4=$row['TARIKHS4'];
-    
-    if($tarikh1=="0000-00-00") { $tarikh1 = ""; }
-     if($tarikh1!="") { $tarikh1 = date('d/m/Y',strtotime($tarikh1)); }
-       
-   if($tarikh2=="0000-00-00") { $tarikh2 = ""; }
-   if($tarikh2!="") { $tarikh2 = date('d/m/Y',strtotime($tarikh2)); }
-       
-        if($tarikh3=="0000-00-00") { $tarikh3 = ""; }
-   if($tarikh3!="") { $tarikh3 = date('d/m/Y',strtotime($tarikh3)); }
-
- 
-        if($tarikh4=="0000-00-00") { $tarikh4 = ""; }
-   if($tarikh4!="") { $tarikh4 = date('d/m/Y',strtotime($tarikh4)); }
-    
-    
-//----------------------- untuk kiraan tempoh selepas mohon / disahkan ------------------------------------
-                       $tarikh = $row['TARIKHBESARA'];
-                       if($tarikh=="0000-00-00") { $tarikh= ""; }
-                       if($tarikh!="") { $tarikh = date('d/m/Y',strtotime($tarikh)); }
-                        
-                        
-                       $tarikhbesara = $row['TARIKHBESARA'];
-                       if( $tarikhbesara =="0000-00-00") {  $tarikhbesara = ""; }
-                       if( $tarikhbesara !="") {  $tarikhbesara  = date('d/m/Y',strtotime( $tarikhbesara )); }
-
-$today = date('d F Y',strtotime("now"));
-                        $today = date("Y-m-d");
-                        $tarikhm = $row['TARIKHBESARA'];
-						//$tarikhl = $row['tarikh_lulus'];
-    
-    
-$datetime1 = date_create($tarikhm);
-$datetime2 = date_create($today);
-$interval = date_diff($datetime1, $datetime2);
-$kira= $interval->format('%a');						
-					
-// ---------------------------------------------------------------------------------------------------------                         
-                        
-                        $bil++;
-                        
-			?>                                       
-                                        
-                                        
-                                        
-                                        <tr>
-                                           
-                                            <td><?php echo "$nama<br>$nokp<br> $namasekolah";?></td>
-                                            <td><?php echo "$tarikhbesara";?></td>
-                                             <td>
-   <?php
-   if($s1=='1'){
-   echo"
-     <a href=\"../modulsekolah/pengesahan1.php?id=$kod\" title=\"Tindkan Sekolah [ $id ]$nama \"> 
-     <span class=\"label label-success\">Sudah Selesai</span></a><br><i>$tarikh1</i> </td>";
-   }
-   if($s1==''){
-   echo"
-  <a href=\"../modulsekolah/pengesahan1.php?id=$kod\" title=\"Tindkan Sekolah [ $id ]$nama \"> 
-   
-   <span class=\"label label-danger\">Belum Selesai</span></a> </td>";
-   }    
-   ?> 
-                                            
-                                            <td><?php
-                                                 if($s2==''){
-   echo"
-   <a href=\"../modulsekolah/pengesahan2.php?id=$kod\" title=\"Tindkan PPD[ $id ]$nama \"> 
-   <span class=\"label label-danger\">Belum Selesai</span></a> <br><i>$tarikh2</i> </td>";
-   }  
-    if($s2=='1'){
-   echo"
-   <a href=\"../modulsekolah/pengesahan2.php?id=$kod\" title=\"Tindkan PPD [ $id ]$nama \"> 
-   <span class=\"label label-success\">Sudah Selesai</span> </a><br><i>$tarikh2</i>";
-   }
-  ?>   
- </td>
- <td>
- <?php
-     if($s3==''){
-   echo"
-   <a href=\"../modulsekolah/pengesahan3.php?id=$kod\" title=\"Tindkan Sekolah [ $id ]$nama \"> 
-   <span class=\"label label-danger\">Belum Selesai</span></a><br><i>$tarikh3</i> </td>";
-   }  
-    if($s3=='1'){
-   echo"
-   <a href=\"../modulsekolah/pengesahan3.php?id=$kod\" title=\"Tindkan Sekolah [ $id ]$nama \"> 
-   <span class=\"label label-success\">Sudah Selesai</span></a><br><i>$tarikh3</i> </td>";
-   }
-     ?>
-</td>
-<td>
- <?php
-    if($s4==''){
-   echo"
-   <a href=\"../modulsekolah/pengesahan4.php?id=$kod\" title=\"Tindkan Kewangan PPD [ $id ]$nama \"> 
-   <span class=\"label label-danger\">Belum Selesai</span></a><br><i>$tarikh4</i> </td>";
-   } 
-       
-    if($s4=='1'){
-   echo"
-   <a href=\"../modulsekolah/pengesahan4.php?id=$kod\" title=\"Tindkan Kewangan PPD [ $id ]$nama \"> 
-   <span class=\"label label-success\">Sudah Selesai</span></a><br><i>$tarikh4</i> </td>";
-   }   
-    ?>
-                                            </td>
-                                            
-     <td>
-         <small> 
-         <?php echo $catatansekolah;?></small>
-                                            
-                                            </td><td><small> <?php echo $catatan;?></small></td>                                        
-                                            
-                                        </tr>
-                         <?php
-}
-}
-                                        ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    
-         
-                    
-                    
-     <?php }
-                     ?>
-                                    
-                    
-                    
-                    
-                    
-                </div>
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                <!-- /.row -->
-                <!-- ============================================================== -->
-                <!-- Right sidebar -->
-                <!-- ============================================================== -->
-                <!-- .right-sidebar -->
-                <div class="right-sidebar">
-                    <div class="slimscrollright">
-                        <div class="rpanel-title"> Service Panel <span><i class="ti-close right-side-toggle"></i></span> </div>
-                        <div class="r-panel-body">
-                            <ul id="themecolors" class="m-t-20">
-                                <li><b>With Light sidebar</b></li>
-                                <li><a href="javascript:void(0)" data-theme="default" class="default-theme">1</a></li>
-                                <li><a href="javascript:void(0)" data-theme="green" class="green-theme">2</a></li>
-                                <li><a href="javascript:void(0)" data-theme="gray" class="yellow-theme">3</a></li>
-                                <li><a href="javascript:void(0)" data-theme="blue" class="blue-theme">4</a></li>
-                                <li><a href="javascript:void(0)" data-theme="purple" class="purple-theme">5</a></li>
-                                <li><a href="javascript:void(0)" data-theme="megna" class="megna-theme">6</a></li>
-                                <li><b>With Dark sidebar</b></li>
-                                <br/>
-                                <li><a href="javascript:void(0)" data-theme="default-dark" class="default-dark-theme">7</a></li>
-                                <li><a href="javascript:void(0)" data-theme="green-dark" class="green-dark-theme">8</a></li>
-                                <li><a href="javascript:void(0)" data-theme="gray-dark" class="yellow-dark-theme">9</a></li>
-                                <li><a href="javascript:void(0)" data-theme="blue-dark" class="blue-dark-theme">10</a></li>
-                                <li><a href="javascript:void(0)" data-theme="purple-dark" class="purple-dark-theme">11</a></li>
-                                <li><a href="javascript:void(0)" data-theme="megna-dark" class="megna-dark-theme working">12</a></li>
-                            </ul>
-                            <ul class="m-t-20 all-demos">
-                                <li><b>Choose other demos</b></li>
-                            </ul>
-                            <ul class="m-t-20 chatonline">
-                                <li><b>Chat option</b></li>
-                               
-                               
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                
-                
-     <?php
-                    
+                <?php
+                    if(isset($_GET['page'])) {
+                        if($_GET['page']=="depan") {
+                            include 'bahagian/depan.php';
+                        } elseif($_GET['page']=="karang") {
+                            include 'bahagian/karang.php';
+                        } elseif($_GET['page']=="jenisprog") {
+                            include 'bahagian/jenisprog.php';
+                        } elseif($_GET['page']=="jenisbimb") {
+                            include 'bahagian/jenisbimb.php';
+                        } elseif($_GET['page']=="senaraisip") {
+                            include 'bahagian/senaraisip.php';
+                        } elseif($_GET['page']=="bilbimsip") {
+                            include 'bahagian/bilbimsip.php';
+                        } elseif($_GET['page']=="bilbimsipstd") {
+                            include 'bahagian/bilbimsipstd.php';
+                        } elseif($_GET['page']=="senaraisisc") {
+                            include 'bahagian/senaraisisc.php';
+                        } elseif($_GET['page']=="bilbimsisc") {
+                            include 'bahagian/bilbimsisc.php';
+                        } elseif($_GET['page']=="bilbimsiscstd") {
+                            include 'bahagian/bilbimsiscstd.php';
+                        }
+                    } else {
+                        include 'bahagian/depan.php';
                     }
+                    
+                ?>
+
+                <!-- PAGE BERAKHIR DI SINI -->             
+                <!-- =============================================================== -->    
+                </div>
                 
-           else
+                
+     <?php }
+                
+                
+         else
      {
          
      header("Location: ../modulppd/logout.php?logout=true");     
          
-     }            
-                
+     }         
                 
                 
                 
@@ -1034,7 +483,7 @@ $kira= $interval->format('%a');
                 <!-- ============================================================== -->
             </div>
             <!-- /.container-fluid -->
-            <footer class="footer text-center"> 2018 &copy; Pejabat Pendidikan Daerah Kluang</footer>
+            <footer class="footer text-center" style="background: rgba(255, 255, 255, 0);"><strong>2018 &copy; Bahagian Pengurusan Sekolah Harian Kementerian Pendidikan Malaysia<strong></footer>
         </div>
         <!-- /#page-wrapper -->
     </div>
